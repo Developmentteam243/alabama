@@ -6,9 +6,11 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 
-Route::get('/', function () {
-    return redirect('/home');
-});
+use App\Http\Controllers\FrontendController;
+
+Route::get('/', [FrontendController::class, 'index'])->name('frontend.home');
+Route::get('/product/{product}', [FrontendController::class, 'show'])->name('frontend.product.show');
+
 require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function () {
