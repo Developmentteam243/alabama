@@ -3,6 +3,19 @@
 @section('title', 'Catalog - Alabama Portal')
 
 @section('content')
+{{-- top bar --}}
+<div class="mock-note">Design concept — Alabama Building Materials Trading L.L.C · prepared for review · not the live site</div>
+<div class="topbar">
+    <div class="wrap">
+        <div class="tb-left">
+            <a href="mailto:sales@alabamauae.com"><i class="fa-solid fa-envelope"></i> sales@alabamauae.com</a>
+            <a href="tel:+97143526973"><span class="hide-m"><i class="fa-solid fa-phone"></i> +971 4 352 6973</span></a>
+        </div>
+        <div class="tb-right">
+            <a href="https://alabamauae.com/wp-content/uploads/2026/01/Alabama-Brochure.pdf" target="_blank" rel="noopener">Download brochure ↓</a>
+        </div>
+    </div>
+</div>
 <!-- Hero Header -->
 <div class="hero-section text-center text-md-start">
     <div class="container">

@@ -1,0 +1,192 @@
+/* fonts */
+@font-face {
+    font-family: 'os-light';
+    src: url('../fonts/OpenSans-Light.woff2') format('woff2'),
+        url('../fonts/OpenSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'os-medium';
+    src: url('../fonts/OpenSans-Medium.woff2') format('woff2'),
+        url('../fonts/OpenSans-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'os-normal';
+    src: url('../fonts/OpenSans-Regular.woff2') format('woff2'),
+        url('../fonts/OpenSans-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'os-sb';
+    src: url('../fonts/OpenSans-SemiBold.woff2') format('woff2'),
+        url('../fonts/OpenSans-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'os-bold';
+    src: url('../fonts/OpenSans-Bold.woff2') format('woff2'),
+        url('../fonts/OpenSans-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'pop-normal';
+    src: url('../fonts/Poppins-Regular.woff2') format('woff2'),
+        url('../fonts/Poppins-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'pop-medium';
+    src: url('../fonts/Poppins-Medium.woff2') format('woff2'),
+        url('../fonts/Poppins-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'pop-sb';
+    src: url('../fonts/Poppins-SemiBold.woff2') format('woff2'),
+        url('../fonts/Poppins-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'pop-bold';
+    src: url('../fonts/Poppins-Bold.woff2') format('woff2'),
+        url('../fonts/Poppins-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'pop-light';
+    src: url('../fonts/Poppins-Light.woff2') format('woff2'),
+        url('../fonts/Poppins-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* ============================================
+   GLOBAL STYLES & VARIABLES
+   ============================================ */
+:root {
+    --ink:#141414;
+    --ink-soft:#2a2a2c;
+    --paper:#ffffff;
+    --stone:#f5f4f1;
+    --brass:#e52b2b;
+    --brass-deep:#b91d1d;
+    --grey:#5c5d60;
+    --line:rgba(20,20,20,.10);
+    --line-invert:rgba(255,255,255,.12);
+    --track:.18em;
+    --radius:6px;
+    --max:1320px;
+
+    interpolate-size: allow-keywords;
+}
+::-webkit-scrollbar {
+    width: 8px !important;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg2);
+    border-radius: 2px;
+    height: 50px;
+}
+* {outline: none ;margin: 0;padding: 0;}
+.navbar-toggler:focus {box-shadow: none !important;}
+
+body {
+    font-family: "Poppins", sans-serif, "Open Sans", sans-serif;
+    color:var(--ink);background:var(--paper);font-size:15px;line-height:1.75;letter-spacing:.036em;-webkit-font-smoothing:antialiased;
+    /* text-wrap: balance; */
+    font-style: normal;
+    font-optical-sizing: auto;
+    position: relative;
+}
+footer, .section {overflow: hidden;}
+/* custom css */
+p {font-size: 1em;letter-spacing: 0.5px;}
+ul {list-style: none;padding-left: 0;}
+/* Smooth scrolling and transitions */
+button {
+  transition: all 0.3s ease;
+}
+a {text-decoration: none;transition: all 0.3s ease;}
+/* --- btn -- */
+
+
+/* font size */
+.section-title .heading-subtitle {font-size: 1em;letter-spacing: 0.31em;font-weight: normal;color: var(--body-font-color);text-transform: uppercase;}
+.section-title .titleh2 {font-size: 2em;font-weight: 700;margin: 0;color: var(--header-font-color);}
+.sub-title {color: var(--header-font-color);}
+.hedingWhiteh2 {color: var(--white);font-weight: 600;font-size: 2em;}
+.section-title .titleh2 {font-size: clamp(1.375rem, 2vw, 1.8rem);}
+
+/* back to top */
+.back-to-top {position: fixed;bottom: 50px;scale: 0;transition: opacity 0.3s ease, scale 0.3s ease;background-color: var(--header-bg);color: var(--white);padding: 1.3rem;border-radius: 100%;z-index: 3;width: 30px;display: flex;height: 30px;align-items: center;justify-content: center;left: calc(100% - 55px);border: 1px solid var(--bg1);}
+@container scroll-state(scrollable: top) {.back-to-top {scale: 1;}}
+
+/* whatsapp */
+.whatsapp {position: fixed;bottom: 80px;background-color: var(--header-bg);color: var(--white);padding: 1.3rem;border-radius: 100%;z-index: 3;width: 30px;display: flex;height: 30px;align-items: center;justify-content: center;left: calc(100% - 55px);border: 1px solid var(--bg1);}
+
+/* call */
+.flotcall {position: fixed;bottom: 130px;background-color: var(--header-bg);color: var(--white);padding: 1.3rem;border-radius: 100%;z-index: 3;width: 30px;display: flex;height: 30px;align-items: center;justify-content: center;left: calc(100% - 55px);border: 1px solid var(--bg1);}
+/* custom css # */
+
+/* ============================================
+   HEADER STYLES
+   ============================================ */
+/* mockup banner */
+.mock-note{background:var(--brass);color:#fff;text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px}
+/* ---------- top bar ---------- */
+.topbar{background:var(--ink);color:rgba(255,255,255,.75);font-size:12px;letter-spacing:.08em}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:38px}
+.topbar a:hover{color:#fff}
+.topbar .tb-left{display:flex;gap:28px}
+.topbar .tb-right a{color:#f29b9b;font-weight:600;text-transform:uppercase;letter-spacing:var(--track);font-size:11px}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) {
+    
+}
+@media (max-width: 991px) {
+    
+}
+@media (max-width: 767px) {
+    
+    
+}
+@media (max-width: 576px) {
+    
+}
+
+

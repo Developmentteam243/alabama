@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Water Heaters & Geysers Portal')</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {{-- CSS --}}
+    <link href="{{url('assets/css/style.css?v='.mt_rand()) }}" rel="stylesheet" />
 
     <!-- CSS & JS Assets via Vite -->
     @vite(['resources/js/app.js'])
@@ -118,17 +116,72 @@
     <nav class="navbar navbar-expand-lg navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand-custom" href="{{ route('frontend.home') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-flame text-primary" width="32" height="32" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.378 1.54 -3 2.27 -4 2z" />
-                </svg>
-                <span>Alabama Portal</span>
+                <img src="{{url('assets/images/logo.webp') }}" title="Alabama" alt="Alabama" class="img-fluid cd-logo" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                 <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('frontend.home') }}">
+                            Home
+                        </a>
+                    </li>
+                    <!-- Categories Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                        href="#"
+                        id="categoriesDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#cat-hotwater">Hot Water Systems</a></li>
+                            <li><a class="dropdown-item" href="#cat-plumbing">Plumbing Materials</a></li>
+                            <li><a class="dropdown-item" href="#cat-sanitary">Sanitaryware</a></li>
+                            <li><a class="dropdown-item" href="#cat-bathroom">Bathroomware</a></li>
+                            <li><a class="dropdown-item" href="#cat-kitchen">Kitchen</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Brands Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                        href="#"
+                        id="brandsDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown">
+                            Brands
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#brand-lamborghini">Lamborghini CaloreClima</a></li>
+                            <li><a class="dropdown-item" href="#brand-zenith">Zenith Water Heater</a></li>
+                            <li><a class="dropdown-item" href="#brand-ariston">Ariston</a></li>
+                            <li><a class="dropdown-item" href="#brand-vera">VERA</a></li>
+                            <li><a class="dropdown-item" href="#brand-pegler">Pegler</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#brands">All Brands</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium"
+                        href="{{ route('frontend.home') }}">
+                            Products Catalog
+                        </a>
+                    </li>
+                </ul>
+                {{--<ul class="navbar-nav ms-auto align-items-center gap-2">
                     <li class="nav-item">
                         <a class="nav-link px-3 fw-medium" href="{{ route('frontend.home') }}">Products Catalog</a>
                     </li>
@@ -148,7 +201,7 @@
                             </li>
                         @endif
                     @endauth
-                </ul>
+                </ul>--}}
             </div>
         </div>
     </nav>
