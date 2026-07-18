@@ -87,9 +87,35 @@ class ProductController extends Controller
             'mfr_part_code' => 'nullable|string',
             'source_catalogue' => 'nullable|string',
             'notes' => 'nullable|string',
+            'image' => 'nullable|image|max:10240',
+            'brochure' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+            'techsheet' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
         ]);
 
-        Product::create($validated);
+        $data = $validated;
+
+        if ($request->hasFile('image')) {
+            $imageUrl = \App\Services\CloudinaryService::upload($request->file('image'));
+            if ($imageUrl) {
+                $data['image_url'] = $imageUrl;
+            }
+        }
+
+        if ($request->hasFile('brochure')) {
+            $brochureUrl = \App\Services\CloudinaryService::upload($request->file('brochure'));
+            if ($brochureUrl) {
+                $data['brochure_url'] = $brochureUrl;
+            }
+        }
+
+        if ($request->hasFile('techsheet')) {
+            $techsheetUrl = \App\Services\CloudinaryService::upload($request->file('techsheet'));
+            if ($techsheetUrl) {
+                $data['techsheet_url'] = $techsheetUrl;
+            }
+        }
+
+        Product::create($data);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
@@ -138,9 +164,35 @@ class ProductController extends Controller
             'mfr_part_code' => 'nullable|string',
             'source_catalogue' => 'nullable|string',
             'notes' => 'nullable|string',
+            'image' => 'nullable|image|max:10240',
+            'brochure' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+            'techsheet' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
         ]);
 
-        $product->update($validated);
+        $data = $validated;
+
+        if ($request->hasFile('image')) {
+            $imageUrl = \App\Services\CloudinaryService::upload($request->file('image'));
+            if ($imageUrl) {
+                $data['image_url'] = $imageUrl;
+            }
+        }
+
+        if ($request->hasFile('brochure')) {
+            $brochureUrl = \App\Services\CloudinaryService::upload($request->file('brochure'));
+            if ($brochureUrl) {
+                $data['brochure_url'] = $brochureUrl;
+            }
+        }
+
+        if ($request->hasFile('techsheet')) {
+            $techsheetUrl = \App\Services\CloudinaryService::upload($request->file('techsheet'));
+            if ($techsheetUrl) {
+                $data['techsheet_url'] = $techsheetUrl;
+            }
+        }
+
+        $product->update($data);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }

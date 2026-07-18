@@ -139,6 +139,30 @@
 
         <!-- Sidebar Actions & Related -->
         <div class="col-lg-4">
+            <!-- Product Media Card -->
+            @if($product->image_url || $product->brochure_url || $product->techsheet_url)
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 text-center">
+                    @if($product->image_url)
+                        <div class="mb-3">
+                            <img src="{{ $product->image_url }}" alt="{{ $product->model_name ?: $product->sku_code }}" class="img-fluid rounded-3" style="max-height: 300px; object-fit: contain;">
+                        </div>
+                    @endif
+                    
+                    <div class="d-flex flex-column gap-2">
+                        @if($product->brochure_url)
+                            <a href="{{ $product->brochure_url }}" target="_blank" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                                <i class="ti ti-file-text"></i> Brochure &gt;
+                            </a>
+                        @endif
+                        @if($product->techsheet_url)
+                            <a href="{{ $product->techsheet_url }}" target="_blank" class="btn btn-dark w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                                <i class="ti ti-download"></i> Download Techsheet <i class="ti ti-arrow-bar-to-down"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            @endif
+
             <!-- Inquiry Form Card -->
             <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
                 <h5 class="fw-bold text-dark mb-3">Product Inquiry</h5>

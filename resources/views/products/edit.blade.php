@@ -15,7 +15,7 @@
 
 <div class="page-body">
     <div class="container-xl">
-        <form action="{{ route('products.update', $product->id) }}" method="POST" class="card">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="card">
             @csrf
             @method('PUT')
             <div class="card-body">
@@ -172,6 +172,55 @@
                         <div class="mb-3">
                             <label class="form-label">Notes</label>
                             <textarea name="notes" rows="4" class="form-control">{{ old('notes', $product->notes) }}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Media Uploads (Cloudinary) -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Product Image</label>
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            @if($product->image_url)
+                                <div class="mt-2">
+                                    <a href="{{ $product->image_url }}" target="_blank" class="text-decoration-none">
+                                        <img src="{{ $product->image_url }}" alt="Product Image" class="img-thumbnail" style="max-height: 80px;">
+                                    </a>
+                                </div>
+                            @endif
+                            <span class="text-muted small">Upload new to replace existing image in Cloudinary.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Brochure File</label>
+                            <input type="file" name="brochure" class="form-control @error('brochure') is-invalid @enderror" accept=".pdf,.doc,.docx">
+                            @error('brochure')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            @if($product->brochure_url)
+                                <div class="mt-2">
+                                    <a href="{{ $product->brochure_url }}" target="_blank" class="btn btn-sm btn-outline-info">View Existing Brochure</a>
+                                </div>
+                            @endif
+                            <span class="text-muted small">Upload new to replace existing brochure in Cloudinary.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Technical Datasheet (Techsheet)</label>
+                            <input type="file" name="techsheet" class="form-control @error('techsheet') is-invalid @enderror" accept=".pdf,.doc,.docx">
+                            @error('techsheet')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            @if($product->techsheet_url)
+                                <div class="mt-2">
+                                    <a href="{{ $product->techsheet_url }}" target="_blank" class="btn btn-sm btn-outline-info">View Existing Techsheet</a>
+                                </div>
+                            @endif
+                            <span class="text-muted small">Upload new to replace existing techsheet in Cloudinary.</span>
                         </div>
                     </div>
                 </div>

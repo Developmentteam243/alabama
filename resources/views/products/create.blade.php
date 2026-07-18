@@ -15,7 +15,7 @@
 
 <div class="page-body">
     <div class="container-xl">
-        <form action="{{ route('products.store') }}" method="POST" class="card">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" class="card">
             @csrf
             <div class="card-body">
                 <div class="row row-cards">
@@ -171,6 +171,38 @@
                         <div class="mb-3">
                             <label class="form-label">Notes</label>
                             <textarea name="notes" rows="4" class="form-control">{{ old('notes') }}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Media Uploads (Cloudinary) -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Product Image</label>
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Upload to Cloudinary (image file).</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Brochure File</label>
+                            <input type="file" name="brochure" class="form-control @error('brochure') is-invalid @enderror" accept=".pdf,.doc,.docx">
+                            @error('brochure')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Upload to Cloudinary (PDF, DOC).</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Technical Datasheet (Techsheet)</label>
+                            <input type="file" name="techsheet" class="form-control @error('techsheet') is-invalid @enderror" accept=".pdf,.doc,.docx">
+                            @error('techsheet')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Upload to Cloudinary (PDF, DOC).</span>
                         </div>
                     </div>
                 </div>
