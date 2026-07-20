@@ -3,209 +3,175 @@
 @section('title', ($product->model_name ?: $product->sku_code) . ' - Alabama Portal')
 
 @section('content')
-<div class="container my-5">
-    <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}" class="text-decoration-none">Catalog</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $product->model_name ?: $product->sku_code }}</li>
-        </ol>
-    </nav>
 
-    <div class="row g-4">
-        <!-- Technical Specs & Info -->
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4 bg-white">
-                <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
-                    <span class="badge-brand">{{ $product->brand->name ?? 'Unknown Brand' }}</span>
-                    <span class="text-muted small fw-semibold bg-light px-3 py-1 rounded-pill">SKU Code: {{ $product->sku_code }}</span>
-                </div>
-
-                <h1 class="fw-extrabold text-dark mb-2 display-6">
-                    {{ $product->model_name ?: 'Model SKU: ' . $product->sku_code }}
-                </h1>
-                <p class="text-muted mb-4 fs-5">
-                    {{ $product->subcategory->category->name ?? '' }} &raquo; {{ $product->subcategory->name ?? '' }}
-                </p>
-
-                @if($product->notes)
-                    <div class="alert alert-info border-0 rounded-3 mb-4 bg-light text-dark p-3">
-                        <h6 class="fw-bold m-0 mb-1 d-flex align-items-center gap-2">
-                            <i class="ti ti-info-circle text-primary fs-5"></i> Product Notes
-                        </h6>
-                        <p class="small m-0 text-muted">{{ $product->notes }}</p>
-                    </div>
-                @endif
-
-                <h4 class="fw-bold text-dark mb-4 mt-4">Technical Specifications</h4>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle border-light-subtle">
-                        <tbody>
-                            @if($product->item_code)
-                            <tr>
-                                <th class="text-muted fw-semibold w-50 py-3">Item Code</th>
-                                <td class="text-dark fw-medium">{{ $product->item_code }}</td>
-                            </tr>
-                            @endif
-                            @if($product->product_type)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Product Type</th>
-                                <td class="text-dark fw-medium">{{ $product->product_type }}</td>
-                            </tr>
-                            @endif
-                            @if($product->product_family)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Product Family</th>
-                                <td class="text-dark fw-medium">{{ $product->product_family }}</td>
-                            </tr>
-                            @endif
-                            @if($product->capacity_l)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Capacity</th>
-                                <td class="text-dark fw-bold text-primary">{{ $product->capacity_l }} Liters</td>
-                            </tr>
-                            @endif
-                            @if($product->orientation_mounting)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Mounting / Orientation</th>
-                                <td class="text-dark fw-medium">{{ $product->orientation_mounting }}</td>
-                            </tr>
-                            @endif
-                            @if($product->heating_power_kw)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Heating Power</th>
-                                <td class="text-dark fw-medium">{{ $product->heating_power_kw }} kW</td>
-                            </tr>
-                            @endif
-                            @if($product->voltage)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Voltage</th>
-                                <td class="text-dark fw-medium">{{ $product->voltage }}</td>
-                            </tr>
-                            @endif
-                            @if($product->max_working_pressure_bar)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Max Working Pressure</th>
-                                <td class="text-dark fw-medium">{{ $product->max_working_pressure_bar }} bar</td>
-                            </tr>
-                            @endif
-                            @if($product->height_length_mm)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Height / Length</th>
-                                <td class="text-dark fw-medium">{{ $product->height_length_mm }} mm</td>
-                            </tr>
-                            @endif
-                            @if($product->diameter_width_mm)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Diameter / Width</th>
-                                <td class="text-dark fw-medium">{{ $product->diameter_width_mm }} mm</td>
-                            </tr>
-                            @endif
-                            @if($product->tank_protection_lining)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Tank Protection Lining</th>
-                                <td class="text-dark fw-medium">{{ $product->tank_protection_lining }}</td>
-                            </tr>
-                            @endif
-                            @if($product->heating_element)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Heating Element Type</th>
-                                <td class="text-dark fw-medium">{{ $product->heating_element }}</td>
-                            </tr>
-                            @endif
-                            @if($product->warranty_yrs)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Warranty</th>
-                                <td class="text-dark fw-bold text-success">{{ $product->warranty_yrs }} Years</td>
-                            </tr>
-                            @endif
-                            @if($product->mfr_part_code)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Mfr Part Code</th>
-                                <td class="text-dark fw-medium">{{ $product->mfr_part_code }}</td>
-                            </tr>
-                            @endif
-                            @if($product->source_catalogue)
-                            <tr>
-                                <th class="text-muted fw-semibold py-3">Source Catalog Reference</th>
-                                <td class="text-dark fw-medium">{{ $product->source_catalogue }}</td>
-                            </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<main id="page-product" class="page current">
+  <section class="section" style="padding-top:70px">
+    <div class="container">
+      <div class="pd-top row">
+        <!-- Media / Image column -->
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <div class="pd-media border border-light-subtle rounded-3 p-4 bg-light d-flex align-items-center justify-content-center" style="height: 480px;">
+            @if($product->image_url)
+              <img src="{{ $product->image_url }}" alt="{{ $product->model_name ?: $product->sku_code }}" class="img-fluid" style="max-height: 100%; width: auto; object-fit: contain;">
+            @else
+              <span class="ghost display-1 text-muted fw-bold">{{ strtoupper(substr($product->model_name ?: $product->sku_code, 0, 1)) }}</span>
+            @endif
+          </div>
         </div>
 
-        <!-- Sidebar Actions & Related -->
-        <div class="col-lg-4">
-            <!-- Product Media Card -->
-            @if($product->image_url || $product->brochure_url || $product->techsheet_url)
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 text-center">
-                    @if($product->image_url)
-                        <div class="mb-3">
-                            <img src="{{ $product->image_url }}" alt="{{ $product->model_name ?: $product->sku_code }}" class="img-fluid rounded-3" style="max-height: 300px; object-fit: contain;">
-                        </div>
-                    @endif
-                    
-                    <div class="d-flex flex-column gap-2">
-                        @if($product->brochure_url)
-                            <a href="{{ $product->brochure_url }}" target="_blank" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
-                                <i class="ti ti-file-text"></i> Brochure &gt;
-                            </a>
-                        @endif
-                        @if($product->techsheet_url)
-                            <a href="{{ $product->techsheet_url }}" target="_blank" class="btn btn-dark w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
-                                <i class="ti ti-download"></i> Download Techsheet <i class="ti ti-arrow-bar-to-down"></i>
-                            </a>
-                        @endif
-                    </div>
-                </div>
-            @endif
+        <!-- Info column -->
+        <div class="col-lg-7 pd-info">
+          <div class="eyebrow text-danger mb-2 fw-bold">{{ $product->brand->name ?? '' }} · {{ $product->subcategory->name ?? '' }} · {{ $product->brand->country_of_origin ?? 'Imported' }}</div>
+          <h1 class="fw-bold mb-2">{{ $product->model_name ?: $product->sku_code }}</h1>
+          <div class="pd-sku text-muted mb-4">SKU Family: {{ $product->product_family ?: $product->sku_code }}</div>
+          
+          <p class="pd-desc text-secondary mb-4">
+            {{ $product->notes ?: 'Premium ' . ($product->model_name ?: $product->sku_code) . ' supplied by Alabama Building Materials Trading across the UAE.' }}
+          </p>
 
-            <!-- Inquiry Form Card -->
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
-                <h5 class="fw-bold text-dark mb-3">Product Inquiry</h5>
-                <p class="small text-muted mb-4">Interested in this heating system? Send us an inquiry to get current pricing and availability details.</p>
-                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you! Your inquiry was successfully simulated.');">
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Your Name</label>
-                        <input type="text" class="form-control rounded-3" required placeholder="John Doe">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Email Address</label>
-                        <input type="email" class="form-control rounded-3" required placeholder="john@example.com">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Message</label>
-                        <textarea class="form-control rounded-3" rows="3" required placeholder="Hi, I would like to get a quote for {{ $product->model_name ?: $product->sku_code }}."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-semibold">Send Inquiry</button>
-                </form>
-            </div>
-
-            <!-- Related Products -->
-            @if($relatedProducts->isNotEmpty())
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-                    <h5 class="fw-bold text-dark mb-3">Related Products</h5>
-                    <div class="d-flex flex-column gap-3">
-                        @foreach($relatedProducts as $rel)
-                            <a href="{{ route('frontend.product.show', $rel->id) }}" class="text-decoration-none d-flex align-items-center gap-3 p-2 rounded-3 hover-bg-light border border-light-subtle">
-                                <div class="bg-primary text-white rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                                    <i class="ti ti-flame fs-4"></i>
-                                </div>
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <h6 class="fw-bold text-dark text-truncate m-0" style="font-size: 0.9rem;">
-                                        {{ $rel->model_name ?: $rel->sku_code }}
-                                    </h6>
-                                    <span class="text-muted small d-block">Brand: {{ $rel->brand->name ?? 'Unknown' }}</span>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
+          <h5 class="fw-bold mb-3">Key Features</h5>
+          <ul class="pd-feats list-unstyled mb-4">
+            @if($product->tank_protection_lining)
+              <li class="py-2 border-bottom position-relative ps-4"><i class="fa-solid fa-check text-danger position-absolute start-0 top-50 translate-y-middle" style="transform: translateY(-50%);"></i> Tank protection: {{ $product->tank_protection_lining }}</li>
             @endif
+            @if($product->heating_element)
+              <li class="py-2 border-bottom position-relative ps-4"><i class="fa-solid fa-check text-danger position-absolute start-0 top-50 translate-y-middle" style="transform: translateY(-50%);"></i> Heating element: {{ $product->heating_element }}</li>
+            @endif
+            @if($product->warranty_yrs)
+              <li class="py-2 border-bottom position-relative ps-4"><i class="fa-solid fa-check text-danger position-absolute start-0 top-50 translate-y-middle" style="transform: translateY(-50%);"></i> {{ $product->warranty_yrs }} years tank / element warranty</li>
+            @endif
+            @if($product->heating_power_kw)
+              <li class="py-2 border-bottom position-relative ps-4"><i class="fa-solid fa-check text-danger position-absolute start-0 top-50 translate-y-middle" style="transform: translateY(-50%);"></i> Heating power: {{ $product->heating_power_kw }} kW</li>
+            @endif
+          </ul>
+
+          <div class="pd-ctas d-flex gap-3 mb-5">
+            <a class="btn btn-dark solid px-4 py-3" id="pd-quote" href="https://wa.me/971559138047?text=Hello%20Alabama%2C%20I%20am%20interested%20in%20{{ urlencode($product->model_name ?: $product->sku_code) }}%20(SKU:%20{{ $product->sku_code }})." target="_blank" rel="noopener">Get a quote</a>
+            @if($product->brochure_url)
+              <a class="btn btn-outline-secondary px-4 py-3" href="{{ $product->brochure_url }}" target="_blank" rel="noopener">Brochure ↓</a>
+            @endif
+          </div>
+
+          <div class="pd-section-label mb-3">
+            <div class="eyebrow text-danger fw-bold">Specifications</div>
+          </div>
+          <table class="table spec-table table-bordered">
+            <tbody>
+              @if($product->heating_power_kw)
+                <tr><td class="fw-semibold text-secondary">Heating Power</td><td>{{ $product->heating_power_kw }} kW</td></tr>
+              @endif
+              @if($product->voltage)
+                <tr><td class="fw-semibold text-secondary">Voltage</td><td>{{ $product->voltage }}</td></tr>
+              @endif
+              @if($product->max_working_pressure_bar)
+                <tr><td class="fw-semibold text-secondary">Max Working Pressure</td><td>{{ $product->max_working_pressure_bar }} bar</td></tr>
+              @endif
+              @if($product->tank_protection_lining)
+                <tr><td class="fw-semibold text-secondary">Tank Protection</td><td>{{ $product->tank_protection_lining }}</td></tr>
+              @endif
+              @if($product->heating_element)
+                <tr><td class="fw-semibold text-secondary">Heating Element</td><td>{{ $product->heating_element }}</td></tr>
+              @endif
+              @if($product->warranty_yrs)
+                <tr><td class="fw-semibold text-secondary">Warranty</td><td>{{ $product->warranty_yrs }} Years</td></tr>
+              @endif
+            </tbody>
+          </table>
         </div>
+      </div>
+
+      <!-- Variants block -->
+      @if($variants->count() > 1)
+        <div class="pd-section-label mt-5 mb-4">
+          <div class="eyebrow text-danger fw-bold">Models &amp; sizes</div>
+          <h2 class="h-section fw-bold mt-2">Choose your <span class="accent-i text-danger">model</span></h2>
+        </div>
+        
+        <div class="variants-wrap vp card border-0 p-4 bg-light mb-5">
+          <div class="mb-4">
+            <label for="pd-vselect" class="form-label fw-semibold">Select a model</label>
+            <div class="vp-row d-flex gap-3 align-items-center">
+              <select id="pd-vselect" class="form-select" onchange="selectVariant(this.value)">
+                @foreach($variants as $index => $variant)
+                  <option value="{{ $index }}">{{ $variant->model_name ?: $variant->sku_code }} — {{ $variant->capacity_l ? $variant->capacity_l . ' L' : ($variant->orientation_mounting ?: 'Standard') }}</option>
+                @endforeach
+              </select>
+              <a class="btn btn-danger px-4 py-2" id="pd-venquire" href="#" target="_blank" rel="noopener">Enquire</a>
+            </div>
+          </div>
+          <table class="table spec-table table-bordered bg-white" id="pd-vdetail">
+            <!-- Dynamic via JavaScript -->
+          </table>
+        </div>
+      @endif
+
+      <!-- Related Products Section -->
+      @if($relatedProducts->isNotEmpty())
+        <div class="pd-section-label mt-5 mb-4">
+          <div class="eyebrow text-danger fw-bold">Recommended</div>
+          <h2 class="h-section fw-bold mt-2">Related <span class="accent-i text-danger">Products</span></h2>
+        </div>
+        <div class="row g-4 mb-5">
+          @foreach($relatedProducts as $rel)
+            <div class="col-xl-3 col-md-6 col-lg-3 col-sm-6">
+              <a href="{{ route('frontend.product.show', $rel->slug) }}" class="product-card text-decoration-none border rounded-3 p-3 d-block bg-white hover-shadow transition">
+                <div class="product-img mb-3 text-center d-flex align-items-center justify-content-center bg-light rounded" style="height: 200px;">
+                  @if($rel->image_url)
+                    <img src="{{ $rel->image_url }}" alt="{{ $rel->model_name ?: $rel->sku_code }}" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                  @else
+                    <span class="ghost text-muted display-4">{{ strtoupper(substr($rel->model_name ?: $rel->sku_code, 0, 1)) }}</span>
+                  @endif
+                </div>
+                <div class="product-body">
+                  <small class="text-danger fw-bold uppercase" style="font-size: 0.8rem;">{{ $rel->brand->name ?? '' }}</small>
+                  <h3 class="h6 text-dark fw-bold text-truncate mt-1">{{ $rel->model_name ?: $rel->sku_code }}</h3>
+                  <span class="product-link text-danger fw-semibold d-inline-block mt-2" style="font-size: 0.9rem;">
+                    View product <i class="fa-solid fa-arrow-right-long"></i>
+                  </span>
+                </div>
+              </a>
+            </div>
+          @endforeach
+        </div>
+      @endif
+
     </div>
-</div>
+  </section>
+
+  <!-- CTA section -->
+  <section class="section tint bg-light py-5">
+    <div class="container d-flex justify-content-between align-items-center gap-3 flex-wrap">
+      <h2 class="h-section fw-bold m-0" style="max-width:560px">Need a spec sheet or project pricing? <span class="accent-i text-danger">Ask our team.</span></h2>
+      <a class="btn btn-dark px-4 py-3 solid" id="pd-quote2" href="https://wa.me/971559138047?text=Hello%20Alabama%2C%20I%20need%20assistance%20with%20{{ urlencode($product->model_name ?: $product->sku_code) }}." target="_blank" rel="noopener">WhatsApp sales</a>
+    </div>
+  </section>
+</main>
+
+<script>
+    const VARIANTS = @json($variants);
+    function selectVariant(index) {
+        const variant = VARIANTS[index];
+        if (!variant) return;
+        
+        let detailHtml = '';
+        if (variant.capacity_l) detailHtml += `<tr><td class="fw-semibold text-secondary">Capacity</td><td>${variant.capacity_l} L</td></tr>`;
+        if (variant.orientation_mounting) detailHtml += `<tr><td class="fw-semibold text-secondary">Mounting</td><td>${variant.orientation_mounting}</td></tr>`;
+        if (variant.height_length_mm || variant.diameter_width_mm) {
+            detailHtml += `<tr><td class="fw-semibold text-secondary">Dimensions (H × Ø)</td><td>${variant.height_length_mm || '—'} × ${variant.diameter_width_mm || '—'} mm</td></tr>`;
+        }
+        detailHtml += `<tr><td class="fw-semibold text-secondary">SKU Reference</td><td class="text-danger fw-bold">${variant.sku_code}</td></tr>`;
+        
+        document.getElementById('pd-vdetail').innerHTML = detailHtml;
+        
+        const message = `Hello Alabama, I am interested in ${variant.model_name || variant.sku_code} (SKU: ${variant.sku_code}). Please share pricing and details.`;
+        document.getElementById('pd-venquire').href = `https://wa.me/971559138047?text=${encodeURIComponent(message)}`;
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        if (VARIANTS.length > 0) {
+            selectVariant(0);
+        }
+    });
+</script>
+
 @endsection

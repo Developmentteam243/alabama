@@ -84,11 +84,9 @@
                             Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('frontend.cat-hotwater') }}">Hot Water Systems</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.cat-hotwater') }}">Plumbing Materials</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.cat-hotwater') }}">Sanitaryware</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.cat-hotwater') }}">Bathroomware</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.cat-hotwater') }}">Kitchen</a></li>
+                            @foreach($navCategories as $cat)
+                                <li><a class="dropdown-item" href="{{ route('frontend.category.show', $cat->slug) }}">{{ $cat->name }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
 
@@ -102,11 +100,9 @@
                             Brands
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('frontend.brand-lamborghini') }}">Lamborghini CaloreClima</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.brand-lamborghini') }}">Zenith Water Heater</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.brand-lamborghini') }}">Ariston</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.brand-lamborghini') }}">VERA</a></li>
-                            <li><a class="dropdown-item" href="{{ route('frontend.brand-lamborghini') }}">Pegler</a></li>
+                            @foreach($navBrands as $brand)
+                                <li><a class="dropdown-item" href="{{ route('frontend.brand.show', $brand->slug) }}">{{ $brand->name }}</a></li>
+                            @endforeach
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ route('frontend.all-brands') }}">All Brands</a></li>
                         </ul>
@@ -174,10 +170,10 @@
                     <h6 class="text-white mb-3 fw-bold">Quick Links</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2">
                         <li><a href="{{ route('frontend.home') }}">Home</a></li>
-                        <li><a href="{{ route('login') }}">About us</a></li>
-                        <li><a href="{{ route('login') }}">Brands</a></li>
-                        <li><a href="{{ route('login') }}">Blog</a></li>
-                        <li><a href="{{ route('login') }}">Contact us</a></li>
+                        <li><a href="{{ route('frontend.about') }}">About us</a></li>
+                        <li><a href="{{ route('frontend.all-brands') }}">Brands</a></li>
+                        <li><a href="{{ route('frontend.blog') }}">Blog</a></li>
+                        <li><a href="{{ route('frontend.contact') }}">Contact us</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-4">

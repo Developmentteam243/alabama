@@ -68,7 +68,7 @@
             <div class="col-xl-12">
                 <div class="row">
                     <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="#cat-hotwater">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'hot-water-system') }}">
                             <img
                                 src="https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp"
                                 alt="Hot water systems"
@@ -82,7 +82,7 @@
                         </a>
                     </div>
                     <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="#cat-plumbing">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'plumbing-materials') }}">
                             <img
                                 src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp"
                                 alt="Plumbing materials"
@@ -96,7 +96,7 @@
                         </a>
                     </div>
                     <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="#cat-sanitary">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'sanitaryware') }}">
                             <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="Sanitaryware" />
                             <div class="cat-body">
                                 <small>03 — Sanitary</small>
@@ -107,7 +107,7 @@
                         </a>
                     </div>
                     <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="#cat-bathroom">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'bathroomware') }}">
                             <img src="https://alabamauae.com/wp-content/uploads/2026/01/12-1.webp" alt="Bathroomware" />
                             <div class="cat-body">
                                 <small>04 — Finish</small>
@@ -118,7 +118,7 @@
                         </a>
                     </div>
                     <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="#cat-kitchen">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'kitchen') }}">
                             <img src="https://alabamauae.com/wp-content/uploads/2026/01/15-1.webp" alt="Kitchen" />
                             <div class="cat-body">
                                 <small>05 — Kitchen</small>
@@ -164,8 +164,8 @@
                 <h2 class="h-section">Lamborghini CaloreClima. Italian engineering, <span class="accent-i">7-year tanks.</span></h2>
                 <p>76 electric water heater SKUs across the TAURUS, E-Glasstech and Glass Thermal families — glasslined tanks, serviceable flanged elements, warranties up to 7 years.</p>
                 <div class="spot-ctas">
-                    <a class="btn brass" href="#brand-lamborghini">View brand</a>
-                    <a class="btn ghost-invert" href="#brands">All brands</a>
+                    <a class="btn brass" href="{{ route('frontend.brand.show', 'lamborghini-caloreclima') }}">View brand</a>
+                    <a class="btn ghost-invert" href="{{ route('frontend.all-brands') }}">All brands</a>
                 </div>
             </div>
         </div>
@@ -208,94 +208,32 @@
             </div>
             <div class="col-xl-12">
                 <div class="row g-4">
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a href="#product-eglasstech" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp"
-                                    alt="E-Glasstech Electric Water Heater"
-                                    class="img-fluid">
-                            </div>
-                            <div class="product-body">
-                                <small>LAMBORGHINI CALORECLIMA</small>
-                                <h3>E-Glasstech Electric Water Heater</h3>
-                                <span class="product-link">
-                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="ghost">T</span>
-                            </div>
-                            <div class="product-body">
-                                <small>LAMBORGHINI CALORECLIMA</small>
-                                <h3>TAURUS BF Electric Water Heater</h3>
-                                <span class="product-link">
-                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="ghost">Z</span>
-                            </div>
-                            <div class="product-body">
-                                <small>Zenith Water Heater</small>
-                                <h3>Zenith ZT Thermosyphonic Solar Water Heater</h3>
-                                <span class="product-link">
-                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a href="#product-eglasstech" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp"
-                                    alt="E-Glasstech Electric Water Heater"
-                                    class="img-fluid">
-                            </div>
-                            <div class="product-body">
-                                <small>LAMBORGHINI CALORECLIMA</small>
-                                <h3>E-Glasstech Electric Water Heater</h3>
-                                <span class="product-link">
-                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="ghost">T</span>
-                            </div>
-                            <div class="product-body">
-                                <small>LAMBORGHINI CALORECLIMA</small>
-                                <h3>TAURUS BF Electric Water Heater</h3>
-                                <span class="product-link">
-                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="ghost">Z</span>
-                            </div>
-                            <div class="product-body">
-                                <small>Zenith Water Heater</small>
-                                <h3>Zenith ZT Thermosyphonic Solar Water Heater</h3>
-                                <span class="product-link">
-                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
+                    @forelse($featuredProducts as $product)
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <a href="{{ route('frontend.product.show', $product->slug) }}" class="product-card text-decoration-none">
+                                <div class="product-img">
+                                    @if($product->image_url)
+                                        <img src="{{ $product->image_url }}"
+                                            alt="{{ $product->model_name ?: $product->sku_code }}"
+                                            class="img-fluid">
+                                    @else
+                                        <span class="ghost">{{ strtoupper(substr($product->model_name ?: $product->sku_code, 0, 1)) }}</span>
+                                    @endif
+                                </div>
+                                <div class="product-body">
+                                    <small>{{ $product->brand->name ?? '' }}</small>
+                                    <h3>{{ $product->model_name ?: $product->sku_code }}</h3>
+                                    <span class="product-link">
+                                        View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-xl-12 text-center py-4">
+                            <p class="text-muted">No products found in the collection.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>

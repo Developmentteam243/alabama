@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('layouts.master', function ($view) {
+            $view->with('navCategories', \App\Models\Category::orderBy('name')->get());
+            $view->with('navBrands', \App\Models\Brand::orderBy('name')->get());
+        });
     }
 }

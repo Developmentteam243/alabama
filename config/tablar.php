@@ -164,6 +164,11 @@ return [
             'icon' => 'ti ti-category',
             'route' => 'categories.index'
         ],
+        [
+            'text' => 'Blogs',
+            'icon' => 'ti ti-news',
+            'route' => 'blogs.index'
+        ],
     ],
 
     /*

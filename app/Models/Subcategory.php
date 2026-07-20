@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subcategory extends Model
 {
-    protected $fillable = ['category_id', 'name', 'code'];
+    protected $fillable = ['category_id', 'name', 'code', 'slug'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($model) {
+            $model->slug = \Illuminate\Support\Str::slug($model->name);
+        });
+    }
 
     public function category()
     {
