@@ -1,5 +1,3 @@
-<a href="#">
-    <img src="{{asset(config('tablar.auth_logo.img.path','assets/logo.svg'))}}" width="110" height="32"
-         alt="{{asset(config('tablar.title','Tablar'))}}"
-         class="navbar-brand-image">
+<a href="{{ route('home') }}">
+    <img src="{{ asset('assets/images/logo.webp') }}" alt="Alabama" style="max-height: 38px; width: auto; object-fit: contain;">
 </a>

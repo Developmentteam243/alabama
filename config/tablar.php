@@ -10,11 +10,11 @@ return [
     |
     */
 
-    'title' => 'Tablar',
+    'title' => 'Alabama Admin Panel',
     'title_prefix' => '',
     'title_postfix' => '',
-    'bottom_title' => 'Tablar',
-    'current_version' => 'v11.11',
+    'bottom_title' => 'Alabama Building Materials Trading L.L.C.',
+    'current_version' => 'v1.0',
 
 
     /*

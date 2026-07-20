@@ -135,6 +135,35 @@
                 </div>
             </div>
 
+            <!-- Stat Card: Blogs -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card card-sm">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <span class="bg-red text-white avatar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" />
+                                        <path d="M8 8l4 0" />
+                                        <path d="M8 12l4 0" />
+                                        <path d="M8 16l4 0" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="col">
+                                <div class="font-weight-medium">
+                                    {{ $blogsCount }} Blogs
+                                </div>
+                                <div class="text-muted">
+                                    Total Posts
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Welcome & Quick Actions -->
             <div class="col-md-12 mt-4">
                 <div class="card">
@@ -152,6 +181,9 @@
                             </a>
                             <a href="{{ route('brands.index') }}" class="btn btn-outline-warning ms-2">
                                 Manage Brands
+                            </a>
+                            <a href="{{ route('blogs.index') }}" class="btn btn-outline-danger ms-2">
+                                Manage Blogs
                             </a>
                         </div>
                     </div>

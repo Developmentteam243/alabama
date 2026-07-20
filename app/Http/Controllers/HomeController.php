@@ -32,7 +32,8 @@ class HomeController extends Controller
         $subcategoriesCount = Subcategory::count();
         $brandsCount = Brand::count();
         $productsCount = Product::count();
+        $blogsCount = \App\Models\Blog::count();
 
-        return view('home', compact('categoriesCount', 'subcategoriesCount', 'brandsCount', 'productsCount'));
+        return view('home', compact('categoriesCount', 'subcategoriesCount', 'brandsCount', 'productsCount', 'blogsCount'));
     }
 }
