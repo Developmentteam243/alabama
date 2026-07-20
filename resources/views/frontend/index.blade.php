@@ -3,231 +3,415 @@
 @section('title', 'Catalog - Alabama Portal')
 
 @section('content')
-{{-- top bar --}}
-<div class="mock-note">Design concept — Alabama Building Materials Trading L.L.C · prepared for review · not the live site</div>
-<div class="topbar">
-    <div class="wrap">
-        <div class="tb-left">
-            <a href="mailto:sales@alabamauae.com"><i class="fa-solid fa-envelope"></i> sales@alabamauae.com</a>
-            <a href="tel:+97143526973"><span class="hide-m"><i class="fa-solid fa-phone"></i> +971 4 352 6973</span></a>
-        </div>
-        <div class="tb-right">
-            <a href="https://alabamauae.com/wp-content/uploads/2026/01/Alabama-Brochure.pdf" target="_blank" rel="noopener">Download brochure ↓</a>
-        </div>
-    </div>
-</div>
+
 <!-- Hero Header -->
-<div class="hero-section text-center text-md-start">
+<div class="hero cdhero-section">
     <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-7">
-                <span class="badge bg-primary-light text-primary px-3 py-2 rounded-pill fw-semibold mb-3">Premium Heating Systems</span>
-                <h1 class="display-4 fw-extrabold text-white mb-3" style="line-height: 1.15;">
-                    Find the Perfect Heating Solution
-                </h1>
-                <p class="lead text-white-50 mb-4">
-                    Search and filter through our comprehensive catalog of geysers, water heaters, and thermal storage solutions tailored to your technical needs.
-                </p>
-                
-                <!-- Quick Search Bar -->
-                <form action="{{ route('frontend.home') }}" method="GET" class="p-2 bg-white rounded-3 shadow-lg d-flex flex-column flex-sm-row gap-2">
-                    <div class="flex-grow-1 position-relative d-flex align-items-center px-3">
-                        <i class="ti ti-search text-muted fs-4 me-2"></i>
-                        <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none" placeholder="Search by Model Name, SKU, SKU Code or Family..." value="{{ request('search') }}">
-                    </div>
-                    <!-- Keep existing filters in quick search -->
-                    @if(request('brand_id')) <input type="hidden" name="brand_id" value="{{ request('brand_id') }}"> @endif
-                    @if(request('subcategory_id')) <input type="hidden" name="subcategory_id" value="{{ request('subcategory_id') }}"> @endif
-                    @if(request('capacity')) <input type="hidden" name="capacity" value="{{ request('capacity') }}"> @endif
-                    @if(request('mounting')) <input type="hidden" name="mounting" value="{{ request('mounting') }}"> @endif
-                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-2 fw-semibold">Search</button>
-                </form>
-            </div>
-            <div class="col-lg-5 text-center d-none d-lg-block">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-flame" width="200" height="200" viewBox="0 0 24 24" stroke-width="0.5" stroke="rgba(255,255,255,0.15)" fill="rgba(255,255,255,0.05)" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.378 1.54 -3 2.27 -4 2z" />
-                </svg>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Main Catalog Area -->
-<div class="container my-5">
-    <div class="row g-4">
-        <!-- Sidebar Filters -->
-        <div class="col-lg-3">
-            <div class="filter-sidebar sticky-top" style="top: 100px;">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h5 class="fw-bold m-0 d-flex align-items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments-horizontal text-primary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                           <path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                           <path d="M4 6l8 0" />
-                           <path d="M16 6l4 0" />
-                           <path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                           <path d="M4 12l2 0" />
-                           <path d="M10 12l10 0" />
-                           <path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                           <path d="M4 18l11 0" />
-                           <path d="M19 18l1 0" />
-                        </svg>
-                        Filters
-                    </h5>
-                    @if(request()->anyFilled(['search', 'brand_id', 'subcategory_id', 'capacity', 'mounting']))
-                        <a href="{{ route('frontend.home') }}" class="btn btn-sm btn-link text-decoration-none p-0 text-danger fw-semibold">Clear All</a>
-                    @endif
-                </div>
-
-                <form action="{{ route('frontend.home') }}" method="GET" class="d-flex flex-column gap-3">
-                    @if(request('search'))
-                        <input type="hidden" name="search" value="{{ request('search') }}">
-                    @endif
-
-                    <!-- Brand Filter -->
-                    <div>
-                        <label class="form-label small fw-bold text-uppercase text-muted">Brand</label>
-                        <select name="brand_id" class="form-select rounded-3" onchange="this.form.submit()">
-                            <option value="">All Brands</option>
-                            @foreach($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ request('brand_id') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Category / Subcategory Filter -->
-                    <div>
-                        <label class="form-label small fw-bold text-uppercase text-muted">Category Type</label>
-                        <select name="subcategory_id" class="form-select rounded-3" onchange="this.form.submit()">
-                            <option value="">All Categories</option>
-                            @foreach($subcategories as $sub)
-                                <option value="{{ $sub->id }}" {{ request('subcategory_id') == $sub->id ? 'selected' : '' }}>
-                                    {{ $sub->category->name }} &raquo; {{ $sub->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Capacity Filter -->
-                    <div>
-                        <label class="form-label small fw-bold text-uppercase text-muted">Capacity (Liters)</label>
-                        <select name="capacity" class="form-select rounded-3" onchange="this.form.submit()">
-                            <option value="">All Capacities</option>
-                            @foreach($capacities as $cap)
-                                <option value="{{ $cap }}" {{ request('capacity') == $cap ? 'selected' : '' }}>{{ $cap }} L</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Mounting Filter -->
-                    <div>
-                        <label class="form-label small fw-bold text-uppercase text-muted">Mounting / Orientation</label>
-                        <select name="mounting" class="form-select rounded-3" onchange="this.form.submit()">
-                            <option value="">All Mountings</option>
-                            @foreach($mountings as $mount)
-                                <option value="{{ $mount }}" {{ request('mounting') == $mount ? 'selected' : '' }}>{{ $mount }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Products Listing -->
-        <div class="col-lg-9">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <p class="text-muted m-0">Showing <strong>{{ $products->firstItem() ?? 0 }}</strong> to <strong>{{ $products->lastItem() ?? 0 }}</strong> of <strong>{{ $products->total() }}</strong> products</p>
-            </div>
-
-            @if($products->isEmpty())
-                <div class="card border-0 shadow-sm rounded-4 p-5 text-center">
-                    <div class="py-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database-search text-muted mb-3" width="64" height="64" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                           <path d="M4 6c0 1.657 3.582 3 8 3s8 -1.343 8 -3s-3.582 -3 -8 -3s-8 1.343 -8 3" />
-                           <path d="M4 6v6c0 1.657 3.582 3 8 3m8 -3.5v-5.5" />
-                           <path d="M4 12v6c0 1.657 3.582 3 8 3" />
-                           <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                           <path d="M20.2 20.2l1.8 1.8" />
-                        </svg>
-                        <h4 class="fw-bold text-dark">No Products Found</h4>
-                        <p class="text-muted">Try clearing some filters or searching for different keywords.</p>
-                        <a href="{{ route('frontend.home') }}" class="btn btn-primary rounded-pill px-4 mt-2">Reset All Filters</a>
-                    </div>
-                </div>
-            @else
-                <div class="row g-4">
-                    @foreach($products as $product)
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card h-100 card-product shadow-sm d-flex flex-column">
-                                <div class="card-body p-4 d-flex flex-column flex-grow-1">
-                                    <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <span class="badge-brand">{{ $product->brand->name ?? 'Unknown Brand' }}</span>
-                                        <span class="text-muted small fw-semibold">SKU: {{ $product->sku_code }}</span>
-                                    </div>
-                                    <h5 class="card-title fw-bold text-dark mb-2">
-                                        {{ $product->model_name ?: 'Model: ' . $product->sku_code }}
-                                    </h5>
-                                    <p class="text-muted small mb-3">
-                                        {{ $product->subcategory->category->name ?? '' }} &raquo; {{ $product->subcategory->name ?? '' }}
-                                    </p>
-                                    
-                                    <hr class="my-3 border-light-subtle">
-                                    
-                                    <!-- Key Specs Snippet -->
-                                    <div class="row g-2 mb-4">
-                                        @if($product->capacity_l)
-                                            <div class="col-6">
-                                                <div class="bg-light p-2 rounded-3 text-center">
-                                                    <span class="d-block text-muted style-small" style="font-size: 0.7rem; text-transform: uppercase;">Capacity</span>
-                                                    <span class="fw-bold text-dark" style="font-size: 0.9rem;">{{ $product->capacity_l }} L</span>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        @if($product->orientation_mounting)
-                                            <div class="col-6">
-                                                <div class="bg-light p-2 rounded-3 text-center">
-                                                    <span class="d-block text-muted" style="font-size: 0.7rem; text-transform: uppercase;">Mounting</span>
-                                                    <span class="fw-bold text-dark text-truncate d-block" style="font-size: 0.9rem;" title="{{ $product->orientation_mounting }}">{{ $product->orientation_mounting }}</span>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        @if($product->heating_power_kw)
-                                            <div class="col-6">
-                                                <div class="bg-light p-2 rounded-3 text-center">
-                                                    <span class="d-block text-muted" style="font-size: 0.7rem; text-transform: uppercase;">Power</span>
-                                                    <span class="fw-bold text-dark" style="font-size: 0.9rem;">{{ $product->heating_power_kw }} kW</span>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        @if($product->voltage)
-                                            <div class="col-6">
-                                                <div class="bg-light p-2 rounded-3 text-center">
-                                                    <span class="d-block text-muted" style="font-size: 0.7rem; text-transform: uppercase;">Voltage</span>
-                                                    <span class="fw-bold text-dark" style="font-size: 0.9rem;">{{ $product->voltage }}</span>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    
-                                    <div class="mt-auto pt-2">
-                                        <a href="{{ route('frontend.product.show', $product->id) }}" class="btn btn-outline-primary w-100 rounded-pill fw-semibold py-2">
-                                            View Specifications
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="content">
+                    <div class="rv">
+                        <div class="eyebrow">Plumbing &amp; building materials — Dubai, UAE</div>
+                        <h1 class="h-display">Every build runs on what's <span class="accent-i">behind the wall.</span></h1>
+                        <p class="lede">
+                            Water heaters, pipes and fittings, valves, pumps and sanitaryware — sourced, stocked and delivered for
+                            residential, commercial and industrial projects across the Emirates.
+                        </p>
+                        <div class="hero-ctas">
+                            <a class="btn solid" href="#contact">Get a quote</a>
+                            <a class="btn" href="#cat-hotwater">Browse categories</a>
                         </div>
-                    @endforeach
+                    </div>
+                    <div class="hero-media rv">
+                        <div class="frame">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="Premium sanitaryware" />
+                        </div>
+                        <div class="cdtag">
+                            <strong>Dubai Investments Park 2</strong>
+                            <span>Warehouse &amp; sales — supplying trade and projects UAE-wide.</span>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Pagination -->
-                <div class="d-flex justify-content-center mt-5">
-                    {{ $products->links() }}
-                </div>
-            @endif
+            </div>
+            <div class="col-xl-12">
+                <div class="hero-ghost">ALABAMA</div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- status -->
+<section class="stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>300+</b><span>Products in the catalogue</span></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>5</b><span>Exclusive brand lines</span></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>7</b><span>Emirates delivery coverage</span></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>1:1</b><span>Direct sales support on WhatsApp</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- cdproducts -->
+<section class="cdproducts">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="sec-head split rv">
+                    <div>
+                        <div class="eyebrow">What we supply</div>
+                        <h2 class="h-section">From boiler room to bathroom. <span class="accent-i">One supplier.</span></h2>
+                    </div>
+                    <a class="link-arrow" href="#cat-hotwater">View all products <i class="fa-solid fa-angles-right"></i></a>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a class="cat-card rv" href="#cat-hotwater">
+                            <img
+                                src="https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp"
+                                alt="Hot water systems"
+                            />
+                            <div class="cat-body">
+                                <small>01 — Heating</small>
+                                <h3>Hot Water Systems</h3>
+                                <p>Electric, solar and heat-pump water heaters, boilers and calorifiers.</p>
+                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a class="cat-card rv" href="#cat-plumbing">
+                            <img
+                                src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp"
+                                alt="Plumbing materials"
+                            />
+                            <div class="cat-body">
+                                <small>02 — Flow</small>
+                                <h3>Plumbing Materials</h3>
+                                <p>Pipes, fittings, valves, pumps and pressure control for every system.</p>
+                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a class="cat-card rv" href="#cat-sanitary">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="Sanitaryware" />
+                            <div class="cat-body">
+                                <small>03 — Sanitary</small>
+                                <h3>Sanitaryware</h3>
+                                <p>WCs, wash basins and shattafs for residential and commercial washrooms.</p>
+                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a class="cat-card rv" href="#cat-bathroom">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/12-1.webp" alt="Bathroomware" />
+                            <div class="cat-body">
+                                <small>04 — Finish</small>
+                                <h3>Bathroomware</h3>
+                                <p>Shower mixers, taps and accessories that finish the bathroom right.</p>
+                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a class="cat-card rv" href="#cat-kitchen">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/15-1.webp" alt="Kitchen" />
+                            <div class="cat-body">
+                                <small>05 — Kitchen</small>
+                                <h3>Kitchen</h3>
+                                <p>Sinks and sink taps built for daily use in UAE homes and facilities.</p>
+                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- qulity -->
+<section class="cdwhoweare">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-md-6 col-lg-6">
+                <div class="eyebrow">Who we are</div>
+                <h2 class="h-section mt-3 pe-md-4">Built on quality. <span class="accent-i">Trusted for excellence.</span></h2>
+                <p class="lede">Alabama is a leading supplier of premium plumbing and building materials in the UAE, providing reliable, high-performance solutions for residential, commercial, and industrial construction projects. Our range covers water heaters, pipes and fittings, valves, pumps, sanitary ware, and plumbing accessories sourced from trusted manufacturers.</p>
+                <p class="lede">With a strong commitment to quality, competitive pricing, and exceptional customer service, we serve contractors, developers, engineers, and homeowners across the UAE.</p>
+                <a class="btn  mt-2" href="#about">More about Alabama</a>
+            </div>
+            <div class="col-xl-6 col-md-6 col-lg-6">
+                <div class="media">
+                    <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="Alabama product range" class="img-fluid cdqulity" />
+                </div>
+            </div>            
+        </div>        
+    </div>
+</section>
+
+<!-- brand -->
+<section class="cdbrand">
+    <div class="container">            
+        <div class="spot">
+            <div class="spot-media"><img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp" alt="Lamborghini E-Glasstech water heater" class="img-fluid cd-brand"/></div>
+            <div class="spot-copy on-dark">
+                <div class="eyebrow">Brand spotlight</div>
+                <h2 class="h-section">Lamborghini CaloreClima. Italian engineering, <span class="accent-i">7-year tanks.</span></h2>
+                <p>76 electric water heater SKUs across the TAURUS, E-Glasstech and Glass Thermal families — glasslined tanks, serviceable flanged elements, warranties up to 7 years.</p>
+                <div class="spot-ctas">
+                    <a class="btn brass" href="#brand-lamborghini">View brand</a>
+                    <a class="btn ghost-invert" href="#brands">All brands</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- brand-strip -->
+<section class="brand-strip">
+    <div class="marquee-wrap">
+        <div class="marquee">
+            <!-- First Set -->
+            <img src="https://alabamauae.com/wp-content/uploads/2026/01/20.png" alt="Lamborghini CaloreClima" class="img-fluid" />
+            <span class="wm">Zenith Water Heater</span>
+            <span class="wm">Ariston</span>
+            <img src="https://alabamauae.com/wp-content/uploads/2026/01/13.png" alt="VERA" class="img-fluid" />
+            <span class="wm">Pegler</span>
+
+            <!-- Duplicate Set -->
+            <img src="https://alabamauae.com/wp-content/uploads/2026/01/20.png" alt="Lamborghini CaloreClima" class="img-fluid" />
+            <span class="wm">Zenith Water Heater</span>
+            <span class="wm">Ariston</span>
+            <img src="https://alabamauae.com/wp-content/uploads/2026/01/13.png" alt="VERA" class="img-fluid" />
+            <span class="wm">Pegler</span>
+        </div>
+    </div>
+</section>
+
+<!-- collections -->
+<section class="cdcollections">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="sec-head split rv">
+                    <div>
+                        <div class="eyebrow">Featured collections</div>
+                        <h2 class="h-section">Specified by engineers. <span class="accent-i">Chosen by homes.</span></h2>
+                    </div>
+                    <a class="link-arrow" href="https://wa.me/971559138047?text=Hello%20Alabama%2C%20please%20share%20your%20latest%20price%20list." target="_blank" rel="noopener">Request price list <i class="fa-solid fa-angles-right"></i></a>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="row g-4">
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a href="#product-eglasstech" class="product-card text-decoration-none">
+                            <div class="product-img">
+                                <img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp"
+                                    alt="E-Glasstech Electric Water Heater"
+                                    class="img-fluid">
+                            </div>
+                            <div class="product-body">
+                                <small>LAMBORGHINI CALORECLIMA</small>
+                                <h3>E-Glasstech Electric Water Heater</h3>
+                                <span class="product-link">
+                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a href="#" class="product-card text-decoration-none">
+                            <div class="product-img">
+                                <span class="ghost">T</span>
+                            </div>
+                            <div class="product-body">
+                                <small>LAMBORGHINI CALORECLIMA</small>
+                                <h3>TAURUS BF Electric Water Heater</h3>
+                                <span class="product-link">
+                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a href="#" class="product-card text-decoration-none">
+                            <div class="product-img">
+                                <span class="ghost">Z</span>
+                            </div>
+                            <div class="product-body">
+                                <small>Zenith Water Heater</small>
+                                <h3>Zenith ZT Thermosyphonic Solar Water Heater</h3>
+                                <span class="product-link">
+                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a href="#product-eglasstech" class="product-card text-decoration-none">
+                            <div class="product-img">
+                                <img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp"
+                                    alt="E-Glasstech Electric Water Heater"
+                                    class="img-fluid">
+                            </div>
+                            <div class="product-body">
+                                <small>LAMBORGHINI CALORECLIMA</small>
+                                <h3>E-Glasstech Electric Water Heater</h3>
+                                <span class="product-link">
+                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a href="#" class="product-card text-decoration-none">
+                            <div class="product-img">
+                                <span class="ghost">T</span>
+                            </div>
+                            <div class="product-body">
+                                <small>LAMBORGHINI CALORECLIMA</small>
+                                <h3>TAURUS BF Electric Water Heater</h3>
+                                <span class="product-link">
+                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <a href="#" class="product-card text-decoration-none">
+                            <div class="product-img">
+                                <span class="ghost">Z</span>
+                            </div>
+                            <div class="product-body">
+                                <small>Zenith Water Heater</small>
+                                <h3>Zenith ZT Thermosyphonic Solar Water Heater</h3>
+                                <span class="product-link">
+                                    View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certified -->
+<section class="cdCertified">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="sec-head centered">
+                    <div class="eyebrow centered">Assurance of quality</div>
+                    <h2 class="h-section">Certified. Tested. <span class="accent-i">Trusted on site.</span></h2>
+                </div>
+                <div class="assure">
+                    <div class="cell">                        
+                        <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" class="img-fluid" />
+                    </div>
+                    <div class="cell">                        
+                        <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" class="img-fluid" />
+                    </div>
+                    <div class="cell">                        
+                        <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" class="img-fluid" />
+                    </div>
+                    <div class="cell">                        
+                        <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" class="img-fluid" />
+                    </div>
+                    <div class="cell">                        
+                        <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- cta -->
+<section class="cdCta section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="cta-band on-dark">
+                    <div>
+                        <div class="eyebrow">Talk to sales</div>
+                        <h2 class="h-section">Looking for quality plumbing solutions? <span class="accent-i">Let's talk.</span></h2>
+                    </div>
+                    <div class="actions">
+                        <a
+                            class="btn brass"
+                            href="https://wa.me/971559138047?text=Hello%20Alabama%2C%20I%20would%20like%20a%20free%20quote."
+                            target="_blank"
+                            rel="noopener"
+                            >Get Free Quote Now</a
+                        >
+                        <a class="btn ghost-invert" href="tel:+97143526973">+971 4 352 6973</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- blog -->
+<section class="cdBlog section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="sec-head split">
+                    <div>
+                        <div class="eyebrow">Insights</div>
+                        <h2 class="h-section">From our <span class="accent-i">blog</span></h2>
+                    </div>
+                    <a class="link-arrow" href="#blog">All articles <i class="fa-solid fa-angles-right"></i></a>
+                </div>
+                <div class="blog-grid">
+                    <a class="post rv" href="#blog">
+                        <div class="pi">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp" alt="" />
+                        </div>
+                        <div class="pc">
+                            <div class="meta"><span class="tagpill">Hot water</span><span class="date">June 2026</span></div>
+                            <h3>Electric vs. solar water heaters: what UAE villas actually need</h3>
+                            <p>A practical comparison of running costs, capacity and lifespan for the Gulf climate.</p>
+                            <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
+                        </div>
+                    </a>
+                    <a class="post rv" href="#blog">
+                        <div class="pi">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="" />
+                        </div>
+                        <div class="pc">
+                            <div class="meta"><span class="tagpill">Plumbing</span><span class="date">May 2026</span></div>
+                            <h3>How to choose the right pump for multi-storey buildings</h3>
+                            <p>Multistage, self-priming or booster — matching pump type to head and flow requirements.</p>
+                            <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
+                        </div>
+                    </a>
+                    <a class="post rv" href="#blog">
+                        <div class="pi">
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="" />
+                        </div>
+                        <div class="pc">
+                            <div class="meta">
+                                <span class="tagpill">Sanitaryware</span><span class="date">April 2026</span>
+                            </div>
+                            <h3>Brass vs. zinc fittings: why the material behind the finish matters</h3>
+                            <p>What separates a mixer that lasts fifteen years from one that fails in two.</p>
+                            <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 @endsection

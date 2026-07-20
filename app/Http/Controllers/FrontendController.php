@@ -80,4 +80,23 @@ class FrontendController extends Controller
 
         return view('frontend.show', compact('product', 'relatedProducts'));
     }
+
+    public function about()  {
+        return view('frontend.about');
+    }
+    public function blog()  {
+        return view('frontend.blog');
+    }
+    public function contact()  {
+        return view('frontend.contact');
+    }
+    public function cat_hotwater()  {
+        return view('frontend.cat-hotwater');
+    }
+    public function brand_lamborghini()  {
+        return view('frontend.brand-lamborghini');
+    }
+    public function all_brands()  {
+        return view('frontend.all-brands');
+    }
 }
