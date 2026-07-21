@@ -36,7 +36,7 @@
             </div>
             <div class="col-xl-12">
                 <div class="row g-4">
-                    <div class="col-xl-6 col-md-6 col-lg-6">
+                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-6" data-aos="fade-up">
                         <div class="category-card">
                             <div class="category-label">Category</div>
                             <h2 class="category-title">Hot Water System</h2>
@@ -68,7 +68,7 @@
             </div>
             <div class="col-xl-12">
                 <div class="row g-4">
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#product-eglasstech" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp"
@@ -84,7 +84,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <span class="ghost">T</span>
@@ -98,7 +98,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <span class="ghost">Z</span>

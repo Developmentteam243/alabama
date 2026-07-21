@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-6 col-md-6 col-lg-6 pe-md-5">
-                <div class="media" data-aos="fade-right">
+                <div class="media mt-0" data-aos="fade-right">
                     <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="Alabama product range" class="img-fluid cdqulity" />
                 </div>
             </div>            

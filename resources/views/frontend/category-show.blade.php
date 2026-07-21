@@ -34,7 +34,7 @@
             <div class="col-xl-12">
                 <div class="row g-4">
                     @forelse($subcategories as $idx => $sub)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                             <a href="{{ route('frontend.home', ['subcategory_id' => $sub->id]) }}" class="product-card text-decoration-none">
                                 <div class="product-img">
                                     <span class="ghost">{{ strtoupper(substr($sub->name, 0, 1)) }}</span>

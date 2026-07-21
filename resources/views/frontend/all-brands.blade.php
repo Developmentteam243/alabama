@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="row g-4">
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#product-eglasstech" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <img src="https://alabamauae.com/wp-content/uploads/2026/01/20.png"
@@ -41,7 +41,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <span class="cdText">Zenith Water Heater</span>
@@ -55,7 +55,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <span class="cdText">Ariston</span>
@@ -69,7 +69,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#product-eglasstech" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <img src="https://alabamauae.com/wp-content/uploads/2026/01/13.png"
@@ -85,7 +85,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                         <a href="#" class="product-card text-decoration-none">
                             <div class="product-img">
                                 <span class="cdText">Pegler</span>

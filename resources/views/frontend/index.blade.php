@@ -211,7 +211,7 @@
             <div class="col-xl-12">
                 <div class="row g-4">
                     @forelse($featuredProducts as $product)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                             <a href="{{ route('frontend.product.show', $product->slug) }}" class="product-card text-decoration-none" data-aos="fade-up">
                                 <div class="product-img">
                                     @if($product->image_url)
@@ -359,48 +359,61 @@
 <script src="{{ url('assets/js/ScrollTrigger.min.js') }}"></script>
 <script>
     gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray(".post.rv").forEach((card) => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        });
 
-gsap.utils.toArray(".post.rv").forEach((card) => {
+        tl.from(card.querySelector(".pi img"), {
+            scale: 1.2,
+            opacity: 0,
+            duration: 1,
+            ease: "power4.out",
+        })
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: card,
-      start: "top 80%",
-      toggleActions: "play none none reverse"
-    }
-  });
+            .from(
+                card.querySelector(".meta"),
+                {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.4,
+                },
+                "-=0.6"
+            )
 
-  tl.from(card.querySelector(".pi img"), {
-    scale: 1.2,
-    opacity: 0,
-    duration: 1,
-    ease: "power4.out"
-  })
+            .from(
+                card.querySelector("h3"),
+                {
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.5,
+                },
+                "-=0.25"
+            )
 
-  .from(card.querySelector(".meta"), {
-    y: 25,
-    opacity: 0,
-    duration: 0.4
-  }, "-=0.6")
+            .from(
+                card.querySelector("p"),
+                {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.5,
+                },
+                "-=0.25"
+            )
 
-  .from(card.querySelector("h3"), {
-    y: 30,
-    opacity: 0,
-    duration: 0.5
-  }, "-=0.25")
-
-  .from(card.querySelector("p"), {
-    y: 25,
-    opacity: 0,
-    duration: 0.5
-  }, "-=0.25")
-
-  .from(card.querySelector(".link-arrow"), {
-    x: -20,
-    opacity: 0,
-    duration: 0.4
-  }, "-=0.2");
-
-});
+            .from(
+                card.querySelector(".link-arrow"),
+                {
+                    x: -20,
+                    opacity: 0,
+                    duration: 0.4,
+                },
+                "-=0.2"
+            );
+    });
 </script>
 @endsection

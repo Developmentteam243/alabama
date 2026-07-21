@@ -122,6 +122,7 @@ body {
     font-style: normal;
     font-optical-sizing: auto;
     position: relative;
+    height: auto;
 }
 html {margin: 0 !important;}
 footer, .section {overflow: hidden;}
@@ -536,7 +537,7 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cta-section {background-color: var(--stone);padding-block: 4.375rem;}
 
 /* ====== cdBrandHeader ======= */
-.cdBrandHeader .cdBrandImg .cdBrandImg { height: 120px;width: auto;object-fit: contain;margin: 20px 0 0;}
+.cdBrandHeader .cdBrandImg .cdBrandImg { height: 90px;width: auto;object-fit: contain;margin: 20px 0 0;}
 .cdBrandRange .category-card {background:#fff;border:1px solid #ddd;border-radius:8px;padding: 2rem;transition: all 0.5s ease;}
 .cdBrandRange .category-card:hover {transform: translateY(-6px);box-shadow: 0 15px 35px rgba(0,0,0,.08);}
 .cdBrandRange .category-label{ font-size: 11px;font-weight: 600;letter-spacing: var(--track);text-transform: uppercase;color: var(--brass);}

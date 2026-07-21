@@ -24,9 +24,9 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="blog-grid" data-aos="fade-up" data-aos-duration="2000">
+                <div class="blog-grid">
                     @forelse($blogs as $post)
-                        <a class="post" href="{{ route('frontend.blog.show', $post->slug) }}">
+                        <a class="post rv" href="{{ route('frontend.blog.show', $post->slug) }}">
                             <div class="pi">
                                 <img src="{{ $post->image_url ?: 'https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp' }}" alt="{{ $post->title }}" />
                             </div>
@@ -59,5 +59,66 @@
         </div>
     </div>
 </section>
+{{-- JS --}}
+<script src="{{ url('assets/js/gsap.min.js') }}"></script>
+<script src="{{ url('assets/js/ScrollTrigger.min.js') }}"></script>
+<script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray(".post.rv").forEach((card) => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
+        });
 
+        tl.from(card.querySelector(".pi img"), {
+            scale: 1.2,
+            opacity: 0,
+            duration: 1,
+            ease: "power4.out",
+        })
+
+            .from(
+                card.querySelector(".meta"),
+                {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.4,
+                },
+                "-=0.6"
+            )
+
+            .from(
+                card.querySelector("h3"),
+                {
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.5,
+                },
+                "-=0.25"
+            )
+
+            .from(
+                card.querySelector("p"),
+                {
+                    y: 25,
+                    opacity: 0,
+                    duration: 0.5,
+                },
+                "-=0.25"
+            )
+
+            .from(
+                card.querySelector(".link-arrow"),
+                {
+                    x: -20,
+                    opacity: 0,
+                    duration: 0.4,
+                },
+                "-=0.2"
+            );
+    });
+</script>
 @endsection
