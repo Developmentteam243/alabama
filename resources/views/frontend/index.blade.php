@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="content">
-                    <div class="rv">
+                    <div class="rv" data-aos="fade-right">
                         <div class="eyebrow">Plumbing &amp; building materials — Dubai, UAE</div>
                         <h1 class="h-display">Every build runs on what's <span class="accent-i">behind the wall.</span></h1>
                         <p class="lede">
@@ -22,9 +22,9 @@
                             <a class="btn" href="#cat-hotwater">Browse categories</a>
                         </div>
                     </div>
-                    <div class="hero-media rv">
+                    <div class="hero-media" data-aos="fade-left">
                         <div class="frame">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="Premium sanitaryware" />
+                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" class="img-fluid" alt="Premium sanitaryware" />
                         </div>
                         <div class="cdtag">
                             <strong>Dubai Investments Park 2</strong>
@@ -44,10 +44,10 @@
 <section class="stats">
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>300+</b><span>Products in the catalogue</span></div>
-            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>5</b><span>Exclusive brand lines</span></div>
-            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>7</b><span>Emirates delivery coverage</span></div>
-            <div class="col-xl-3 col-md-3 col-lg-3 stat rv"><b>1:1</b><span>Direct sales support on WhatsApp</span></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="800"> <b>300+</b><span>Products in the catalogue</span></div></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1000"> <b>5</b><span>Exclusive brand lines</span></div></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1200"> <b>7</b><span>Emirates delivery coverage</span></div></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1400"> <b>1:1</b><span>Direct sales support on WhatsApp</span></div></div>
         </div>
     </div>
 </section>
@@ -67,8 +67,8 @@
             </div>
             <div class="col-xl-12">
                 <div class="row">
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'hot-water-system') }}">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'hot-water-system') }}" data-aos="fade-up" data-aos-duration="800">
                             <img
                                 src="https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp"
                                 alt="Hot water systems"
@@ -81,8 +81,8 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'plumbing-materials') }}">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'plumbing-materials') }}" data-aos="fade-up" data-aos-duration="800">
                             <img
                                 src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp"
                                 alt="Plumbing materials"
@@ -95,8 +95,8 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'sanitaryware') }}">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'sanitaryware') }}" data-aos="fade-up" data-aos-duration="800">
                             <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="Sanitaryware" />
                             <div class="cat-body">
                                 <small>03 — Sanitary</small>
@@ -106,8 +106,8 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'bathroomware') }}">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'bathroomware') }}" data-aos="fade-up" data-aos-duration="800">
                             <img src="https://alabamauae.com/wp-content/uploads/2026/01/12-1.webp" alt="Bathroomware" />
                             <div class="cat-body">
                                 <small>04 — Finish</small>
@@ -117,8 +117,8 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'kitchen') }}">
+                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'kitchen') }}" data-aos="fade-up" data-aos-duration="800">
                             <img src="https://alabamauae.com/wp-content/uploads/2026/01/15-1.webp" alt="Kitchen" />
                             <div class="cat-body">
                                 <small>05 — Kitchen</small>
@@ -139,14 +139,16 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-6 col-md-6 col-lg-6">
-                <div class="eyebrow">Who we are</div>
-                <h2 class="h-section mt-3 pe-md-4">Built on quality. <span class="accent-i">Trusted for excellence.</span></h2>
-                <p class="lede">Alabama is a leading supplier of premium plumbing and building materials in the UAE, providing reliable, high-performance solutions for residential, commercial, and industrial construction projects. Our range covers water heaters, pipes and fittings, valves, pumps, sanitary ware, and plumbing accessories sourced from trusted manufacturers.</p>
-                <p class="lede">With a strong commitment to quality, competitive pricing, and exceptional customer service, we serve contractors, developers, engineers, and homeowners across the UAE.</p>
-                <a class="btn  mt-2" href="#about">More about Alabama</a>
+                <div data-aos="flip-left">
+                    <div class="eyebrow">Who we are</div>
+                    <h2 class="h-section mt-3 pe-md-4">Built on quality. <span class="accent-i">Trusted for excellence.</span></h2>
+                    <p class="lede">Alabama is a leading supplier of premium plumbing and building materials in the UAE, providing reliable, high-performance solutions for residential, commercial, and industrial construction projects. Our range covers water heaters, pipes and fittings, valves, pumps, sanitary ware, and plumbing accessories sourced from trusted manufacturers.</p>
+                    <p class="lede">With a strong commitment to quality, competitive pricing, and exceptional customer service, we serve contractors, developers, engineers, and homeowners across the UAE.</p>
+                    <a class="btn  mt-2" href="#about">More about Alabama</a>
+                </div>
             </div>
             <div class="col-xl-6 col-md-6 col-lg-6">
-                <div class="media">
+                <div class="media" data-aos="flip-up">
                     <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="Alabama product range" class="img-fluid cdqulity" />
                 </div>
             </div>            
@@ -158,8 +160,8 @@
 <section class="cdbrand">
     <div class="container">            
         <div class="spot">
-            <div class="spot-media"><img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp" alt="Lamborghini E-Glasstech water heater" class="img-fluid cd-brand"/></div>
-            <div class="spot-copy on-dark">
+            <div class="spot-media" data-aos="zoom-in"><img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp" alt="Lamborghini E-Glasstech water heater" class="img-fluid cd-brand"/></div>
+            <div class="spot-copy on-dark" data-aos="zoom-out" data-aos-duration="1400">
                 <div class="eyebrow">Brand spotlight</div>
                 <h2 class="h-section">Lamborghini CaloreClima. Italian engineering, <span class="accent-i">7-year tanks.</span></h2>
                 <p>76 electric water heater SKUs across the TAURUS, E-Glasstech and Glass Thermal families — glasslined tanks, serviceable flanged elements, warranties up to 7 years.</p>
@@ -209,8 +211,8 @@
             <div class="col-xl-12">
                 <div class="row g-4">
                     @forelse($featuredProducts as $product)
-                        <div class="col-xl-4 col-md-6 col-lg-4">
-                            <a href="{{ route('frontend.product.show', $product->slug) }}" class="product-card text-decoration-none">
+                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                            <a href="{{ route('frontend.product.show', $product->slug) }}" class="product-card text-decoration-none" data-aos="fade-up">
                                 <div class="product-img">
                                     @if($product->image_url)
                                         <img src="{{ $product->image_url }}"
@@ -250,19 +252,19 @@
                     <h2 class="h-section">Certified. Tested. <span class="accent-i">Trusted on site.</span></h2>
                 </div>
                 <div class="assure">
-                    <div class="cell">                        
+                    <div class="cell" data-aos="flip-up">                        
                         <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" class="img-fluid" />
                     </div>
-                    <div class="cell">                        
+                    <div class="cell" data-aos="flip-up">                        
                         <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" class="img-fluid" />
                     </div>
-                    <div class="cell">                        
+                    <div class="cell" data-aos="flip-up">                        
                         <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" class="img-fluid" />
                     </div>
-                    <div class="cell">                        
+                    <div class="cell" data-aos="flip-up">                        
                         <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" class="img-fluid" />
                     </div>
-                    <div class="cell">                        
+                    <div class="cell" data-aos="flip-up">                        
                         <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" class="img-fluid" />
                     </div>
                 </div>
@@ -276,7 +278,8 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="cta-band on-dark">
+                <div class="cta-band on-dark" data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom">
                     <div>
                         <div class="eyebrow">Talk to sales</div>
                         <h2 class="h-section">Looking for quality plumbing solutions? <span class="accent-i">Let's talk.</span></h2>
@@ -351,5 +354,53 @@
     </div>
 </section>
 
+{{-- JS --}}
+<script src="{{ url('assets/js/gsap.min.js') }}"></script>
+<script src="{{ url('assets/js/ScrollTrigger.min.js') }}"></script>
+<script>
+    gsap.registerPlugin(ScrollTrigger);
 
+gsap.utils.toArray(".post.rv").forEach((card) => {
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: card,
+      start: "top 80%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  tl.from(card.querySelector(".pi img"), {
+    scale: 1.2,
+    opacity: 0,
+    duration: 1,
+    ease: "power4.out"
+  })
+
+  .from(card.querySelector(".meta"), {
+    y: 25,
+    opacity: 0,
+    duration: 0.4
+  }, "-=0.6")
+
+  .from(card.querySelector("h3"), {
+    y: 30,
+    opacity: 0,
+    duration: 0.5
+  }, "-=0.25")
+
+  .from(card.querySelector("p"), {
+    y: 25,
+    opacity: 0,
+    duration: 0.5
+  }, "-=0.25")
+
+  .from(card.querySelector(".link-arrow"), {
+    x: -20,
+    opacity: 0,
+    duration: 0.4
+  }, "-=0.2");
+
+});
+</script>
 @endsection
