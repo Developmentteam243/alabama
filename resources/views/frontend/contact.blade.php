@@ -11,8 +11,10 @@
             <div class="col-xl-12">
                 <div data-aos="zoom-in-up">
                     <div class="eyebrow">Contact us</div>
-                    <h1 class="h-section">Reliable building materials supplier <span class="accent-i">in the UAE.</span></h1>
-                    <p class="lede mw-100">Looking for high-quality building materials you can rely on? Alabama provides a comprehensive range of durable, industry-approved building supplies trusted by contractors, developers, engineers, and project managers across the UAE. Our expert team helps you choose the right products for your project — contact us for competitive pricing, product availability, and professional guidance.</p>
+                    <h1 class="h-section">Reliable Building Materials Supplier <span class="accent-i">in the UAE</span></h1>
+                    <p class="lede mw-100">Looking for high-quality building materials you can rely on? Alabama provides a comprehensive range of durable and industry-approved building supplies trusted by contractors, developers, engineers, and project managers across the UAE.</p>
+                    <p class="lede mw-100">From premium plumbing materials and sanitary solutions to water heaters, fittings, and essential construction products, we deliver reliable solutions designed for superior performance, durability, and long-term value. Our expert team helps you choose the right products to meet your project requirements.</p>
+                    <p class="lede mw-100">Contact Alabama today for competitive pricing, product availability, and professional guidance for your residential, commercial, or industrial projects.</p>
                 </div>
             </div>
         </div>

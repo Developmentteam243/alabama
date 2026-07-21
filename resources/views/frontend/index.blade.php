@@ -142,8 +142,8 @@
                 <div data-aos="flip-left">
                     <div class="eyebrow">Who we are</div>
                     <h2 class="h-section mt-3 pe-md-4">Built on quality. <span class="accent-i">Trusted for excellence.</span></h2>
-                    <p class="lede">Alabama is a leading supplier of premium plumbing and building materials in the UAE, providing reliable, high-performance solutions for residential, commercial, and industrial construction projects. Our range covers water heaters, pipes and fittings, valves, pumps, sanitary ware, and plumbing accessories sourced from trusted manufacturers.</p>
-                    <p class="lede">With a strong commitment to quality, competitive pricing, and exceptional customer service, we serve contractors, developers, engineers, and homeowners across the UAE.</p>
+                    <p class="lede">Alabama is a leading supplier of premium plumbing and building materials in the UAE, providing reliable, high-performance solutions for residential, commercial, and industrial construction projects. We offer an extensive range of quality products, including water heaters, pipes and fittings, valves, pumps, sanitary ware, and plumbing accessories sourced from trusted manufacturers to ensure long-lasting durability, efficiency, and compliance with industry standards.</p>
+                    <p class="lede">With a strong commitment to quality, competitive pricing, and exceptional customer service, Alabama serves contractors, developers, engineers, and homeowners across the UAE with dependable building materials that support projects of every size. Whether you're constructing a new property, upgrading an existing system, or managing a large-scale development, we provide the products and expertise you need to complete your project with confidence.</p>
                     <a class="btn  mt-2" href="#about">More about Alabama</a>
                 </div>
             </div>
@@ -278,11 +278,10 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="cta-band on-dark" data-aos="fade-up"
-     data-aos-anchor-placement="top-bottom">
+                <div class="cta-band on-dark" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
                     <div>
                         <div class="eyebrow">Talk to sales</div>
-                        <h2 class="h-section">Looking for quality plumbing solutions? <span class="accent-i">Let's talk.</span></h2>
+                        <h2 class="h-section">Looking for Quality Plumbing Solutions? <span class="accent-i">Let's Talk.</span></h2>
                     </div>
                     <div class="actions">
                         <a
@@ -292,7 +291,6 @@
                             rel="noopener"
                             >Get Free Quote Now</a
                         >
-                        <a class="btn ghost-invert" href="tel:+97143526973">+971 4 352 6973</a>
                     </div>
                 </div>
             </div>

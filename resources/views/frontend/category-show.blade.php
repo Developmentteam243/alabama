@@ -74,7 +74,7 @@
             <div class="col-xl-12">
                 <div class="row g-4">
                     @forelse($products as $prod)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
                             <a href="{{ route('frontend.product.show', $prod->slug) }}" class="product-card text-decoration-none">
                                 <div class="product-img">
                                     @if($prod->image_url)
