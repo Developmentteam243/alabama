@@ -364,7 +364,7 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cdbrand .spot .spot-ctas{display:flex;gap:14px;flex-wrap:wrap}
 
 /* ---------- brand strip ---------- */
-.brand-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding: 4px 0;overflow:hidden}
+.brand-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding: 1rem 0;overflow:hidden}
 .marquee-wrap{
     overflow:hidden;
     width:100%;
@@ -385,7 +385,7 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
     }
 }
 .marquee img {
-    height: 120px;
+    height: 150px;
     filter: grayscale(100%);
     transition: filter 0.3s ease, transform 0.3s ease;
 }

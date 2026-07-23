@@ -181,18 +181,26 @@
     <div class="marquee-wrap">
         <div class="marquee">
             <!-- First Set -->
-            <img src="https://alabamauae.com/wp-content/uploads/2026/01/20.png" alt="Lamborghini CaloreClima" class="img-fluid" />
-            <span class="wm">Zenith Water Heater</span>
-            <span class="wm">Ariston</span>
-            <img src="https://alabamauae.com/wp-content/uploads/2026/01/13.png" alt="VERA" class="img-fluid" />
-            <span class="wm">Pegler</span>
+            <img src="{{url('assets/images/brands/1.png') }}" alt="AQUAVERA" class="img-fluid" />
+            <img src="{{url('assets/images/brands/9.png') }}" alt="HC" class="img-fluid" />
+            <img src="{{url('assets/images/brands/3.png') }}" alt="JETFIX" class="img-fluid" />
+            <img src="{{url('assets/images/brands/4.png') }}" alt="JOFLEX" class="img-fluid" />
+            <img src="{{url('assets/images/brands/5.png') }}" alt="JOFLUSH" class="img-fluid" />
+            <img src="{{url('assets/images/brands/6.png') }}" alt="JOMIX" class="img-fluid" />
+            <img src="{{url('assets/images/brands/7.png') }}" alt="LAMBORGHINI" class="img-fluid" />
+            <img src="{{url('assets/images/brands/8.png') }}" alt="NUOVA" class="img-fluid" />
+            <img src="{{url('assets/images/brands/10.png') }}" alt="VERA" class="img-fluid" />
 
             <!-- Duplicate Set -->
-            <img src="https://alabamauae.com/wp-content/uploads/2026/01/20.png" alt="Lamborghini CaloreClima" class="img-fluid" />
-            <span class="wm">Zenith Water Heater</span>
-            <span class="wm">Ariston</span>
-            <img src="https://alabamauae.com/wp-content/uploads/2026/01/13.png" alt="VERA" class="img-fluid" />
-            <span class="wm">Pegler</span>
+            <img src="{{url('assets/images/brands/1.png') }}" alt="AQUAVERA" class="img-fluid" />
+            <img src="{{url('assets/images/brands/9.png') }}" alt="HC" class="img-fluid" />
+            <img src="{{url('assets/images/brands/3.png') }}" alt="JETFIX" class="img-fluid" />
+            <img src="{{url('assets/images/brands/4.png') }}" alt="JOFLEX" class="img-fluid" />
+            <img src="{{url('assets/images/brands/5.png') }}" alt="JOFLUSH" class="img-fluid" />
+            <img src="{{url('assets/images/brands/6.png') }}" alt="JOMIX" class="img-fluid" />
+            <img src="{{url('assets/images/brands/7.png') }}" alt="LAMBORGHINI" class="img-fluid" />
+            <img src="{{url('assets/images/brands/8.png') }}" alt="NUOVA" class="img-fluid" />
+            <img src="{{url('assets/images/brands/10.png') }}" alt="VERA" class="img-fluid" />
         </div>
     </div>
 </section>
