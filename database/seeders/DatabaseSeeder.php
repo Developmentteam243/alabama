@@ -26,9 +26,25 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $file_path = "C:/Users/AGL IT/Downloads/Alabama_Master SKU.xlsx";
-        if (!file_exists($file_path)) {
-            $this->command->error("Excel file not found at: $file_path");
+        // Find the Excel file dynamically
+        $file_path = env('SEEDER_EXCEL_PATH');
+        if (!$file_path || !file_exists($file_path)) {
+            $possible_paths = [
+                base_path('Alabama_Master SKU.xlsx'),
+                database_path('seeders/Alabama_Master SKU.xlsx'),
+                storage_path('app/Alabama_Master SKU.xlsx'),
+                "C:/Users/AGL IT/Downloads/Alabama_Master SKU.xlsx" // Fallback
+            ];
+            foreach ($possible_paths as $path) {
+                if (file_exists($path)) {
+                    $file_path = $path;
+                    break;
+                }
+            }
+        }
+
+        if (!$file_path || !file_exists($file_path)) {
+            $this->command->error("Excel file not found. Please upload 'Alabama_Master SKU.xlsx' to the project root directory or set SEEDER_EXCEL_PATH in your .env file.");
             return;
         }
 
