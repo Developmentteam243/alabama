@@ -169,6 +169,16 @@ return [
             'icon' => 'ti ti-news',
             'route' => 'blogs.index'
         ],
+        [
+            'text' => 'Reviews',
+            'icon' => 'ti ti-star',
+            'route' => 'reviews.index'
+        ],
+        [
+            'text' => 'Quotes',
+            'icon' => 'ti ti-file-text',
+            'route' => 'quotes.index'
+        ],
     ],
 
     /*

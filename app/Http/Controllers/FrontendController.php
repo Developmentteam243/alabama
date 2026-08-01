@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Product;
 use App\Models\Blog;
+use App\Models\Quote;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -128,19 +129,133 @@ class FrontendController extends Controller
     public function contact()  {
         return view('frontend.contact');
     }
-    public function categoryShow($slug) {
+    public function categoryShow(Request $request, $slug) {
         $category = Category::where('slug', $slug)->firstOrFail();
         $subcategories = $category->subcategories;
-        
-        // Fetch products belonging to this category's subcategories
         $subIds = $subcategories->pluck('id');
-        $products = Product::whereIn('subcategory_id', $subIds)->with('brand')->paginate(12);
+        
+        $query = Product::whereIn('subcategory_id', $subIds)->with('brand');
+
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('model_name', 'like', "%{$search}%")
+                  ->orWhere('sku_code', 'like', "%{$search}%")
+                  ->orWhere('item_code', 'like', "%{$search}%")
+                  ->orWhere('product_family', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->get('brand_id'));
+        }
+
+        if ($request->filled('capacity')) {
+            $query->where('capacity_l', $request->get('capacity'));
+        }
+
+        if ($request->filled('mounting')) {
+            $query->where('orientation_mounting', $request->get('mounting'));
+        }
+
+        $products = $query->paginate(12)->withQueryString();
         
         // Fetch up to 6 popular/featured products for this category
         $popularProducts = Product::whereIn('subcategory_id', $subIds)->with('brand')->latest()->limit(6)->get();
 
-        return view('frontend.category-show', compact('category', 'subcategories', 'products', 'popularProducts'));
+        // Get filter options specific to this category
+        $brands = Brand::whereHas('products', function($q) use ($subIds) {
+            $q->whereIn('subcategory_id', $subIds);
+        })->orderBy('name')->get();
+        
+        $capacities = Product::whereIn('subcategory_id', $subIds)
+            ->whereNotNull('capacity_l')
+            ->where('capacity_l', '!=', '')
+            ->distinct()
+            ->pluck('capacity_l')
+            ->sort();
+            
+        $mountings = Product::whereIn('subcategory_id', $subIds)
+            ->whereNotNull('orientation_mounting')
+            ->where('orientation_mounting', '!=', '')
+            ->distinct()
+            ->pluck('orientation_mounting')
+            ->sort();
+
+        return view('frontend.category-show', compact(
+            'category', 
+            'subcategories', 
+            'products', 
+            'popularProducts', 
+            'brands', 
+            'capacities', 
+            'mountings'
+        ));
     }
+
+    public function subcategoryShow(Request $request, $categorySlug, $subcategorySlug) {
+        $category = Category::where('slug', $categorySlug)->firstOrFail();
+        $subcategory = Subcategory::where('category_id', $category->id)->where('slug', $subcategorySlug)->firstOrFail();
+        
+        $query = Product::where('subcategory_id', $subcategory->id)->with('brand');
+
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('model_name', 'like', "%{$search}%")
+                  ->orWhere('sku_code', 'like', "%{$search}%")
+                  ->orWhere('item_code', 'like', "%{$search}%")
+                  ->orWhere('product_family', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->get('brand_id'));
+        }
+
+        if ($request->filled('capacity')) {
+            $query->where('capacity_l', $request->get('capacity'));
+        }
+
+        if ($request->filled('mounting')) {
+            $query->where('orientation_mounting', $request->get('mounting'));
+        }
+
+        $products = $query->paginate(12)->withQueryString();
+        
+        // Fetch up to 6 popular/featured products for this subcategory
+        $popularProducts = Product::where('subcategory_id', $subcategory->id)->with('brand')->latest()->limit(6)->get();
+
+        // Get filter options specific to this subcategory
+        $brands = Brand::whereHas('products', function($q) use ($subcategory) {
+            $q->where('subcategory_id', $subcategory->id);
+        })->orderBy('name')->get();
+        
+        $capacities = Product::where('subcategory_id', $subcategory->id)
+            ->whereNotNull('capacity_l')
+            ->where('capacity_l', '!=', '')
+            ->distinct()
+            ->pluck('capacity_l')
+            ->sort();
+            
+        $mountings = Product::where('subcategory_id', $subcategory->id)
+            ->whereNotNull('orientation_mounting')
+            ->where('orientation_mounting', '!=', '')
+            ->distinct()
+            ->pluck('orientation_mounting')
+            ->sort();
+        
+        return view('frontend.subcategory-show', compact(
+            'category', 
+            'subcategory', 
+            'products', 
+            'popularProducts', 
+            'brands', 
+            'capacities', 
+            'mountings'
+        ));
+    }
+
     public function brandShow($slug) {
         $brand = Brand::where('slug', $slug)->firstOrFail();
         
@@ -162,5 +277,44 @@ class FrontendController extends Controller
     }
     public function all_brands()  {
         return view('frontend.all-brands');
+    }
+
+    public function storeReview(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_email' => 'required|email|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'required|string|min:3',
+        ]);
+
+        $product->allReviews()->create($validated);
+
+        return redirect()->back()->with('success_review', 'Your review has been submitted and is awaiting approval.');
+    }
+
+    public function storeQuote(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:50',
+            'requirement' => 'nullable|string',
+            'boq' => 'nullable|file|mimes:pdf,xls,xlsx|max:15360',
+        ]);
+
+        $data = $validated;
+        unset($data['boq']);
+
+        if ($request->hasFile('boq')) {
+            $boqUrl = \App\Services\CloudinaryService::upload($request->file('boq'));
+            if ($boqUrl) {
+                $data['boq_url'] = $boqUrl;
+            }
+        }
+
+        Quote::create($data);
+
+        return redirect()->back()->with('success_quote', 'Your quotation request has been submitted successfully. Our sales team will get back to you shortly.');
     }
 }

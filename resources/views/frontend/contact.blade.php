@@ -57,39 +57,53 @@
             <div class="col-xl-6 col-md-6 col-lg-6 mt-0">
                 <div class="contact-form">
                     <div data-aos="fade-up">
-                        <form>
+                        @if(session('success_quote'))
+                            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                                {{ session('success_quote') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger mb-4">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('frontend.quote.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="mb-4">
-                                <label class="form-label">NAME</label>
-                                <input type="text" class="form-control" placeholder="Your name">
+                                <label class="form-label required">NAME</label>
+                                <input type="text" name="name" class="form-control" placeholder="Your name" value="{{ old('name') }}" required>
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label">EMAIL</label>
-                                <input type="email" class="form-control" placeholder="you@company.com">
+                                <label class="form-label required">EMAIL</label>
+                                <input type="email" name="email" class="form-control" placeholder="you@company.com" value="{{ old('email') }}" required>
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label">PHONE</label>
-                                <input type="text" class="form-control" placeholder="+971">
+                                <label class="form-label required">PHONE</label>
+                                <input type="text" name="phone" class="form-control" placeholder="e.g. +971 50 123 4567" value="{{ old('phone') }}" required>
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label">HOW CAN WE HELP?</label>
-                                <select class="form-select">
-                                    <option>Product inquiry</option>
-                                    <option>Request a quotation</option>
-                                    <option>Customer support</option>
-                                    <option>Other</option>
-                                </select>
+                                <label class="form-label">REQUIREMENT (OPTIONAL)</label>
+                                <textarea name="requirement" rows="4" class="form-control" placeholder="Products, quantities, project details...">{{ old('requirement') }}</textarea>
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label">MESSAGE</label>
-                                <textarea rows="5" class="form-control" placeholder="Products, quantities, project details..."></textarea>
+                                <label class="form-label">UPLOAD BOQ (PDF OR EXCEL)</label>
+                                <input type="file" name="boq" class="form-control" accept=".pdf,.xls,.xlsx">
+                                <small class="text-muted">Accepts PDF, XLS, XLSX formats (Max 15MB).</small>
                             </div>
 
-                            <button class="btn solid w-100">
-                                SEND MESSAGE
+                            <button type="submit" class="btn solid w-100">
+                                SUBMIT QUOTE REQUEST
                             </button>
                         </form>
                     </div>

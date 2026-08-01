@@ -57,8 +57,8 @@ class ProductController extends Controller
     public function create()
     {
         $brands = Brand::orderBy('name')->get();
-        $subcategories = Subcategory::with('category')->orderBy('name')->get();
-        return view('products.create', compact('brands', 'subcategories'));
+        $categories = Category::with('subcategories')->orderBy('name')->get();
+        return view('products.create', compact('brands', 'categories'));
     }
 
     /**
@@ -90,9 +90,16 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:10240',
             'brochure' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'techsheet' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+            'slug' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'video_url' => 'nullable|string|max:255',
+            'product_images' => 'nullable|array',
+            'product_images.*' => 'image|max:10240',
         ]);
 
         $data = $validated;
+        unset($data['product_images']);
 
         if ($request->hasFile('image')) {
             $imageUrl = \App\Services\CloudinaryService::upload($request->file('image'));
@@ -115,7 +122,20 @@ class ProductController extends Controller
             }
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        if ($request->hasFile('product_images')) {
+            $images = $request->file('product_images');
+            foreach ($images as $index => $image) {
+                $url = \App\Services\CloudinaryService::upload($image);
+                if ($url) {
+                    $product->images()->create([
+                        'image_url' => $url,
+                        'sort_order' => $index,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
@@ -134,8 +154,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $brands = Brand::orderBy('name')->get();
-        $subcategories = Subcategory::with('category')->orderBy('name')->get();
-        return view('products.edit', compact('product', 'brands', 'subcategories'));
+        $categories = Category::with('subcategories')->orderBy('name')->get();
+        return view('products.edit', compact('product', 'brands', 'categories'));
     }
 
     /**
@@ -167,9 +187,16 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:10240',
             'brochure' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'techsheet' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+            'slug' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'video_url' => 'nullable|string|max:255',
+            'product_images' => 'nullable|array',
+            'product_images.*' => 'image|max:10240',
         ]);
 
         $data = $validated;
+        unset($data['product_images']);
 
         if ($request->hasFile('image')) {
             $imageUrl = \App\Services\CloudinaryService::upload($request->file('image'));
@@ -193,6 +220,34 @@ class ProductController extends Controller
         }
 
         $product->update($data);
+
+        // Handle existing images' sort orders
+        if ($request->has('sort_orders')) {
+            foreach ($request->input('sort_orders') as $imageId => $order) {
+                $product->images()->where('id', $imageId)->update(['sort_order' => intval($order)]);
+            }
+        }
+
+        // Handle deletions of existing images
+        if ($request->has('delete_images')) {
+            $deleteIds = $request->input('delete_images');
+            $product->images()->whereIn('id', $deleteIds)->delete();
+        }
+
+        // Handle newly uploaded images
+        if ($request->hasFile('product_images')) {
+            $images = $request->file('product_images');
+            $maxOrder = $product->images()->max('sort_order') ?? -1;
+            foreach ($images as $index => $image) {
+                $url = \App\Services\CloudinaryService::upload($image);
+                if ($url) {
+                    $product->images()->create([
+                        'image_url' => $url,
+                        'sort_order' => $maxOrder + 1 + $index,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }

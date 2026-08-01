@@ -24,9 +24,23 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:50|unique:categories,code',
+            'slug' => 'nullable|string|max:255|unique:categories,slug',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'banner' => 'nullable|image|max:10240',
         ]);
 
-        Category::create($validated);
+        $data = $validated;
+        unset($data['banner']);
+
+        if ($request->hasFile('banner')) {
+            $bannerUrl = \App\Services\CloudinaryService::upload($request->file('banner'));
+            if ($bannerUrl) {
+                $data['banner_url'] = $bannerUrl;
+            }
+        }
+
+        Category::create($data);
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
@@ -46,9 +60,23 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:50|unique:categories,code,' . $category->id,
+            'slug' => 'nullable|string|max:255|unique:categories,slug,' . $category->id,
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'banner' => 'nullable|image|max:10240',
         ]);
 
-        $category->update($validated);
+        $data = $validated;
+        unset($data['banner']);
+
+        if ($request->hasFile('banner')) {
+            $bannerUrl = \App\Services\CloudinaryService::upload($request->file('banner'));
+            if ($bannerUrl) {
+                $data['banner_url'] = $bannerUrl;
+            }
+        }
+
+        $category->update($data);
 
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
@@ -76,5 +104,36 @@ class CategoryController extends Controller
     {
         $subcategory->delete();
         return redirect()->route('categories.index')->with('success', 'Subcategory deleted successfully.');
+    }
+
+    public function editSubcategory(Subcategory $subcategory)
+    {
+        return view('subcategories.edit', compact('subcategory'));
+    }
+
+    public function updateSubcategory(Request $request, Subcategory $subcategory)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:50|unique:subcategories,code,' . $subcategory->id,
+            'slug' => 'nullable|string|max:255|unique:subcategories,slug,' . $subcategory->id,
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'banner' => 'nullable|image|max:10240',
+        ]);
+
+        $data = $validated;
+        unset($data['banner']);
+
+        if ($request->hasFile('banner')) {
+            $bannerUrl = \App\Services\CloudinaryService::upload($request->file('banner'));
+            if ($bannerUrl) {
+                $data['banner_url'] = $bannerUrl;
+            }
+        }
+
+        $subcategory->update($data);
+
+        return redirect()->route('categories.index')->with('success', 'Subcategory updated successfully.');
     }
 }

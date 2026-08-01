@@ -45,14 +45,20 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label required">Subcategory</label>
-                            <select name="subcategory_id" class="form-select @error('subcategory_id') is-invalid @enderror" required>
-                                <option value="">Select Subcategory</option>
-                                @foreach($subcategories as $subcat)
-                                    <option value="{{ $subcat->id }}" {{ old('subcategory_id') == $subcat->id ? 'selected' : '' }}>
-                                        {{ $subcat->name }} ({{ $subcat->category->name ?? '' }})
-                                    </option>
+                            <label class="form-label required">Category</label>
+                            <select id="category_id_select" class="form-select" required>
+                                <option value="">Select Category</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label required">Subcategory</label>
+                            <select name="subcategory_id" id="subcategory_id_select" class="form-select @error('subcategory_id') is-invalid @enderror" required disabled>
+                                <option value="">Select Subcategory</option>
                             </select>
                             @error('subcategory_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -197,12 +203,64 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label">Technical Datasheet (Techsheet)</label>
+                            <label class="form-label">Factsheet / Technical Datasheet</label>
                             <input type="file" name="techsheet" class="form-control @error('techsheet') is-invalid @enderror" accept=".pdf,.doc,.docx">
                             @error('techsheet')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             <span class="text-muted small">Upload to Cloudinary (PDF, DOC).</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Video Link</label>
+                            <input type="text" name="video_url" class="form-control @error('video_url') is-invalid @enderror" value="{{ old('video_url') }}" placeholder="e.g. https://www.youtube.com/watch?v=... or Vimeo URL">
+                            @error('video_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Optional link to a YouTube, Vimeo, or direct MP4 video.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Additional Product Pictures</label>
+                            <input type="file" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" accept="image/*" multiple>
+                            @error('product_images')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Select multiple pictures to display in the product gallery.</span>
+                        </div>
+                    </div>
+                    <!-- SEO Fields -->
+                    <div class="col-md-12">
+                        <hr class="my-4" />
+                        <h3 class="card-title mb-3">SEO Configuration</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">URL Slug</label>
+                            <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}" placeholder="e.g. electric-water-heater-100l (Auto-generated if left blank)">
+                            @error('slug')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror" value="{{ old('meta_title') }}" placeholder="Custom Page Title tag">
+                            @error('meta_title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Meta Description</label>
+                            <textarea name="meta_description" rows="3" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Custom Meta Description tag">{{ old('meta_description') }}</textarea>
+                            @error('meta_description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -214,4 +272,48 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categories = @json($categories);
+        const categorySelect = document.getElementById('category_id_select');
+        const subcategorySelect = document.getElementById('subcategory_id_select');
+        const oldSubcategoryId = "{{ old('subcategory_id') }}";
+
+        if (categorySelect && subcategorySelect) {
+            function updateSubcategories(categoryId, selectedSubId = null) {
+                subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+                
+                if (!categoryId) {
+                    subcategorySelect.disabled = true;
+                    return;
+                }
+
+                const selectedCategory = categories.find(cat => cat.id == categoryId);
+                if (selectedCategory && selectedCategory.subcategories.length > 0) {
+                    selectedCategory.subcategories.forEach(sub => {
+                        const option = document.createElement('option');
+                        option.value = sub.id;
+                        option.textContent = sub.name;
+                        if (selectedSubId && sub.id == selectedSubId) {
+                            option.selected = true;
+                        }
+                        subcategorySelect.appendChild(option);
+                    });
+                    subcategorySelect.disabled = false;
+                } else {
+                    subcategorySelect.disabled = true;
+                }
+            }
+
+            categorySelect.addEventListener('change', function () {
+                updateSubcategories(this.value);
+            });
+
+            // Handle old input (validation redirect fallback)
+            if (categorySelect.value) {
+                updateSubcategories(categorySelect.value, oldSubcategoryId);
+            }
+        }
+    });
+</script>
 @endsection

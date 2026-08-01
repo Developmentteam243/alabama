@@ -18,7 +18,7 @@
                             residential, commercial and industrial projects across the Emirates.
                         </p>
                         <div class="hero-ctas">
-                            <a class="btn solid" href="#contact">Get a quote</a>
+                            <a class="btn solid" href="{{ route('frontend.contact') }}">Get a quote</a>
                             <a class="btn" href="#cat-hotwater">Browse categories</a>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
 </section>
 
 <!-- collections -->
-<section class="cdcollections">
+<section class="cdcollections" id="products">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
@@ -261,21 +261,43 @@
                     <div class="eyebrow centered">Assurance of quality</div>
                     <h2 class="h-section">Certified. Tested. <span class="accent-i">Trusted on site.</span></h2>
                 </div>
-                <div class="assure">
-                    <div class="cell" data-aos="flip-up">                        
-                        <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" class="img-fluid" />
-                    </div>
-                    <div class="cell" data-aos="flip-up">                        
-                        <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" class="img-fluid" />
-                    </div>
-                    <div class="cell" data-aos="flip-up">                        
-                        <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" class="img-fluid" />
-                    </div>
-                    <div class="cell" data-aos="flip-up">                        
-                        <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" class="img-fluid" />
-                    </div>
-                    <div class="cell" data-aos="flip-up">                        
-                        <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" class="img-fluid" />
+                <div class="brand-strip" style="background: transparent; border: none; padding: 1rem 0;">
+                    <div class="marquee-wrap">
+                        <div class="marquee" style="animation-duration: 25s; gap: 0;">
+                            <!-- First Set -->
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            
+                            <!-- Duplicate Set -->
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -296,10 +318,8 @@
                     <div class="actions">
                         <a
                             class="btn brass"
-                            href="https://wa.me/971559138047?text=Hello%20Alabama%2C%20I%20would%20like%20a%20free%20quote."
-                            target="_blank"
-                            rel="noopener"
-                            >Get Free Quote Now</a
+                            href="{{ route('frontend.contact') }}"
+                            >GET QUOTE</a
                         >
                     </div>
                 </div>

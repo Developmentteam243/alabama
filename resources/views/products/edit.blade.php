@@ -46,14 +46,20 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label required">Subcategory</label>
-                            <select name="subcategory_id" class="form-select @error('subcategory_id') is-invalid @enderror" required>
-                                <option value="">Select Subcategory</option>
-                                @foreach($subcategories as $subcat)
-                                    <option value="{{ $subcat->id }}" {{ old('subcategory_id', $product->subcategory_id) == $subcat->id ? 'selected' : '' }}>
-                                        {{ $subcat->name }} ({{ $subcat->category->name ?? '' }})
-                                    </option>
+                            <label class="form-label required">Category</label>
+                            <select id="category_id_select" class="form-select" required>
+                                <option value="">Select Category</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}" {{ old('category_id', $product->subcategory->category_id ?? '') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label required">Subcategory</label>
+                            <select name="subcategory_id" id="subcategory_id_select" class="form-select @error('subcategory_id') is-invalid @enderror" required disabled>
+                                <option value="">Select Subcategory</option>
                             </select>
                             @error('subcategory_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -210,17 +216,103 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label">Technical Datasheet (Techsheet)</label>
+                            <label class="form-label">Factsheet / Technical Datasheet</label>
                             <input type="file" name="techsheet" class="form-control @error('techsheet') is-invalid @enderror" accept=".pdf,.doc,.docx">
                             @error('techsheet')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             @if($product->techsheet_url)
                                 <div class="mt-2">
-                                    <a href="{{ $product->techsheet_url }}" target="_blank" class="btn btn-sm btn-outline-info">View Existing Techsheet</a>
+                                    <a href="{{ $product->techsheet_url }}" target="_blank" class="btn btn-sm btn-outline-info">View Existing Factsheet</a>
                                 </div>
                             @endif
-                            <span class="text-muted small">Upload new to replace existing techsheet in Cloudinary.</span>
+                            <span class="text-muted small">Upload new to replace existing factsheet in Cloudinary.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Video Link</label>
+                            <input type="text" name="video_url" class="form-control @error('video_url') is-invalid @enderror" value="{{ old('video_url', $product->video_url) }}" placeholder="e.g. https://www.youtube.com/watch?v=... or Vimeo URL">
+                            @error('video_url')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Optional link to a YouTube, Vimeo, or direct MP4 video.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Upload Additional Pictures</label>
+                            <input type="file" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" accept="image/*" multiple>
+                            @error('product_images')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <span class="text-muted small">Select multiple pictures to add to the product gallery.</span>
+                        </div>
+                    </div>
+
+                    <!-- Manage Multiple Images -->
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Product Gallery Pictures (Arrange and Manage)</label>
+                            @if($product->images->count() > 0)
+                                <div class="row g-3" id="gallery-container">
+                                    @foreach($product->images as $img)
+                                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 gallery-item" data-id="{{ $img->id }}" style="transition: all 0.3s ease;">
+                                            <div class="card p-2 border position-relative h-100 bg-light text-center">
+                                                <div class="d-flex align-items-center justify-content-center" style="height: 100px;">
+                                                    <img src="{{ $img->image_url }}" alt="Gallery Image" class="img-fluid rounded" style="max-height: 100%; object-fit: contain;">
+                                                </div>
+                                                <input type="hidden" name="sort_orders[{{ $img->id }}]" class="sort-order-input" value="{{ $img->sort_order }}">
+                                                <div class="form-check mt-2 d-flex justify-content-center">
+                                                    <label class="form-check-label text-danger small">
+                                                        <input type="checkbox" name="delete_images[]" value="{{ $img->id }}" class="form-check-input">
+                                                        Delete
+                                                    </label>
+                                                </div>
+                                                <div class="btn-group mt-2">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary move-prev" title="Move Left"><i class="fa fa-arrow-left"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary move-next" title="Move Right"><i class="fa fa-arrow-right"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <p class="text-muted small">No gallery pictures uploaded yet. Use the field above to upload pictures.</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- SEO Fields -->
+                    <div class="col-md-12">
+                        <hr class="my-4" />
+                        <h3 class="card-title mb-3">SEO Configuration</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">URL Slug</label>
+                            <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug', $product->slug) }}" placeholder="e.g. electric-water-heater-100l (Auto-generated if left blank)">
+                            @error('slug')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Meta Title</label>
+                            <input type="text" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror" value="{{ old('meta_title', $product->meta_title) }}" placeholder="Custom Page Title tag">
+                            @error('meta_title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Meta Description</label>
+                            <textarea name="meta_description" rows="3" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Custom Meta Description tag">{{ old('meta_description', $product->meta_description) }}</textarea>
+                            @error('meta_description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -232,4 +324,84 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('gallery-container');
+    if (!container) return;
+
+    function updateSortOrders() {
+        const items = container.querySelectorAll('.gallery-item');
+        items.forEach((item, index) => {
+            const input = item.querySelector('.sort-order-input');
+            if (input) input.value = index;
+        });
+    }
+
+    container.addEventListener('click', function (e) {
+        const btnPrev = e.target.closest('.move-prev');
+        const btnNext = e.target.closest('.move-next');
+        
+        if (btnPrev) {
+            const item = btnPrev.closest('.gallery-item');
+            const prev = item.previousElementSibling;
+            if (prev) {
+                container.insertBefore(item, prev);
+                updateSortOrders();
+            }
+        }
+        
+        if (btnNext) {
+            const item = btnNext.closest('.gallery-item');
+            const next = item.nextElementSibling;
+            if (next) {
+                container.insertBefore(next, item);
+                updateSortOrders();
+            }
+        }
+    });
+
+    // Category -> Subcategory dynamic filtration
+    const categories = @json($categories);
+    const categorySelect = document.getElementById('category_id_select');
+    const subcategorySelect = document.getElementById('subcategory_id_select');
+    const activeSubcategoryId = "{{ old('subcategory_id', $product->subcategory_id ?? '') }}";
+
+    if (categorySelect && subcategorySelect) {
+        function updateSubcategories(categoryId, selectedSubId = null) {
+            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+            
+            if (!categoryId) {
+                subcategorySelect.disabled = true;
+                return;
+            }
+
+            const selectedCategory = categories.find(cat => cat.id == categoryId);
+            if (selectedCategory && selectedCategory.subcategories.length > 0) {
+                selectedCategory.subcategories.forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub.id;
+                    option.textContent = sub.name;
+                    if (selectedSubId && sub.id == selectedSubId) {
+                        option.selected = true;
+                    }
+                    subcategorySelect.appendChild(option);
+                });
+                subcategorySelect.disabled = false;
+            } else {
+                subcategorySelect.disabled = true;
+            }
+        }
+
+        categorySelect.addEventListener('change', function () {
+            updateSubcategories(this.value);
+        });
+
+        // Initialize active selections
+        if (categorySelect.value) {
+            updateSubcategories(categorySelect.value, activeSubcategoryId);
+        }
+    }
+});
+</script>
 @endsection

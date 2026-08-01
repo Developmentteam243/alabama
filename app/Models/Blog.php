@@ -13,6 +13,8 @@ class Blog extends Model
         'content',
         'image_url',
         'is_active',
+        'meta_title',
+        'meta_description',
     ];
 
     protected $casts = [

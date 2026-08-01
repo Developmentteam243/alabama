@@ -1,89 +1,47 @@
 @extends('layouts.master')
 
-@section('title', $category->meta_title ?: $category->name . ' - Alabama Portal')
+@section('title', $subcategory->meta_title ?: $subcategory->name . ' - Alabama Portal')
 
-@if($category->meta_description)
-@section('meta_description', $category->meta_description)
+@if($subcategory->meta_description)
+@section('meta_description', $subcategory->meta_description)
 @endif
 
 @section('content')
 
 <!-- Header -->
-<section class="page-hero" data-aos="fade-up" style="background: @if($category->banner_url) url('{{ $category->banner_url }}') no-repeat center center / cover @else #f8f9fa @endif; padding: 100px 0; position: relative; min-height: 300px; display: flex; align-items: center;">
-    @if($category->banner_url)
+<section class="page-hero" data-aos="fade-up" style="background: @if($subcategory->banner_url) url('{{ $subcategory->banner_url }}') no-repeat center center / cover @elseif($category->banner_url) url('{{ $category->banner_url }}') no-repeat center center / cover @else #f8f9fa @endif; padding: 100px 0; position: relative; min-height: 300px; display: flex; align-items: center;">
+    @if($subcategory->banner_url || $category->banner_url)
         <!-- Overlay to ensure text readability -->
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.55); z-index: 1;"></div>
     @endif
-    <div class="container" style="position: relative; z-index: 2; @if($category->banner_url) color: white; @endif">
+    <div class="container" style="position: relative; z-index: 2; @if($subcategory->banner_url || $category->banner_url) color: white; @endif">
         <div class="row">
             <div class="col-xl-12">
                 <div data-aos="zoom-in-up">
                     <nav aria-label="breadcrumb" class="mb-3">
                         <ol class="breadcrumb m-0" style="background: transparent; padding: 0;">
-                            <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}" style="color: @if($category->banner_url) rgba(255, 255, 255, 0.8) @else #dc3545 @endif; text-decoration: none;">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page" style="color: @if($category->banner_url) #ffffff @else #6c757d @endif;">{{ $category->name }}</li>
+                            <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}" style="color: @if($subcategory->banner_url || $category->banner_url) rgba(255, 255, 255, 0.8) @else #dc3545 @endif; text-decoration: none;">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('frontend.category.show', $category->slug) }}" style="color: @if($subcategory->banner_url || $category->banner_url) rgba(255, 255, 255, 0.8) @else #dc3545 @endif; text-decoration: none;">{{ $category->name }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page" style="color: @if($subcategory->banner_url || $category->banner_url) #ffffff @else #6c757d @endif;">{{ $subcategory->name }}</li>
                         </ol>
                     </nav>
-                    <div class="eyebrow" style="@if($category->banner_url) color: rgba(255, 255, 255, 0.8) !important; @endif">Category — {{ $category->code ?: 'Alabama' }}</div>
-                    <h1 class="h-section" style="@if($category->banner_url) color: #ffffff !important; @endif">{{ $category->name }}</h1>
-                    <p class="lede mw-100" style="@if($category->banner_url) color: rgba(255, 255, 255, 0.9) !important; @endif">{{ $category->description }}</p>
+                    <div class="eyebrow" style="@if($subcategory->banner_url || $category->banner_url) color: rgba(255, 255, 255, 0.8) !important; @endif">Subcategory — {{ $subcategory->code ?: 'Alabama' }}</div>
+                    <h1 class="h-section" style="@if($subcategory->banner_url || $category->banner_url) color: #ffffff !important; @endif">{{ $subcategory->name }}</h1>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- sub cat-prod list -->
+<!-- products list -->
 <section class="cdcollections section">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="sec-head split">
-                    <div>
-                        <div class="eyebrow">Browse the range</div>
-                        <h2 class="h-section">Subcategories</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="row g-4">
-                    @forelse($subcategories as $idx => $sub)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                            <a href="{{ route('frontend.subcategory.show', [$category->slug, $sub->slug]) }}" class="product-card text-decoration-none">
-                                <div class="product-img" style="@if($sub->banner_url) background: url('{{ $sub->banner_url }}') no-repeat center center / cover; height: 180px; @endif">
-                                    @if(!$sub->banner_url)
-                                        <span class="ghost">{{ strtoupper(substr($sub->name, 0, 1)) }}</span>
-                                    @endif
-                                </div>
-                                <div class="product-body">
-                                    <small>{{ sprintf('%02d', $idx + 1) }} — {{ $category->name }}</small>
-                                    <h3>{{ $sub->name }}</h3>
-                                    <span class="product-link">
-                                        Explore Range <i class="fa-solid fa-arrow-right-long"></i>
-                                    </span>
-                                </div>
-                            </a>
-                        </div>
-                    @empty
-                        <div class="col-12 text-center py-4">
-                            <p class="text-muted">No subcategories found.</p>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- popular-prod list -->
-<section class="cdcollections section pt-0">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
                 <div class="sec-head split mb-3">
                     <div>
-                        <div class="eyebrow">Featured in this category</div>
-                        <h2 class="h-section">Popular <span class="accent-i">products</span></h2>
+                        <div class="eyebrow">Explore the range</div>
+                        <h2 class="h-section">Products in <span class="accent-i">{{ $subcategory->name }}</span></h2>
                     </div>
                 </div>
             </div>
@@ -153,8 +111,8 @@
                             </a>
                         </div>
                     @empty
-                        <div class="col-xl-12 text-center py-4">
-                            <p class="text-muted">No products found in this category.</p>
+                        <div class="col-xl-12 text-center py-5">
+                            <p class="text-muted fs-5">No products found in this subcategory.</p>
                         </div>
                     @endforelse
                 </div>

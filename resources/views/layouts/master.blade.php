@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Water Heaters & Geysers Portal')</title>
+    @hasSection('meta_description')
+    <meta name="description" content="@yield('meta_description')">
+    @endif
 
     
     <!-- CSS & JS Assets via Vite -->
@@ -74,6 +77,11 @@
                             Home
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link cdLine" href="{{ route('frontend.home') }}#products">
+                            Products
+                        </a>
+                    </li>
                     <!-- Categories Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle cdLine"
@@ -141,7 +149,7 @@
 
                 <!-- menu-btn -->
                 <div class="nav-cta">
-                    <a class="btn solid" href="#contact">Get a quote</a>
+                    <a class="btn solid" href="{{ route('frontend.contact') }}">Get a quote</a>
                 </div>
             </div>
         </div>

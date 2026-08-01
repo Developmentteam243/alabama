@@ -62,13 +62,19 @@
                                                 <strong>{{ $subcat->name }}</strong>
                                                 <span class="badge bg-secondary-lite text-secondary ms-2">{{ $subcat->code ?: 'N/A' }}</span>
                                             </div>
-                                            <form action="{{ route('subcategories.destroy', $subcat->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm text-danger border-0 bg-transparent p-0">
-                                                    Remove
-                                                </button>
-                                            </form>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <a href="{{ route('subcategories.edit', $subcat->id) }}" class="btn btn-sm text-warning p-0 border-0 bg-transparent">
+                                                    Edit
+                                                </a>
+                                                <span class="text-muted small">|</span>
+                                                <form action="{{ route('subcategories.destroy', $subcat->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm text-danger border-0 bg-transparent p-0">
+                                                        Remove
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </li>
                                     @endforeach
                                 </ul>

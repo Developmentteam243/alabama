@@ -1,6 +1,10 @@
 @extends('layouts.master')
 
-@section('title', $blog->title . ' - Alabama Insights')
+@section('title', $blog->meta_title ?: $blog->title . ' - Alabama Insights')
+
+@if($blog->meta_description)
+@section('meta_description', $blog->meta_description)
+@endif
 
 @section('content')
 <!-- Hero header -->

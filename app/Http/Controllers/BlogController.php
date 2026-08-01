@@ -37,10 +37,13 @@ class BlogController extends Controller
             'content' => 'required|string',
             'image' => 'nullable|image|max:10240',
             'is_active' => 'nullable|boolean',
+            'slug' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
         ]);
 
         $data = $validated;
-        $data['slug'] = $this->generateUniqueSlug($request->title);
+        $data['slug'] = $this->generateUniqueSlug($request->slug ?: $request->title);
         $data['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('image')) {
@@ -82,15 +85,16 @@ class BlogController extends Controller
             'content' => 'required|string',
             'image' => 'nullable|image|max:10240',
             'is_active' => 'nullable|boolean',
+            'slug' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
         ]);
 
         $data = $validated;
         $data['is_active'] = $request->has('is_active');
 
-        // Regenerate slug if title changed
-        if ($blog->title !== $request->title) {
-            $data['slug'] = $this->generateUniqueSlug($request->title, $blog->id);
-        }
+        // Generate slug using custom slug if provided, otherwise title
+        $data['slug'] = $this->generateUniqueSlug($request->slug ?: $request->title, $blog->id);
 
         if ($request->hasFile('image')) {
             $imageUrl = CloudinaryService::upload($request->file('image'));
