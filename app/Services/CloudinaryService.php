@@ -19,6 +19,22 @@ class CloudinaryService
         $cloudName = env('CLOUDINARY_CLOUD_NAME');
         $apiKey = env('CLOUDINARY_API_KEY');
         $apiSecret = env('CLOUDINARY_API_SECRET');
+        $cloudinaryUrl = env('CLOUDINARY_URL');
+
+        if ($cloudinaryUrl) {
+            $parsed = parse_url($cloudinaryUrl);
+            if ($parsed && isset($parsed['scheme']) && $parsed['scheme'] === 'cloudinary') {
+                if (isset($parsed['user'])) {
+                    $apiKey = $parsed['user'];
+                }
+                if (isset($parsed['pass'])) {
+                    $apiSecret = $parsed['pass'];
+                }
+                if (isset($parsed['host'])) {
+                    $cloudName = $parsed['host'];
+                }
+            }
+        }
 
         if (!$cloudName || !$apiKey || !$apiSecret) {
             Log::error('Cloudinary credentials are not fully configured in the environment.');

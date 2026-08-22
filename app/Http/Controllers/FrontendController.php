@@ -276,7 +276,8 @@ class FrontendController extends Controller
         return view('frontend.brand-show', compact('brand', 'products', 'categories'));
     }
     public function all_brands()  {
-        return view('frontend.all-brands');
+        $brands = Brand::orderBy('name')->get();
+        return view('frontend.all-brands', compact('brands'));
     }
 
     public function storeReview(Request $request, Product $product)

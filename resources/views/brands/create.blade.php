@@ -15,7 +15,7 @@
 
 <div class="page-body">
     <div class="container-xl">
-        <form action="{{ route('brands.store') }}" method="POST" class="card">
+        <form action="{{ route('brands.store') }}" method="POST" enctype="multipart/form-data" class="card">
             @csrf
             <div class="card-body">
                 <div class="row row-cards">
@@ -47,6 +47,21 @@
                         <div class="mb-3">
                             <label class="form-label">Country of Origin</label>
                             <input type="text" name="country_of_origin" class="form-control" value="{{ old('country_of_origin') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Logo Image</label>
+                            <input type="file" name="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
+                            @error('logo')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>

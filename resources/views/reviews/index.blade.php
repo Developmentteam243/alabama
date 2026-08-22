@@ -85,11 +85,20 @@
                                             @method('PUT')
                                             <input type="hidden" name="is_approved" value="{{ $review->is_approved ? 0 : 1 }}">
                                             @if($review->is_approved)
-                                                <button type="submit" class="btn btn-sm btn-outline-warning">
+                                                <button type="submit" class="btn btn-sm btn-outline-warning d-inline-flex align-items-center gap-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                        <path d="M9 12l6 0" />
+                                                    </svg>
                                                     Disapprove
                                                 </button>
                                             @else
-                                                <button type="submit" class="btn btn-sm btn-outline-success">
+                                                <button type="submit" class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                        <path d="M5 12l5 5l10 -10" />
+                                                    </svg>
                                                     Approve
                                                 </button>
                                             @endif
@@ -98,7 +107,15 @@
                                         <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M4 7l16 0" />
+                                                    <path d="M10 11l0 6" />
+                                                    <path d="M14 11l0 6" />
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                </svg>
                                                 Delete
                                             </button>
                                         </form>

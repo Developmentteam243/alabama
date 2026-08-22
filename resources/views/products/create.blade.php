@@ -273,47 +273,53 @@
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const categories = @json($categories);
-        const categorySelect = document.getElementById('category_id_select');
-        const subcategorySelect = document.getElementById('subcategory_id_select');
-        const oldSubcategoryId = "{{ old('subcategory_id') }}";
+function initCategoryFiltration() {
+    const categories = @json($categories);
+    const categorySelect = document.getElementById('category_id_select');
+    const subcategorySelect = document.getElementById('subcategory_id_select');
+    const oldSubcategoryId = "{{ old('subcategory_id') }}";
 
-        if (categorySelect && subcategorySelect) {
-            function updateSubcategories(categoryId, selectedSubId = null) {
-                subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-                
-                if (!categoryId) {
-                    subcategorySelect.disabled = true;
-                    return;
-                }
-
-                const selectedCategory = categories.find(cat => cat.id == categoryId);
-                if (selectedCategory && selectedCategory.subcategories.length > 0) {
-                    selectedCategory.subcategories.forEach(sub => {
-                        const option = document.createElement('option');
-                        option.value = sub.id;
-                        option.textContent = sub.name;
-                        if (selectedSubId && sub.id == selectedSubId) {
-                            option.selected = true;
-                        }
-                        subcategorySelect.appendChild(option);
-                    });
-                    subcategorySelect.disabled = false;
-                } else {
-                    subcategorySelect.disabled = true;
-                }
+    if (categorySelect && subcategorySelect) {
+        function updateSubcategories(categoryId, selectedSubId = null) {
+            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+            
+            if (!categoryId) {
+                subcategorySelect.disabled = true;
+                return;
             }
 
-            categorySelect.addEventListener('change', function () {
-                updateSubcategories(this.value);
-            });
-
-            // Handle old input (validation redirect fallback)
-            if (categorySelect.value) {
-                updateSubcategories(categorySelect.value, oldSubcategoryId);
+            const selectedCategory = categories.find(cat => cat.id == categoryId);
+            if (selectedCategory && selectedCategory.subcategories.length > 0) {
+                selectedCategory.subcategories.forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub.id;
+                    option.textContent = sub.name;
+                    if (selectedSubId && sub.id == selectedSubId) {
+                        option.selected = true;
+                    }
+                    subcategorySelect.appendChild(option);
+                });
+                subcategorySelect.disabled = false;
+            } else {
+                subcategorySelect.disabled = true;
             }
         }
-    });
+
+        categorySelect.addEventListener('change', function () {
+            updateSubcategories(this.value);
+        });
+
+        // Handle old input (validation redirect fallback)
+        if (categorySelect.value) {
+            updateSubcategories(categorySelect.value, oldSubcategoryId);
+        }
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCategoryFiltration);
+} else {
+    initCategoryFiltration();
+}
 </script>
 @endsection

@@ -100,6 +100,9 @@ class ProductController extends Controller
 
         $data = $validated;
         unset($data['product_images']);
+        unset($data['image']);
+        unset($data['brochure']);
+        unset($data['techsheet']);
 
         if ($request->hasFile('image')) {
             $imageUrl = \App\Services\CloudinaryService::upload($request->file('image'));
@@ -197,6 +200,9 @@ class ProductController extends Controller
 
         $data = $validated;
         unset($data['product_images']);
+        unset($data['image']);
+        unset($data['brochure']);
+        unset($data['techsheet']);
 
         if ($request->hasFile('image')) {
             $imageUrl = \App\Services\CloudinaryService::upload($request->file('image'));

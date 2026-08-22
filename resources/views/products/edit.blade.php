@@ -326,40 +326,40 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function initCategoryFiltration() {
     const container = document.getElementById('gallery-container');
-    if (!container) return;
+    if (container) {
+        function updateSortOrders() {
+            const items = container.querySelectorAll('.gallery-item');
+            items.forEach((item, index) => {
+                const input = item.querySelector('.sort-order-input');
+                if (input) input.value = index;
+            });
+        }
 
-    function updateSortOrders() {
-        const items = container.querySelectorAll('.gallery-item');
-        items.forEach((item, index) => {
-            const input = item.querySelector('.sort-order-input');
-            if (input) input.value = index;
+        container.addEventListener('click', function (e) {
+            const btnPrev = e.target.closest('.move-prev');
+            const btnNext = e.target.closest('.move-next');
+            
+            if (btnPrev) {
+                const item = btnPrev.closest('.gallery-item');
+                const prev = item.previousElementSibling;
+                if (prev) {
+                    container.insertBefore(item, prev);
+                    updateSortOrders();
+                }
+            }
+            
+            if (btnNext) {
+                const item = btnNext.closest('.gallery-item');
+                const next = item.nextElementSibling;
+                if (next) {
+                    container.insertBefore(next, item);
+                    updateSortOrders();
+                }
+            }
         });
     }
-
-    container.addEventListener('click', function (e) {
-        const btnPrev = e.target.closest('.move-prev');
-        const btnNext = e.target.closest('.move-next');
-        
-        if (btnPrev) {
-            const item = btnPrev.closest('.gallery-item');
-            const prev = item.previousElementSibling;
-            if (prev) {
-                container.insertBefore(item, prev);
-                updateSortOrders();
-            }
-        }
-        
-        if (btnNext) {
-            const item = btnNext.closest('.gallery-item');
-            const next = item.nextElementSibling;
-            if (next) {
-                container.insertBefore(next, item);
-                updateSortOrders();
-            }
-        }
-    });
 
     // Category -> Subcategory dynamic filtration
     const categories = @json($categories);
@@ -402,6 +402,12 @@ document.addEventListener('DOMContentLoaded', function () {
             updateSubcategories(categorySelect.value, activeSubcategoryId);
         }
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCategoryFiltration);
+} else {
+    initCategoryFiltration();
+}
 </script>
 @endsection

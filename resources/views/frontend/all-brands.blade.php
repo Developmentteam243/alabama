@@ -25,80 +25,26 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="row g-4">
+                    @foreach($brands as $brand)
                     <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                        <a href="#product-eglasstech" class="product-card text-decoration-none">
+                        <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="product-card text-decoration-none">
                             <div class="product-img">
-                                <img src="https://alabamauae.com/wp-content/uploads/2026/01/20.png"
-                                    alt="Lamborghini CaloreClima"
-                                    class="img-fluid">
+                                @if($brand->logo_url)
+                                    <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="img-fluid">
+                                @else
+                                    <span class="cdText">{{ $brand->name }}</span>
+                                @endif
                             </div>
                             <div class="product-body">
-                                <h3>Lamborghini CaloreClima</h3>
-                                <p class="short-desc">Italian heating engineering from Lamborghini CaloreClima.</p>
+                                <h3>{{ $brand->name }}</h3>
+                                <p class="short-desc">{{ \Illuminate\Support\Str::limit($brand->description ?: 'Partner brand', 120) }}</p>
                                 <span class="product-link">
                                     View brand <i class="fa-solid fa-arrow-right-long"></i>
                                 </span>
                             </div>
                         </a>
                     </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="cdText">Zenith Water Heater</span>
-                            </div>
-                            <div class="product-body">                                
-                                <h3>Zenith Water Heater</h3>
-                                <p class="short-desc">Made in the UAE by Star Industrial Products.</p>
-                                <span class="product-link">
-                                    View brand <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="cdText">Ariston</span>
-                            </div>
-                            <div class="product-body">
-                                <h3>Ariston</h3>
-                                <p class="short-desc">Ariston Thermo's solar systems, collectors and cylinders.</p>
-                                <span class="product-link">
-                                    View brand <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                        <a href="#product-eglasstech" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <img src="https://alabamauae.com/wp-content/uploads/2026/01/13.png"
-                                    alt="VERA"
-                                    class="img-fluid">
-                            </div>
-                            <div class="product-body">                                
-                                <h3>VERA</h3>
-                                <p class="short-desc">Greek solar thermal engineering by Papaemmanouel SA.</p>
-                                <span class="product-link">
-                                    View brand <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                        <a href="#" class="product-card text-decoration-none">
-                            <div class="product-img">
-                                <span class="cdText">Pegler</span>
-                            </div>
-                            <div class="product-body">                                
-                                <h3>Pegler</h3>
-                                <p class="short-desc">British-engineered valves from Pegler Yorkshire.</p>
-                                <span class="product-link">
-                                    View brand <i class="fa-solid fa-arrow-right-long"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

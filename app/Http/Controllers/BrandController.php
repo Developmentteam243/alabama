@@ -25,9 +25,21 @@ class BrandController extends Controller
             'code' => 'required|string|unique:brands,code|max:50',
             'manufacturer' => 'nullable|string|max:255',
             'country_of_origin' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'logo' => 'nullable|image|max:10240',
         ]);
 
-        Brand::create($validated);
+        $data = $validated;
+        unset($data['logo']);
+
+        if ($request->hasFile('logo')) {
+            $logoUrl = \App\Services\CloudinaryService::upload($request->file('logo'));
+            if ($logoUrl) {
+                $data['logo_url'] = $logoUrl;
+            }
+        }
+
+        Brand::create($data);
 
         return redirect()->route('brands.index')->with('success', 'Brand created successfully.');
     }
@@ -49,9 +61,21 @@ class BrandController extends Controller
             'code' => 'required|string|max:50|unique:brands,code,' . $brand->id,
             'manufacturer' => 'nullable|string|max:255',
             'country_of_origin' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'logo' => 'nullable|image|max:10240',
         ]);
 
-        $brand->update($validated);
+        $data = $validated;
+        unset($data['logo']);
+
+        if ($request->hasFile('logo')) {
+            $logoUrl = \App\Services\CloudinaryService::upload($request->file('logo'));
+            if ($logoUrl) {
+                $data['logo_url'] = $logoUrl;
+            }
+        }
+
+        $brand->update($data);
 
         return redirect()->route('brands.index')->with('success', 'Brand updated successfully.');
     }
