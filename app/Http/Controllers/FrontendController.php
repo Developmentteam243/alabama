@@ -68,13 +68,31 @@ class FrontendController extends Controller
         $capacities = Product::whereNotNull('capacity_l')->where('capacity_l', '!=', '')->distinct()->pluck('capacity_l')->sort();
         $mountings = Product::whereNotNull('orientation_mounting')->where('orientation_mounting', '!=', '')->distinct()->pluck('orientation_mounting')->sort();
 
+        // Dynamic stats
+        $totalProductsCount = Product::count();
+        $totalBrandsCount = Brand::count();
+
+        // Get categories for homepage showcase
+        $categories = Category::all();
+
+        // Spotlight brand (e.g., Lamborghini or first brand with description)
+        $spotlightBrand = Brand::where('slug', 'lamborghini-caloreclima')->first() ?? Brand::whereNotNull('description')->first() ?? Brand::first();
+
+        // Latest active blogs for homepage
+        $blogs = Blog::active()->latest()->limit(3)->get();
+
         return view('frontend.index', compact(
             'products',
             'featuredProducts',
             'brands',
+            'categories',
             'subcategories',
             'capacities',
-            'mountings'
+            'mountings',
+            'totalProductsCount',
+            'totalBrandsCount',
+            'spotlightBrand',
+            'blogs'
         ));
     }
 

@@ -40,6 +40,15 @@
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
+                            <label class="form-label">Category Description</label>
+                            <textarea name="description" rows="3" class="form-control @error('description') is-invalid @enderror" placeholder="Short summary of this category">{{ old('description', $category->description) }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
                             <label class="form-label">Category Banner Image</label>
                             <input type="file" name="banner" class="form-control @error('banner') is-invalid @enderror" accept="image/*">
                             @error('banner')

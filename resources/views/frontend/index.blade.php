@@ -44,8 +44,8 @@
 <section class="stats">
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="800"> <b>300+</b><span>Products in the catalogue</span></div></div>
-            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1000"> <b>5</b><span>Exclusive brand lines</span></div></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="800"> <b>{{ $totalProductsCount > 0 ? $totalProductsCount . '+' : '300+' }}</b><span>Products in the catalogue</span></div></div>
+            <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1000"> <b>{{ $totalBrandsCount > 0 ? $totalBrandsCount : '5' }}</b><span>Exclusive brand lines</span></div></div>
             <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1200"> <b>7</b><span>Emirates delivery coverage</span></div></div>
             <div class="col-xl-3 col-md-3 col-lg-3 col-sm-6"><div class="stat" data-aos="fade-up" data-aos-duration="1400"> <b>1:1</b><span>Direct sales support on WhatsApp</span></div></div>
         </div>
@@ -62,72 +62,34 @@
                         <div class="eyebrow">What we supply</div>
                         <h2 class="h-section">From boiler room to bathroom. <span class="accent-i">One supplier.</span></h2>
                     </div>
-                    <a class="link-arrow" href="#cat-hotwater">View all products <i class="fa-solid fa-angles-right"></i></a>
+                    <a class="link-arrow" href="#products">View all products <i class="fa-solid fa-angles-right"></i></a>
                 </div>
             </div>
             <div class="col-xl-12">
                 <div class="row">
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'hot-water-system') }}" data-aos="fade-up" data-aos-duration="800">
-                            <img
-                                src="https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp"
-                                alt="Hot water systems"
-                            />
-                            <div class="cat-body">
-                                <small>01 — Heating</small>
-                                <h3>Hot Water Systems</h3>
-                                <p>Electric, solar and heat-pump water heaters, boilers and calorifiers.</p>
-                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'plumbing-materials') }}" data-aos="fade-up" data-aos-duration="800">
-                            <img
-                                src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp"
-                                alt="Plumbing materials"
-                            />
-                            <div class="cat-body">
-                                <small>02 — Flow</small>
-                                <h3>Plumbing Materials</h3>
-                                <p>Pipes, fittings, valves, pumps and pressure control for every system.</p>
-                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'sanitaryware') }}" data-aos="fade-up" data-aos-duration="800">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="Sanitaryware" />
-                            <div class="cat-body">
-                                <small>03 — Sanitary</small>
-                                <h3>Sanitaryware</h3>
-                                <p>WCs, wash basins and shattafs for residential and commercial washrooms.</p>
-                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'bathroomware') }}" data-aos="fade-up" data-aos-duration="800">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/12-1.webp" alt="Bathroomware" />
-                            <div class="cat-body">
-                                <small>04 — Finish</small>
-                                <h3>Bathroomware</h3>
-                                <p>Shower mixers, taps and accessories that finish the bathroom right.</p>
-                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
-                        <a class="cat-card rv" href="{{ route('frontend.category.show', 'kitchen') }}" data-aos="fade-up" data-aos-duration="800">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/15-1.webp" alt="Kitchen" />
-                            <div class="cat-body">
-                                <small>05 — Kitchen</small>
-                                <h3>Kitchen</h3>
-                                <p>Sinks and sink taps built for daily use in UAE homes and facilities.</p>
-                                <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
-                            </div>
-                        </a>
-                    </div>
+                    @forelse($categories as $index => $category)
+                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
+                            <a class="cat-card rv" href="{{ route('frontend.category.show', $category->slug) }}" data-aos="fade-up" data-aos-duration="800">
+                                @if($category->banner_url)
+                                    <img src="{{ $category->banner_url }}" alt="{{ $category->name }}" />
+                                @else
+                                    <div class="d-flex align-items-center justify-content-center bg-light" style="height: 220px; font-size: 2rem; color: #94a3b8; font-weight: bold;">
+                                        {{ $category->name }}
+                                    </div>
+                                @endif
+                                <div class="cat-body">
+                                    <small>{{ sprintf('%02d', $index + 1) }} — {{ $category->name }}</small>
+                                    <h3>{{ $category->name }}</h3>
+                                    <p>{{ $category->description ?: 'High quality plumbing, fixtures and equipment for residential and commercial applications.' }}</p>
+                                    <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-12 text-center py-4">
+                            <p class="text-muted">No categories available at the moment.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -146,7 +108,7 @@
                     <p class="lede">We specialize in supplying everything required for residential, commercial, hospitality, industrial, and infrastructure projects across the UAE. Our extensive portfolio includes premium plumbing systems, sanitary ware, water heaters, pumps, valves, pipes, fittings, bathroom solutions, and other essential building materials from globally recognized manufacturers.</p>
                     <p class="lede">With strategically located warehouses and an efficient logistics network, we ensure <strong>fast and dependable delivery across all Emirates</strong>, helping contractors, developers, consultants, retailers, and MEP professionals keep their projects on schedule.</p>
                     <p class="lede">Our product portfolio consists of <strong>project-approved brands</strong> that meet the stringent quality and compliance standards required by leading consultants, developers, and government authorities across the UAE.</p>
-                    <a class="btn  mt-2" href="#about">More about Alabama</a>
+                    <a class="btn  mt-2" href="{{ route('frontend.about') }}">More about Alabama</a>
                 </div>
             </div>
             <div class="col-xl-6 col-md-6 col-lg-6">
@@ -159,51 +121,67 @@
 </section>
 
 <!-- brand -->
+@if($spotlightBrand)
 <section class="cdbrand">
     <div class="container">            
         <div class="spot">
-            <div class="spot-media" data-aos="zoom-in"><img src="https://alabamauae.com/wp-content/uploads/2026/01/E-GLASSTECH-1.webp" alt="Lamborghini E-Glasstech water heater" class="img-fluid cd-brand"/></div>
+            <div class="spot-media" data-aos="zoom-in">
+                @if($spotlightBrand->logo_url)
+                    <img src="{{ $spotlightBrand->logo_url }}" alt="{{ $spotlightBrand->name }}" class="img-fluid cd-brand"/>
+                @else
+                    <div class="d-flex align-items-center justify-content-center h-100 bg-secondary text-white fw-bold fs-2 p-4">
+                        {{ $spotlightBrand->name }}
+                    </div>
+                @endif
+            </div>
             <div class="spot-copy on-dark" data-aos="zoom-out" data-aos-duration="1400">
                 <div class="eyebrow">Brand spotlight</div>
-                <h2 class="h-section">Lamborghini CaloreClima. Italian engineering, <span class="accent-i">7-year tanks.</span></h2>
-                <p>76 electric water heater SKUs across the TAURUS, E-Glasstech and Glass Thermal families — glasslined tanks, serviceable flanged elements, warranties up to 7 years.</p>
+                <h2 class="h-section">{{ $spotlightBrand->name }}. <span class="accent-i">Trusted Quality.</span></h2>
+                <p>{{ $spotlightBrand->description ?: 'Premium manufacturer engineered with precision and industry-leading performance.' }}</p>
                 <div class="spot-ctas">
-                    <a class="btn brass" href="{{ route('frontend.brand.show', 'lamborghini-caloreclima') }}">View brand</a>
+                    <a class="btn brass" href="{{ route('frontend.brand.show', $spotlightBrand->slug) }}">View brand</a>
                     <a class="btn ghost-invert" href="{{ route('frontend.all-brands') }}">All brands</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+@endif
 
 <!-- brand-strip -->
+@if($brands->isNotEmpty())
 <section class="brand-strip">
     <div class="marquee-wrap">
         <div class="marquee">
             <!-- First Set -->
-            <img src="{{url('assets/images/brands/1.png') }}" alt="AQUAVERA" class="img-fluid" />
-            <img src="{{url('assets/images/brands/9.png') }}" alt="HC" class="img-fluid" />
-            <img src="{{url('assets/images/brands/3.png') }}" alt="JETFIX" class="img-fluid" />
-            <img src="{{url('assets/images/brands/4.png') }}" alt="JOFLEX" class="img-fluid" />
-            <img src="{{url('assets/images/brands/5.png') }}" alt="JOFLUSH" class="img-fluid" />
-            <img src="{{url('assets/images/brands/6.png') }}" alt="JOMIX" class="img-fluid" />
-            <img src="{{url('assets/images/brands/7.png') }}" alt="LAMBORGHINI" class="img-fluid" />
-            <img src="{{url('assets/images/brands/8.png') }}" alt="NUOVA" class="img-fluid" />
-            <img src="{{url('assets/images/brands/10.png') }}" alt="VERA" class="img-fluid" />
+            @foreach($brands as $brand)
+                @if($brand->logo_url)
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" title="{{ $brand->name }}" class="d-inline-flex align-items-center">
+                        <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="img-fluid" style="max-height: 50px; object-fit: contain;" />
+                    </a>
+                @else
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="d-inline-flex align-items-center text-decoration-none px-3 text-dark fw-bold">
+                        {{ $brand->name }}
+                    </a>
+                @endif
+            @endforeach
 
-            <!-- Duplicate Set -->
-            <img src="{{url('assets/images/brands/1.png') }}" alt="AQUAVERA" class="img-fluid" />
-            <img src="{{url('assets/images/brands/9.png') }}" alt="HC" class="img-fluid" />
-            <img src="{{url('assets/images/brands/3.png') }}" alt="JETFIX" class="img-fluid" />
-            <img src="{{url('assets/images/brands/4.png') }}" alt="JOFLEX" class="img-fluid" />
-            <img src="{{url('assets/images/brands/5.png') }}" alt="JOFLUSH" class="img-fluid" />
-            <img src="{{url('assets/images/brands/6.png') }}" alt="JOMIX" class="img-fluid" />
-            <img src="{{url('assets/images/brands/7.png') }}" alt="LAMBORGHINI" class="img-fluid" />
-            <img src="{{url('assets/images/brands/8.png') }}" alt="NUOVA" class="img-fluid" />
-            <img src="{{url('assets/images/brands/10.png') }}" alt="VERA" class="img-fluid" />
+            <!-- Duplicate Set for smooth infinite marquee loop -->
+            @foreach($brands as $brand)
+                @if($brand->logo_url)
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" title="{{ $brand->name }}" class="d-inline-flex align-items-center">
+                        <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="img-fluid" style="max-height: 50px; object-fit: contain;" />
+                    </a>
+                @else
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="d-inline-flex align-items-center text-decoration-none px-3 text-dark fw-bold">
+                        {{ $brand->name }}
+                    </a>
+                @endif
+            @endforeach
         </div>
     </div>
 </section>
+@endif
 
 <!-- collections -->
 <section class="cdcollections" id="products">
@@ -264,39 +242,22 @@
                 <div class="brand-strip" style="background: transparent; border: none; padding: 1rem 0;">
                     <div class="marquee-wrap">
                         <div class="marquee" style="animation-duration: 25s; gap: 0;">
+                            @php
+                                $certFiles = glob(public_path('assets/images/certification/*.{webp,png,jpg,jpeg}'), GLOB_BRACE);
+                            @endphp
                             <!-- First Set -->
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
+                            @foreach($certFiles as $certFile)
+                                <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                    <img src="{{ asset('assets/images/certification/' . basename($certFile)) }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                                </div>
+                            @endforeach
                             
                             <!-- Duplicate Set -->
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/1.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/2.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/3.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/4.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
-                            <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
-                                <img src="{{url('assets/images/certification/5.webp') }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
-                            </div>
+                            @foreach($certFiles as $certFile)
+                                <div class="cell" style="display: inline-flex; width: 220px; border: 1px solid var(--line); border-radius: var(--radius); height: 160px; align-items: center; justify-content: center; padding: 20px; background: var(--paper); flex-shrink: 0; margin-right: 20px;">
+                                    <img src="{{ asset('assets/images/certification/' . basename($certFile)) }}" alt="Certification" style="max-height: 120px; width: auto; object-fit: contain;" />
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -329,6 +290,7 @@
 </section>
 
 <!-- blog -->
+@if($blogs->isNotEmpty())
 <section class="cdBlog section">
     <div class="container">
         <div class="row">
@@ -338,49 +300,37 @@
                         <div class="eyebrow">Insights</div>
                         <h2 class="h-section">From our <span class="accent-i">blog</span></h2>
                     </div>
-                    <a class="link-arrow" href="#blog">All articles <i class="fa-solid fa-angles-right"></i></a>
+                    <a class="link-arrow" href="{{ route('frontend.blog') }}">All articles <i class="fa-solid fa-angles-right"></i></a>
                 </div>
                 <div class="blog-grid">
-                    <a class="post rv" href="#blog">
-                        <div class="pi">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/hot-water-system.webp" alt="" />
-                        </div>
-                        <div class="pc">
-                            <div class="meta"><span class="tagpill">Hot water</span><span class="date">June 2026</span></div>
-                            <h3>Electric vs. solar water heaters: what UAE villas actually need</h3>
-                            <p>A practical comparison of running costs, capacity and lifespan for the Gulf climate.</p>
-                            <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
-                        </div>
-                    </a>
-                    <a class="post rv" href="#blog">
-                        <div class="pi">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="" />
-                        </div>
-                        <div class="pc">
-                            <div class="meta"><span class="tagpill">Plumbing</span><span class="date">May 2026</span></div>
-                            <h3>How to choose the right pump for multi-storey buildings</h3>
-                            <p>Multistage, self-priming or booster — matching pump type to head and flow requirements.</p>
-                            <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
-                        </div>
-                    </a>
-                    <a class="post rv" href="#blog">
-                        <div class="pi">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" alt="" />
-                        </div>
-                        <div class="pc">
-                            <div class="meta">
-                                <span class="tagpill">Sanitaryware</span><span class="date">April 2026</span>
+                    @foreach($blogs as $blog)
+                        <a class="post rv" href="{{ route('frontend.blog.show', $blog->slug) }}">
+                            <div class="pi">
+                                @if($blog->image_url)
+                                    <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}" />
+                                @else
+                                    <div class="d-flex align-items-center justify-content-center bg-light text-muted fw-bold" style="height: 200px;">
+                                        {{ $blog->tag ?: 'Alabama' }}
+                                    </div>
+                                @endif
                             </div>
-                            <h3>Brass vs. zinc fittings: why the material behind the finish matters</h3>
-                            <p>What separates a mixer that lasts fifteen years from one that fails in two.</p>
-                            <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
-                        </div>
-                    </a>
+                            <div class="pc">
+                                <div class="meta">
+                                    <span class="tagpill">{{ $blog->tag ?: 'Insights' }}</span>
+                                    <span class="date">{{ $blog->created_at ? $blog->created_at->format('F Y') : '' }}</span>
+                                </div>
+                                <h3>{{ $blog->title }}</h3>
+                                <p>{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 120) }}</p>
+                                <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </section>
+@endif
 
 {{-- JS --}}
 <script src="{{ url('assets/js/gsap.min.js') }}"></script>
