@@ -3,12 +3,79 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Water Heaters & Geysers Portal')</title>
+    <title>@yield('title', 'Water Heaters & Geysers Portal - Alabama Building Materials')</title>
     @hasSection('meta_description')
     <meta name="description" content="@yield('meta_description')">
     @endif
+    <link rel="canonical" href="{{ url()->current() }}" />
 
-    
+    <!-- OpenGraph & Twitter Meta Tags -->
+    @yield('meta_tags')
+
+    <!-- Structured Data Schema Markup -->
+    @yield('schema_markup')
+
+    @php
+        $gtmId = $siteSettings['server_gtm_container_id'] ?? env('SERVER_GTM_CONTAINER_ID');
+        $gtmUrl = rtrim($siteSettings['server_gtm_url'] ?? env('SERVER_GTM_URL', 'https://www.googletagmanager.com'), '/');
+        $ga4Id = $siteSettings['ga4_measurement_id'] ?? env('GA4_MEASUREMENT_ID');
+        $clarityId = $siteSettings['clarity_project_id'] ?? env('CLARITY_PROJECT_ID');
+        $pixelId = $siteSettings['meta_pixel_id'] ?? env('META_PIXEL_ID');
+    @endphp
+
+    <!-- Server-Side Google Tag Manager (ServerGTM) -->
+    @if(!empty($gtmId))
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '{{ $gtmUrl }}/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ $gtmId }}');
+    </script>
+    @endif
+
+    <!-- Google Analytics 4 (Direct GA4 if GTM not active) -->
+    @if(!empty($ga4Id) && empty($gtmId))
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $ga4Id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ $ga4Id }}');
+    </script>
+    @endif
+
+    <!-- Microsoft Clarity -->
+    @if(!empty($clarityId))
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "{{ $clarityId }}");
+    </script>
+    @endif
+
+    <!-- Meta Pixel (Facebook) -->
+    @if(!empty($pixelId))
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ $pixelId }}');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id={{ $pixelId }}&ev=PageView&noscript=1"
+    alt="facebook pixel" /></noscript>
+    @endif
+
     <!-- CSS & JS Assets via Vite -->
     @vite(['resources/js/app.js'])
     
@@ -44,6 +111,12 @@
     </style>
 </head>
 <body>
+    @if(!empty($gtmId))
+    <!-- Server GTM (noscript) -->
+    <noscript><iframe src="{{ $gtmUrl }}/ns.html?id={{ $gtmId }}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    @endif
+
     {{--Go to top--}}
     <div id="return-to-top"><i class="fa fa-angle-up"></i></div>
 

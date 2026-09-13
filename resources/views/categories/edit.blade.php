@@ -47,22 +47,45 @@
                             @enderror
                         </div>
                     </div>
+
+                    <!-- Independent Images -->
                     <div class="col-md-12">
+                        <hr class="my-3" />
+                        <h3 class="card-title mb-3">Category Imagery (Independent Dimensions)</h3>
+                    </div>
+                    <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label">Category Banner Image</label>
+                            <label class="form-label fw-bold">Homepage Category Card Image</label>
+                            <input type="file" name="home_image" class="form-control @error('home_image') is-invalid @enderror" accept="image/*">
+                            @error('home_image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            @if($category->home_image_url)
+                                <div class="mt-2">
+                                    <label class="form-label small">Current Home Card Preview:</label>
+                                    <img src="{{ $category->home_image_url }}" alt="{{ $category->name }} Home Card" class="img-thumbnail" style="max-height: 140px;">
+                                </div>
+                            @endif
+                            <small class="form-hint">Card thumbnail for the <strong>Homepage showcase</strong> (Aspect ratio ~4:5 portrait, e.g. 600x750px).</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Category Page Top Banner</label>
                             <input type="file" name="banner" class="form-control @error('banner') is-invalid @enderror" accept="image/*">
                             @error('banner')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             @if($category->banner_url)
                                 <div class="mt-2">
-                                    <label class="form-label small">Current Banner Preview:</label>
-                                    <img src="{{ $category->banner_url }}" alt="{{ $category->name }} Banner" class="img-thumbnail" style="max-height: 150px;">
+                                    <label class="form-label small">Current Page Banner Preview:</label>
+                                    <img src="{{ $category->banner_url }}" alt="{{ $category->name }} Banner" class="img-thumbnail" style="max-height: 140px;">
                                 </div>
                             @endif
-                            <small class="form-hint">Upload a banner image for this category (displayed as the header on the frontend).</small>
+                            <small class="form-hint">Wide header banner for the <strong>Category detail page</strong> (Panorama banner, e.g. 1920x450px).</small>
                         </div>
                     </div>
+
                     <!-- SEO Fields -->
                     <div class="col-md-12">
                         <hr class="my-4" />

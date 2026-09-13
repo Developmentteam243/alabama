@@ -11,30 +11,29 @@
             <div class="col-xl-12">
                 <div class="content">
                     <div class="rv" data-aos="fade-right">
-                        <div class="eyebrow">Plumbing &amp; building materials — Dubai, UAE</div>
-                        <h1 class="h-display">Every build runs on what's <span class="accent-i">behind the wall.</span></h1>
+                        <div class="eyebrow">{{ $siteSettings['hero_eyebrow'] ?? 'Plumbing & building materials — Dubai, UAE' }}</div>
+                        <h1 class="h-display">{!! $siteSettings['hero_title'] ?? 'Every build runs on what\'s <span class="accent-i">behind the wall.</span>' !!}</h1>
                         <p class="lede">
-                            Water heaters, pipes and fittings, valves, pumps and sanitaryware — sourced, stocked and delivered for
-                            residential, commercial and industrial projects across the Emirates.
+                            {{ $siteSettings['hero_description'] ?? 'Water heaters, pipes and fittings, valves, pumps and sanitaryware — sourced, stocked and delivered for residential, commercial and industrial projects across the Emirates.' }}
                         </p>
                         <div class="hero-ctas">
-                            <a class="btn solid" href="{{ route('frontend.contact') }}">Get a quote</a>
-                            <a class="btn" href="#cat-hotwater">Browse categories</a>
+                            <a class="btn solid" href="{{ $siteSettings['hero_btn1_link'] ?? route('frontend.contact') }}">{{ $siteSettings['hero_btn1_text'] ?? 'Get a quote' }}</a>
+                            <a class="btn" href="{{ $siteSettings['hero_btn2_link'] ?? '#cat-hotwater' }}">{{ $siteSettings['hero_btn2_text'] ?? 'Browse categories' }}</a>
                         </div>
                     </div>
                     <div class="hero-media" data-aos="fade-left">
                         <div class="frame">
-                            <img src="https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp" class="img-fluid" alt="Premium sanitaryware" />
+                            <img src="{{ $siteSettings['hero_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp' }}" class="img-fluid" alt="Alabama plumbing materials" />
                         </div>
                         <div class="cdtag">
-                            <strong>Dubai Investments Park 2</strong>
-                            <span>Warehouse &amp; sales — supplying trade and projects UAE-wide.</span>
+                            <strong>{{ $siteSettings['hero_tag_title'] ?? 'Dubai Investments Park 2' }}</strong>
+                            <span>{{ $siteSettings['hero_tag_desc'] ?? 'Warehouse & sales — supplying trade and projects UAE-wide.' }}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-12">
-                <div class="hero-ghost">ALABAMA</div>
+                <div class="hero-ghost">{{ $siteSettings['hero_ghost_text'] ?? 'ALABAMA' }}</div>
             </div>
         </div>
     </div>
@@ -70,10 +69,13 @@
                     @forelse($categories as $index => $category)
                         <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
                             <a class="cat-card rv" href="{{ route('frontend.category.show', $category->slug) }}" data-aos="fade-up" data-aos-duration="800">
-                                @if($category->banner_url)
-                                    <img src="{{ $category->banner_url }}" alt="{{ $category->name }}" />
+                                @php
+                                    $catImg = $category->home_image_url ?: $category->banner_url;
+                                @endphp
+                                @if($catImg)
+                                    <img src="{{ $catImg }}" alt="{{ $category->name }}" />
                                 @else
-                                    <div class="d-flex align-items-center justify-content-center bg-light" style="height: 220px; font-size: 2rem; color: #94a3b8; font-weight: bold;">
+                                    <div class="d-flex align-items-center justify-content-center bg-light text-dark" style="height: 100%; min-height: 480px; font-size: 2rem; font-weight: bold;">
                                         {{ $category->name }}
                                     </div>
                                 @endif

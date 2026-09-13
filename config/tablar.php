@@ -179,6 +179,11 @@ return [
             'icon' => 'ti ti-file-text',
             'route' => 'quotes.index'
         ],
+        [
+            'text' => 'Site & Tracking Settings',
+            'icon' => 'ti ti-settings',
+            'route' => 'settings.index'
+        ],
     ],
 
     /*

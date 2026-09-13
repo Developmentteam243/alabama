@@ -46,21 +46,29 @@
                 </div>
             </div>
             <div class="col-xl-12">
-                <div class="row g-4">
+                <div class="row g-3">
                     @forelse($subcategories as $idx => $sub)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                            <a href="{{ route('frontend.subcategory.show', [$category->slug, $sub->slug]) }}" class="product-card text-decoration-none">
-                                <div class="product-img" style="@if($sub->banner_url) background: url('{{ $sub->banner_url }}') no-repeat center center / cover; height: 180px; @endif">
-                                    @if(!$sub->banner_url)
-                                        <span class="ghost">{{ strtoupper(substr($sub->name, 0, 1)) }}</span>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-aos="fade-up">
+                            <a href="{{ route('frontend.subcategory.show', [$category->slug, $sub->slug]) }}" class="subcat-card">
+                                <div class="subcat-img-wrap">
+                                    @if($sub->banner_url)
+                                        <img src="{{ $sub->banner_url }}" alt="{{ $sub->name }}" loading="lazy" />
+                                    @else
+                                        <div class="subcat-placeholder">
+                                            {{ strtoupper(substr($sub->name, 0, 1)) }}
+                                        </div>
                                     @endif
                                 </div>
-                                <div class="product-body">
-                                    <small>{{ sprintf('%02d', $idx + 1) }} — {{ $category->name }}</small>
-                                    <h3>{{ $sub->name }}</h3>
-                                    <span class="product-link">
-                                        Explore Range <i class="fa-solid fa-arrow-right-long"></i>
-                                    </span>
+                                <div class="subcat-body">
+                                    <div>
+                                        <small>{{ sprintf('%02d', $idx + 1) }} · {{ $category->name }}</small>
+                                        <h3>{{ $sub->name }}</h3>
+                                    </div>
+                                    <div>
+                                        <span class="subcat-link">
+                                            Explore Range <i class="fa-solid fa-arrow-right-long"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </a>
                         </div>

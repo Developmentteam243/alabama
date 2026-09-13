@@ -11,6 +11,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.home');
 Route::get('/about', [FrontendController::class, 'about'])->name('frontend.about');
@@ -39,5 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('subcategories/{subcategory}', [CategoryController::class, 'destroySubcategory'])->name('subcategories.destroy');
     Route::resource('reviews', ReviewController::class)->only(['index', 'update', 'destroy']);
     Route::resource('quotes', QuoteController::class)->only(['index', 'destroy']);
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
 });
 

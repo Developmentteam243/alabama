@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Subcategory;
+use App\Services\CloudinaryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -29,15 +30,23 @@ class CategoryController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'banner' => 'nullable|image|max:10240',
+            'home_image' => 'nullable|image|max:10240',
         ]);
 
         $data = $validated;
-        unset($data['banner']);
+        unset($data['banner'], $data['home_image']);
 
         if ($request->hasFile('banner')) {
-            $bannerUrl = \App\Services\CloudinaryService::upload($request->file('banner'));
+            $bannerUrl = CloudinaryService::upload($request->file('banner'));
             if ($bannerUrl) {
                 $data['banner_url'] = $bannerUrl;
+            }
+        }
+
+        if ($request->hasFile('home_image')) {
+            $homeImageUrl = CloudinaryService::upload($request->file('home_image'));
+            if ($homeImageUrl) {
+                $data['home_image_url'] = $homeImageUrl;
             }
         }
 
@@ -66,15 +75,23 @@ class CategoryController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'banner' => 'nullable|image|max:10240',
+            'home_image' => 'nullable|image|max:10240',
         ]);
 
         $data = $validated;
-        unset($data['banner']);
+        unset($data['banner'], $data['home_image']);
 
         if ($request->hasFile('banner')) {
-            $bannerUrl = \App\Services\CloudinaryService::upload($request->file('banner'));
+            $bannerUrl = CloudinaryService::upload($request->file('banner'));
             if ($bannerUrl) {
                 $data['banner_url'] = $bannerUrl;
+            }
+        }
+
+        if ($request->hasFile('home_image')) {
+            $homeImageUrl = CloudinaryService::upload($request->file('home_image'));
+            if ($homeImageUrl) {
+                $data['home_image_url'] = $homeImageUrl;
             }
         }
 
@@ -95,9 +112,21 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:50|unique:subcategories,code',
+            'slug' => 'nullable|string|max:255|unique:subcategories,slug',
+            'banner' => 'nullable|image|max:10240',
         ]);
 
-        $category->subcategories()->create($validated);
+        $data = $validated;
+        unset($data['banner']);
+
+        if ($request->hasFile('banner')) {
+            $bannerUrl = CloudinaryService::upload($request->file('banner'));
+            if ($bannerUrl) {
+                $data['banner_url'] = $bannerUrl;
+            }
+        }
+
+        $category->subcategories()->create($data);
 
         return redirect()->route('categories.index')->with('success', 'Subcategory added successfully.');
     }
@@ -128,7 +157,7 @@ class CategoryController extends Controller
         unset($data['banner']);
 
         if ($request->hasFile('banner')) {
-            $bannerUrl = \App\Services\CloudinaryService::upload($request->file('banner'));
+            $bannerUrl = CloudinaryService::upload($request->file('banner'));
             if ($bannerUrl) {
                 $data['banner_url'] = $bannerUrl;
             }

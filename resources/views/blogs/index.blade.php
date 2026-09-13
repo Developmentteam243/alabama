@@ -13,6 +13,11 @@
             <div class="col-12 col-md-auto ms-auto d-print-none">
                 <div class="btn-list">
                     <a href="{{ route('blogs.create') }}" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 5l0 14" />
+                            <path d="M5 12l14 0" />
+                        </svg>
                         Add Blog Post
                     </a>
                 </div>
@@ -36,10 +41,10 @@
                     <thead>
                         <tr>
                             <th>Image</th>
-                            <th>Title</th>
-                            <th>Tag</th>
+                            <th>Title & Author</th>
+                            <th>Tags</th>
                             <th>Status</th>
-                            <th>Date Created</th>
+                            <th>Date / Schedule</th>
                             <th class="w-1">Actions</th>
                         </tr>
                     </thead>
@@ -48,30 +53,48 @@
                             <tr>
                                 <td>
                                     @if($blog->image_url)
-                                        <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}" class="avatar avatar-md rounded">
+                                        <img src="{{ $blog->image_url }}" alt="{{ $blog->image_alt ?: $blog->title }}" class="avatar avatar-md rounded" style="object-fit: cover;">
                                     @else
                                         <span class="avatar avatar-md rounded bg-secondary-lt">No Image</span>
                                     @endif
                                 </td>
                                 <td>
                                     <strong>{{ $blog->title }}</strong>
-                                    <div class="text-muted small">/blog/{{ $blog->slug }}</div>
+                                    <div class="text-muted small">
+                                        Author: {{ $blog->author_name ?: 'Alabama Team' }} · 
+                                        <a href="{{ route('frontend.blog.show', $blog->slug) }}" target="_blank" class="text-secondary text-decoration-none">/blog/{{ $blog->slug }}</a>
+                                    </div>
                                 </td>
                                 <td>
                                     @if($blog->tag)
-                                        <span class="badge bg-purple-lt">{{ $blog->tag }}</span>
+                                        @foreach(explode(',', $blog->tag) as $t)
+                                            <span class="badge bg-purple-lt me-1">{{ trim($t) }}</span>
+                                        @endforeach
                                     @else
-                                        -
+                                        <span class="text-muted small">-</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if($blog->is_active)
-                                        <span class="badge bg-green text-green-fg">Active</span>
+                                    @if($blog->status === 'published' || empty($blog->status))
+                                        <span class="badge bg-green text-green-fg">Published</span>
+                                    @elseif($blog->status === 'scheduled')
+                                        <span class="badge bg-yellow text-yellow-fg">Scheduled</span>
                                     @else
-                                        <span class="badge bg-secondary text-secondary-fg">Inactive</span>
+                                        <span class="badge bg-secondary text-secondary-fg">Draft</span>
+                                    @endif
+
+                                    @if(!$blog->is_active)
+                                        <span class="badge bg-danger-lt ms-1">Disabled</span>
                                     @endif
                                 </td>
-                                <td>{{ $blog->created_at->format('M d, Y') }}</td>
+                                <td>
+                                    @if($blog->status === 'scheduled' && $blog->scheduled_at)
+                                        <span class="text-warning small d-block">Scheduled:</span>
+                                        {{ $blog->scheduled_at->format('M d, Y H:i') }}
+                                    @else
+                                        {{ $blog->created_at->format('M d, Y') }}
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-list flex-nowrap">
                                         <a href="{{ route('blogs.edit', $blog->id) }}" class="btn btn-sm btn-outline-warning d-inline-flex align-items-center gap-1">
