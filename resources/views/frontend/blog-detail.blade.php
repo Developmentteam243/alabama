@@ -35,28 +35,28 @@
         <!-- Automated Article Schema -->
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "Article",
+            "@@context": "https://schema.org",
+            "@@type": "Article",
             "headline": {{ json_encode($blog->title) }},
             "description": {{ json_encode($blog->meta_description ?: ($blog->excerpt ?: Str::limit(strip_tags($blog->content), 150))) }},
             "image": [{{ json_encode($blog->image_url ?: url('assets/images/logo.webp')) }}],
             "datePublished": "{{ $blog->published_at ? $blog->published_at->toIso8601String() : $blog->created_at->toIso8601String() }}",
             "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
             "author": {
-                "@type": "Person",
+                "@@type": "Person",
                 "name": {{ json_encode($blog->author_name ?: 'Alabama Team') }}
             },
             "publisher": {
-                "@type": "Organization",
+                "@@type": "Organization",
                 "name": "Alabama Building Materials Trading L.L.C.",
                 "logo": {
-                    "@type": "ImageObject",
+                    "@@type": "ImageObject",
                     "url": "{{ url('assets/images/logo.webp') }}"
                 }
             },
             "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "{{ request()->fullUrl() }}"
+                "@@type": "WebPage",
+                "@@id": "{{ request()->fullUrl() }}"
             }
         }
         </script>
@@ -65,15 +65,15 @@
         <!-- Automated FAQPage Schema -->
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
+            "@@context": "https://schema.org",
+            "@@type": "FAQPage",
             "mainEntity": [
                 @foreach($blog->faqs as $fIndex => $faq)
                 {
-                    "@type": "Question",
+                    "@@type": "Question",
                     "name": {{ json_encode($faq['question'] ?? '') }},
                     "acceptedAnswer": {
-                        "@type": "Answer",
+                        "@@type": "Answer",
                         "text": {{ json_encode($faq['answer'] ?? '') }}
                     }
                 }{{ !$loop->last ? ',' : '' }}

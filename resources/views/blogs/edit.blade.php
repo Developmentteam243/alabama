@@ -221,7 +221,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label">Custom Schema Markup (JSON-LD - Optional)</label>
-                                    <textarea name="schema_markup" rows="4" class="form-control font-monospace small" placeholder='{ "@context": "https://schema.org", "@type": "Article", ... }'>{{ old('schema_markup', $blog->schema_markup) }}</textarea>
+                                    <textarea name="schema_markup" rows="4" class="form-control font-monospace small" placeholder='{ "@@context": "https://schema.org", "@@type": "Article", ... }'>{{ old('schema_markup', $blog->schema_markup) }}</textarea>
                                     <small class="form-hint">Leave blank to automatically generate Schema.org <strong>Article</strong> and <strong>FAQPage</strong> JSON-LD markup on the frontend.</small>
                                 </div>
                             </div>
