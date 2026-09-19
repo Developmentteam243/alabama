@@ -104,18 +104,18 @@
         <div class="row">
             <div class="col-xl-6 col-md-6 col-lg-6">
                 <div data-aos="flip-left">
-                    <div class="eyebrow">Who we are</div>
-                    <h2 class="h-section mt-3 pe-md-4">Built on quality. <span class="accent-i">Trusted for excellence.</span></h2>
-                    <p class="lede">Alabama Building Materials Trading LLC is one of the UAE’s trusted building materials suppliers, backed by a team of industry veterans with over <strong>40 years of combined expertise</strong> in delivering reliable, high-quality construction and plumbing solutions.</p>
-                    <p class="lede">We specialize in supplying everything required for residential, commercial, hospitality, industrial, and infrastructure projects across the UAE. Our extensive portfolio includes premium plumbing systems, sanitary ware, water heaters, pumps, valves, pipes, fittings, bathroom solutions, and other essential building materials from globally recognized manufacturers.</p>
-                    <p class="lede">With strategically located warehouses and an efficient logistics network, we ensure <strong>fast and dependable delivery across all Emirates</strong>, helping contractors, developers, consultants, retailers, and MEP professionals keep their projects on schedule.</p>
-                    <p class="lede">Our product portfolio consists of <strong>project-approved brands</strong> that meet the stringent quality and compliance standards required by leading consultants, developers, and government authorities across the UAE.</p>
-                    <a class="btn  mt-2" href="{{ route('frontend.about') }}">More about Alabama</a>
+                    <div class="eyebrow">{{ $siteSettings['who_we_are_eyebrow'] ?? 'Who we are' }}</div>
+                    <h2 class="h-section mt-3 pe-md-4">{!! $siteSettings['who_we_are_title'] ?? 'Built on quality. <span class="accent-i">Trusted for excellence.</span>' !!}</h2>
+                    <p class="lede">{!! $siteSettings['who_we_are_p1'] ?? 'Alabama Building Materials Trading LLC is one of the UAE’s trusted building materials suppliers, backed by a team of industry veterans with over <strong>40 years of combined expertise</strong> in delivering reliable, high-quality construction and plumbing solutions.' !!}</p>
+                    <p class="lede">{!! $siteSettings['who_we_are_p2'] ?? 'We specialize in supplying everything required for residential, commercial, hospitality, industrial, and infrastructure projects across the UAE. Our extensive portfolio includes premium plumbing systems, sanitary ware, water heaters, pumps, valves, pipes, fittings, bathroom solutions, and other essential building materials from globally recognized manufacturers.' !!}</p>
+                    <p class="lede">{!! $siteSettings['who_we_are_p3'] ?? 'With strategically located warehouses and an efficient logistics network, we ensure <strong>fast and dependable delivery across all Emirates</strong>, helping contractors, developers, consultants, retailers, and MEP professionals keep their projects on schedule.' !!}</p>
+                    <p class="lede">{!! $siteSettings['who_we_are_p4'] ?? 'Our product portfolio consists of <strong>project-approved brands</strong> that meet the stringent quality and compliance standards required by leading consultants, developers, and government authorities across the UAE.' !!}</p>
+                    <a class="btn mt-2" href="{{ route('frontend.about') }}">More about Alabama</a>
                 </div>
             </div>
             <div class="col-xl-6 col-md-6 col-lg-6">
                 <div class="media" data-aos="flip-up">
-                    <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="Alabama product range" class="img-fluid cdqulity" />
+                    <img src="{{ $siteSettings['who_we_are_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp' }}" alt="Alabama product range" class="img-fluid cdqulity" />
                 </div>
             </div>            
         </div>        

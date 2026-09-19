@@ -37,6 +37,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#tabs-whoweare" class="nav-link" data-bs-toggle="tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                <path d="M9 12l2 2l4 -4" />
+                            </svg>
+                            Who We Are (Built on Quality)
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#tabs-tracking" class="nav-link" data-bs-toggle="tab">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -142,6 +152,79 @@
                                     <div class="mb-3">
                                         <label class="form-label">Floating Tag Badge Subtext</label>
                                         <input type="text" name="hero_tag_desc" class="form-control" value="{{ $settings['hero_tag_desc'] ?? 'Warehouse & sales — supplying trade and projects UAE-wide.' }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Who We Are / Built on Quality Section Tab -->
+                        <div class="tab-pane" id="tabs-whoweare">
+                            <h3 class="card-title mb-3">Who We Are ("Built on Quality") Content & Image</h3>
+                            <p class="text-muted mb-4">Manage the image and copy for the "Built on quality. Trusted for excellence." section shown across the Homepage and About Us page.</p>
+
+                            <div class="row row-cards">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Section Image (Upload new image)</label>
+                                        <input type="file" name="who_we_are_image" class="form-control" accept="image/*">
+                                        @php
+                                            $currentWhoImg = $settings['who_we_are_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp';
+                                        @endphp
+                                        @if(!empty($currentWhoImg))
+                                            <div class="mt-2">
+                                                <label class="form-label small">Current Section Image:</label>
+                                                <img src="{{ $currentWhoImg }}" alt="Built on quality image" class="img-thumbnail" style="max-height: 150px;">
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Section Image URL (Alternative/External)</label>
+                                        <input type="text" name="who_we_are_image_url" class="form-control" value="{{ $settings['who_we_are_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp' }}" placeholder="https://...">
+                                        <small class="form-hint">Direct image URL fallback if not uploading a new file.</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Eyebrow Subtitle</label>
+                                        <input type="text" name="who_we_are_eyebrow" class="form-control" value="{{ $settings['who_we_are_eyebrow'] ?? 'Who we are' }}" placeholder="e.g. Who we are">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label class="form-label">Headline Title</label>
+                                        <input type="text" name="who_we_are_title" class="form-control" value="{{ $settings['who_we_are_title'] ?? 'Built on quality. <span class=\'accent-i\'>Trusted for excellence.</span>' }}" placeholder="e.g. Built on quality. <span class='accent-i'>Trusted for excellence.</span>">
+                                        <small class="form-hint">Wrap highlighted words in <code>&lt;span class="accent-i"&gt;...&lt;/span&gt;</code> for the red italic styling.</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Paragraph 1 (Experience / Introduction)</label>
+                                        <textarea name="who_we_are_p1" rows="3" class="form-control">{{ $settings['who_we_are_p1'] ?? 'Alabama Building Materials Trading LLC is one of the UAE’s trusted building materials suppliers, backed by a team of industry veterans with over <strong>40 years of combined expertise</strong> in delivering reliable, high-quality construction and plumbing solutions.' }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Paragraph 2 (Products & Portfolio)</label>
+                                        <textarea name="who_we_are_p2" rows="3" class="form-control">{{ $settings['who_we_are_p2'] ?? 'We specialize in supplying everything required for residential, commercial, hospitality, industrial, and infrastructure projects across the UAE. Our extensive portfolio includes premium plumbing systems, sanitary ware, water heaters, pumps, valves, pipes, fittings, bathroom solutions, and other essential building materials from globally recognized manufacturers.' }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Paragraph 3 (Logistics & Delivery)</label>
+                                        <textarea name="who_we_are_p3" rows="2" class="form-control">{{ $settings['who_we_are_p3'] ?? 'With strategically located warehouses and an efficient logistics network, we ensure <strong>fast and dependable delivery across all Emirates</strong>, helping contractors, developers, consultants, retailers, and MEP professionals keep their projects on schedule.' }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Paragraph 4 (Quality & Approval Standards)</label>
+                                        <textarea name="who_we_are_p4" rows="2" class="form-control">{{ $settings['who_we_are_p4'] ?? 'Our product portfolio consists of <strong>project-approved brands</strong> that meet the stringent quality and compliance standards required by leading consultants, developers, and government authorities across the UAE.' }}</textarea>
                                     </div>
                                 </div>
                             </div>

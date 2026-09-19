@@ -22,7 +22,7 @@ class SettingController extends Controller
      */
     public function update(Request $request)
     {
-        $data = $request->except(['_token', '_method', 'hero_image']);
+        $data = $request->except(['_token', '_method', 'hero_image', 'who_we_are_image']);
 
         foreach ($data as $key => $value) {
             Setting::set($key, $value, $request->input('group', 'general'));
@@ -33,6 +33,14 @@ class SettingController extends Controller
             $imageUrl = CloudinaryService::upload($request->file('hero_image'));
             if ($imageUrl) {
                 Setting::set('hero_image_url', $imageUrl, 'homepage');
+            }
+        }
+
+        // Handle Who We Are / Built on Quality image upload
+        if ($request->hasFile('who_we_are_image')) {
+            $imageUrl = CloudinaryService::upload($request->file('who_we_are_image'));
+            if ($imageUrl) {
+                Setting::set('who_we_are_image_url', $imageUrl, 'homepage');
             }
         }
 

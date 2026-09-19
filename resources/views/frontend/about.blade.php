@@ -22,13 +22,13 @@
         <div class="row">
             <div class="col-xl-6 col-md-6 col-lg-6 pe-md-5">
                 <div class="media mt-0" data-aos="fade-right">
-                    <img src="https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp" alt="Alabama product range" class="img-fluid cdqulity" />
+                    <img src="{{ $siteSettings['who_we_are_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/plumbing-materials.webp' }}" alt="Alabama product range" class="img-fluid cdqulity" />
                 </div>
             </div>            
             <div class="col-xl-6 col-md-6 col-lg-6 ps-md-5 mt-4 mt-md-0">
                 <div data-aos="zoom-in-up">
-                    <div class="eyebrow">Who we are</div>
-                    <h2 class="h-section mt-3">Built on quality. <span class="accent-i">Trusted for excellence.</span></h2>
+                    <div class="eyebrow">{{ $siteSettings['who_we_are_eyebrow'] ?? 'Who we are' }}</div>
+                    <h2 class="h-section mt-3">{!! $siteSettings['who_we_are_title'] ?? 'Built on quality. <span class="accent-i">Trusted for excellence.</span>' !!}</h2>
                 </div>
                 <p class="lede">At Alabama, we are a trusted supplier of premium plumbing and building materials in the UAE, serving residential, commercial, and industrial projects with reliable products and exceptional service. With a commitment to quality, durability, and customer satisfaction, we provide comprehensive plumbing and construction solutions that meet the highest industry standards.</p>
                 <p class="lede">Our extensive product range includes water heaters, pipes and fittings, valves, pumps, sanitary ware, and essential plumbing accessories sourced from leading manufacturers. Whether you're a contractor, developer, engineer, or homeowner, we deliver highperformance products designed for long-lasting reliability and efficiency.</p>
