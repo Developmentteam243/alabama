@@ -8,6 +8,15 @@ class Product extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'is_featured' => 'boolean',
+    ];
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
+    }
+
     protected static function boot()
     {
         parent::boot();

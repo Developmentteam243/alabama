@@ -3,22 +3,22 @@
 @section('title', 'Add Blog Post')
 
 @section('content')
-<!-- Summernote CSS CDN -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<!-- CKEditor 4 WYSIWYG Editor CDN -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <style>
-    .note-editor.note-frame {
-        border: 1px solid #dce1e7;
-        border-radius: 8px;
+    .cke_chrome {
+        border: 1px solid #dce1e7 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
     }
-    .note-toolbar {
+    .cke_inner {
+        border-radius: 8px !important;
+    }
+    .cke_top {
         background: #f8fafc !important;
         border-bottom: 1px solid #e2e8f0 !important;
-    }
-    .note-editable {
-        min-height: 320px;
-        font-family: inherit;
-        font-size: 15px;
-        line-height: 1.6;
+        border-top-left-radius: 7px !important;
+        border-top-right-radius: 7px !important;
     }
     .repeater-card {
         background: #f8fafc;
@@ -75,11 +75,12 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Excerpt / Summary</label>
-                                <textarea name="excerpt" rows="3" class="form-control @error('excerpt') is-invalid @enderror" placeholder="A concise summary of the article displayed on blog cards and search listings">{{ old('excerpt') }}</textarea>
+                                <label class="form-label">Excerpt / Short Description (Rich Text Editor)</label>
+                                <textarea name="excerpt" id="blogExcerptEditor" rows="3" class="form-control @error('excerpt') is-invalid @enderror" placeholder="A concise summary of the article displayed on blog cards and search listings">{{ old('excerpt') }}</textarea>
                                 @error('excerpt')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                                <small class="form-hint mt-1">Use editor to make text bold, highlight, add links, or adjust font sizing.</small>
                             </div>
 
                             <div class="mb-3">
@@ -296,120 +297,121 @@
         </form>
     </div>
 </div>
-
-<!-- jQuery and Summernote JS CDN -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
+<!-- CKEditor Initialization & Form Handling -->
 <script>
-$(document).ready(function() {
-    // Initialize Summernote Rich Text Editor
-    $('#blogContentEditor').summernote({
-        placeholder: 'Write your comprehensive blog post content here...',
-        tabsize: 2,
-        height: 380,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'hr']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        styleTags: [
-            'p',
-            { title: 'Heading 1', tag: 'h1', className: 'h1-custom', value: 'h1' },
-            { title: 'Heading 2', tag: 'h2', className: 'h2-custom', value: 'h2' },
-            { title: 'Heading 3', tag: 'h3', className: 'h3-custom', value: 'h3' },
-            { title: 'Heading 4', tag: 'h4', className: 'h4-custom', value: 'h4' },
-            'blockquote', 'pre'
-        ]
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    // Replace textareas with CKEditor (handles hyperlinks, formatting, bold, headers, tables)
+    if (document.getElementById('blogExcerptEditor')) {
+        CKEDITOR.replace('blogExcerptEditor', {
+            height: 140,
+            toolbar: [
+                { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
+                { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote' ] },
+                { name: 'links', items: [ 'Link', 'Unlink' ] },
+                { name: 'styles', items: [ 'Format', 'FontSize' ] },
+                { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                { name: 'tools', items: [ 'Maximize', 'Source' ] }
+            ]
+        });
+    }
+
+    if (document.getElementById('blogContentEditor')) {
+        CKEDITOR.replace('blogContentEditor', {
+            height: 380,
+            toolbar: [
+                { name: 'document', items: [ 'Source' ] },
+                { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                { name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll' ] },
+                { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },
+                { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+                { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+                '/',
+                { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+                { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] }
+            ]
+        });
+    }
 
     // Schedule visibility toggle
-    $('#postStatus').on('change', function() {
-        if ($(this).val() === 'scheduled') {
-            $('#scheduledAtGroup').slideDown();
-        } else {
-            $('#scheduledAtGroup').slideUp();
-        }
-    });
+    var postStatus = document.getElementById('postStatus');
+    if (postStatus) {
+        postStatus.addEventListener('change', function() {
+            var group = document.getElementById('scheduledAtGroup');
+            if (group) {
+                group.style.display = this.value === 'scheduled' ? 'block' : 'none';
+            }
+        });
+    }
 
     // FAQ Repeater
-    let faqIndex = 0;
-    $('#addFaqBtn').on('click', function() {
-        $('#noFaqMsg').hide();
-        const html = `
-            <div class="repeater-card" id="faqItem_${faqIndex}">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong class="text-primary small">FAQ Item #${faqIndex + 1}</strong>
-                    <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2 remove-faq" data-target="#faqItem_${faqIndex}">Remove</button>
+    var faqIndex = 0;
+    var addFaqBtn = document.getElementById('addFaqBtn');
+    if (addFaqBtn) {
+        addFaqBtn.addEventListener('click', function() {
+            var noMsg = document.getElementById('noFaqMsg');
+            if (noMsg) noMsg.style.display = 'none';
+            var html = `
+                <div class="repeater-card" id="faqItem_${faqIndex}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-primary small">FAQ Item #${faqIndex + 1}</strong>
+                        <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2 remove-faq" onclick="document.getElementById('faqItem_${faqIndex}').remove()">Remove</button>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="faqs[${faqIndex}][question]" class="form-control form-control-sm" placeholder="Question: e.g. What is the warranty period for electric water heaters?" required>
+                    </div>
+                    <div>
+                        <textarea name="faqs[${faqIndex}][answer]" rows="2" class="form-control form-control-sm" placeholder="Answer: e.g. All Alabama water heaters come with a minimum 5-year tank warranty." required></textarea>
+                    </div>
                 </div>
-                <div class="mb-2">
-                    <input type="text" name="faqs[${faqIndex}][question]" class="form-control form-control-sm" placeholder="Question: e.g. What is the warranty period for electric water heaters?" required>
-                </div>
-                <div>
-                    <textarea name="faqs[${faqIndex}][answer]" rows="2" class="form-control form-control-sm" placeholder="Answer: e.g. All Alabama water heaters come with a minimum 5-year tank warranty." required></textarea>
-                </div>
-            </div>
-        `;
-        $('#faqContainer').append(html);
-        faqIndex++;
-    });
-
-    $(document).on('click', '.remove-faq', function() {
-        $($(this).data('target')).remove();
-        if ($('#faqContainer').children('.repeater-card').length === 0) {
-            $('#noFaqMsg').show();
-        }
-    });
+            `;
+            document.getElementById('faqContainer').insertAdjacentHTML('beforeend', html);
+            faqIndex++;
+        });
+    }
 
     // Links Repeater
-    let linkIndex = 0;
-    $('#addLinkBtn').on('click', function() {
-        $('#noLinksMsg').hide();
-        const html = `
-            <div class="repeater-card" id="linkItem_${linkIndex}">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong class="text-primary small">Link / Backlink Reference #${linkIndex + 1}</strong>
-                    <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2 remove-link" data-target="#linkItem_${linkIndex}">Remove</button>
+    var linkIndex = 0;
+    var addLinkBtn = document.getElementById('addLinkBtn');
+    if (addLinkBtn) {
+        addLinkBtn.addEventListener('click', function() {
+            var noMsg = document.getElementById('noLinksMsg');
+            if (noMsg) noMsg.style.display = 'none';
+            var html = `
+                <div class="repeater-card" id="linkItem_${linkIndex}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-primary small">Link / Backlink Reference #${linkIndex + 1}</strong>
+                        <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2 remove-link" onclick="document.getElementById('linkItem_${linkIndex}').remove()">Remove</button>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <input type="text" name="internal_external_links[${linkIndex}][anchor]" class="form-control form-control-sm" placeholder="Anchor Text (e.g. Electric Geysers)">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="url" name="internal_external_links[${linkIndex}][url]" class="form-control form-control-sm" placeholder="Target URL (e.g. /category/water-heaters)" required>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="internal_external_links[${linkIndex}][type]" class="form-select form-select-sm">
+                                <option value="internal">Internal</option>
+                                <option value="external">External</option>
+                                <option value="backlink">Backlink</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="internal_external_links[${linkIndex}][rel]" class="form-select form-select-sm">
+                                <option value="dofollow">dofollow</option>
+                                <option value="nofollow">nofollow</option>
+                                <option value="sponsored">sponsored</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="row g-2">
-                    <div class="col-md-4">
-                        <input type="text" name="internal_external_links[${linkIndex}][anchor]" class="form-control form-control-sm" placeholder="Anchor Text (e.g. Electric Geysers)">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="url" name="internal_external_links[${linkIndex}][url]" class="form-control form-control-sm" placeholder="Target URL (e.g. /category/water-heaters)" required>
-                    </div>
-                    <div class="col-md-2">
-                        <select name="internal_external_links[${linkIndex}][type]" class="form-select form-select-sm">
-                            <option value="internal">Internal</option>
-                            <option value="external">External</option>
-                            <option value="backlink">Backlink</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select name="internal_external_links[${linkIndex}][rel]" class="form-select form-select-sm">
-                            <option value="dofollow">dofollow</option>
-                            <option value="nofollow">nofollow</option>
-                            <option value="sponsored">sponsored</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        `;
-        $('#linksContainer').append(html);
-        linkIndex++;
-    });
-
-    $(document).on('click', '.remove-link', function() {
-        $($(this).data('target')).remove();
-        if ($('#linksContainer').children('.repeater-card').length === 0) {
-            $('#noLinksMsg').show();
-        }
-    });
+            `;
+            document.getElementById('linksContainer').insertAdjacentHTML('beforeend', html);
+            linkIndex++;
+        });
+    }
 });
 </script>
 @endsection

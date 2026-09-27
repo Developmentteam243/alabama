@@ -13,67 +13,24 @@ use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
     /**
-     * Show the frontend home page with search and filter functionality.
+     * Show the frontend home page.
      */
     public function index(Request $request)
     {
-        $query = Product::with(['brand', 'subcategory.category']);
-
-        // Search by keyword (sku, model name, item code, etc.)
-        if ($request->filled('search')) {
-            $search = $request->get('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('model_name', 'like', "%{$search}%")
-                  ->orWhere('sku_code', 'like', "%{$search}%")
-                  ->orWhere('item_code', 'like', "%{$search}%")
-                  ->orWhere('product_family', 'like', "%{$search}%");
-            });
+        // Get featured products for homepage collections carousel
+        $featuredProducts = Product::featured()->with('brand')->latest()->get();
+        if ($featuredProducts->isEmpty()) {
+            $featuredProducts = Product::with('brand')->latest()->limit(8)->get();
         }
 
-        // Filter by Brand
-        if ($request->filled('brand_id')) {
-            $query->where('brand_id', $request->get('brand_id'));
-        }
-
-        // Filter by Subcategory
-        if ($request->filled('subcategory_id')) {
-            $query->where('subcategory_id', $request->get('subcategory_id'));
-        }
-
-        // Filter by Capacity
-        if ($request->filled('capacity')) {
-            $query->where('capacity_l', $request->get('capacity'));
-        }
-
-        // Filter by Mounting/Orientation
-        if ($request->filled('mounting')) {
-            $query->where('orientation_mounting', $request->get('mounting'));
-        }
-
-        // Filter by Category (via Subcategory)
-        if ($request->filled('category_id')) {
-            $query->whereHas('subcategory', function ($q) use ($request) {
-                $q->where('category_id', $request->get('category_id'));
-            });
-        }
-
-        $products = $query->paginate(12)->withQueryString();
-
-        // Get 6 featured products for homepage collections
-        $featuredProducts = Product::with('brand')->latest()->limit(6)->get();
-
-        // Get unique options for filter dropdowns
+        // Get unique options for categories & brands
         $brands = Brand::orderBy('name')->get();
+        $categories = Category::with('subcategories')->orderBy('name')->get();
         $subcategories = Subcategory::with('category')->orderBy('name')->get();
-        $capacities = Product::whereNotNull('capacity_l')->where('capacity_l', '!=', '')->distinct()->pluck('capacity_l')->sort();
-        $mountings = Product::whereNotNull('orientation_mounting')->where('orientation_mounting', '!=', '')->distinct()->pluck('orientation_mounting')->sort();
 
         // Dynamic stats
         $totalProductsCount = Product::count();
         $totalBrandsCount = Brand::count();
-
-        // Get categories for homepage showcase
-        $categories = Category::all();
 
         // Spotlight brand (e.g., Lamborghini or first brand with description)
         $spotlightBrand = Brand::where('slug', 'lamborghini-caloreclima')->first() ?? Brand::whereNotNull('description')->first() ?? Brand::first();
@@ -82,17 +39,95 @@ class FrontendController extends Controller
         $blogs = Blog::active()->latest()->limit(3)->get();
 
         return view('frontend.index', compact(
-            'products',
             'featuredProducts',
             'brands',
             'categories',
             'subcategories',
-            'capacities',
-            'mountings',
             'totalProductsCount',
             'totalBrandsCount',
             'spotlightBrand',
             'blogs'
+        ));
+    }
+
+    /**
+     * Dedicated Products Catalog page with full search, filter & pagination.
+     */
+    public function products(Request $request)
+    {
+        $query = Product::with(['brand', 'subcategory.category']);
+
+        // Search keyword
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('model_name', 'like', "%{$search}%")
+                  ->orWhere('sku_code', 'like', "%{$search}%")
+                  ->orWhere('item_code', 'like', "%{$search}%")
+                  ->orWhere('mfr_part_code', 'like', "%{$search}%")
+                  ->orWhere('product_family', 'like', "%{$search}%");
+            });
+        }
+
+        // Category filter (via subcategory)
+        if ($request->filled('category_id')) {
+            $query->whereHas('subcategory', function ($q) use ($request) {
+                $q->where('category_id', $request->get('category_id'));
+            });
+        }
+
+        // Subcategory filter
+        if ($request->filled('subcategory_id')) {
+            $query->where('subcategory_id', $request->get('subcategory_id'));
+        }
+
+        // Brand filter
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->get('brand_id'));
+        }
+
+        // Capacity filter
+        if ($request->filled('capacity')) {
+            $query->where('capacity_l', $request->get('capacity'));
+        }
+
+        // Mounting filter
+        if ($request->filled('mounting')) {
+            $query->where('orientation_mounting', $request->get('mounting'));
+        }
+
+        // Featured only filter
+        if ($request->filled('featured') && $request->get('featured') == '1') {
+            $query->where('is_featured', true);
+        }
+
+        // Sorting
+        $sort = $request->get('sort', 'latest');
+        if ($sort === 'name_asc') {
+            $query->orderBy('model_name', 'asc');
+        } elseif ($sort === 'name_desc') {
+            $query->orderBy('model_name', 'desc');
+        } elseif ($sort === 'featured') {
+            $query->orderBy('is_featured', 'desc')->latest();
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->paginate(12)->withQueryString();
+
+        $brands = Brand::orderBy('name')->get();
+        $categories = Category::with('subcategories')->orderBy('name')->get();
+        $subcategories = Subcategory::with('category')->orderBy('name')->get();
+        $capacities = Product::whereNotNull('capacity_l')->where('capacity_l', '!=', '')->distinct()->pluck('capacity_l')->sort();
+        $mountings = Product::whereNotNull('orientation_mounting')->where('orientation_mounting', '!=', '')->distinct()->pluck('orientation_mounting')->sort();
+
+        return view('frontend.products', compact(
+            'products',
+            'brands',
+            'categories',
+            'subcategories',
+            'capacities',
+            'mountings'
         ));
     }
 
@@ -160,8 +195,13 @@ class FrontendController extends Controller
                 $q->where('model_name', 'like', "%{$search}%")
                   ->orWhere('sku_code', 'like', "%{$search}%")
                   ->orWhere('item_code', 'like', "%{$search}%")
+                  ->orWhere('mfr_part_code', 'like', "%{$search}%")
                   ->orWhere('product_family', 'like', "%{$search}%");
             });
+        }
+
+        if ($request->filled('subcategory_id')) {
+            $query->where('subcategory_id', $request->get('subcategory_id'));
         }
 
         if ($request->filled('brand_id')) {
@@ -178,8 +218,21 @@ class FrontendController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
         
-        // Fetch up to 6 popular/featured products for this category
-        $popularProducts = Product::whereIn('subcategory_id', $subIds)->with('brand')->latest()->limit(6)->get();
+        // Fetch featured products for this category
+        $featuredProducts = Product::whereIn('subcategory_id', $subIds)
+            ->where('is_featured', true)
+            ->with('brand')
+            ->latest()
+            ->limit(8)
+            ->get();
+
+        if ($featuredProducts->isEmpty()) {
+            $featuredProducts = Product::whereIn('subcategory_id', $subIds)
+                ->with('brand')
+                ->latest()
+                ->limit(6)
+                ->get();
+        }
 
         // Get filter options specific to this category
         $brands = Brand::whereHas('products', function($q) use ($subIds) {
@@ -204,7 +257,7 @@ class FrontendController extends Controller
             'category', 
             'subcategories', 
             'products', 
-            'popularProducts', 
+            'featuredProducts', 
             'brands', 
             'capacities', 
             'mountings'
@@ -223,6 +276,7 @@ class FrontendController extends Controller
                 $q->where('model_name', 'like', "%{$search}%")
                   ->orWhere('sku_code', 'like', "%{$search}%")
                   ->orWhere('item_code', 'like', "%{$search}%")
+                  ->orWhere('mfr_part_code', 'like', "%{$search}%")
                   ->orWhere('product_family', 'like', "%{$search}%");
             });
         }
@@ -241,8 +295,21 @@ class FrontendController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
         
-        // Fetch up to 6 popular/featured products for this subcategory
-        $popularProducts = Product::where('subcategory_id', $subcategory->id)->with('brand')->latest()->limit(6)->get();
+        // Fetch featured products for this subcategory
+        $featuredProducts = Product::where('subcategory_id', $subcategory->id)
+            ->where('is_featured', true)
+            ->with('brand')
+            ->latest()
+            ->limit(8)
+            ->get();
+
+        if ($featuredProducts->isEmpty()) {
+            $featuredProducts = Product::where('subcategory_id', $subcategory->id)
+                ->with('brand')
+                ->latest()
+                ->limit(6)
+                ->get();
+        }
 
         // Get filter options specific to this subcategory
         $brands = Brand::whereHas('products', function($q) use ($subcategory) {
@@ -267,7 +334,7 @@ class FrontendController extends Controller
             'category', 
             'subcategory', 
             'products', 
-            'popularProducts', 
+            'featuredProducts', 
             'brands', 
             'capacities', 
             'mountings'

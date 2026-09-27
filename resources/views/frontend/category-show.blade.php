@@ -104,6 +104,15 @@
                         <input type="text" name="search" class="form-control" value="{{ request('search') }}" placeholder="e.g. Model, SKU, Code...">
                     </div>
                     <div class="col-lg-3 col-md-6">
+                        <label class="form-label fw-bold small text-secondary">SUBCATEGORY</label>
+                        <select name="subcategory_id" class="form-select">
+                            <option value="">All Subcategories</option>
+                            @foreach($subcategories as $sub)
+                                <option value="{{ $sub->id }}" {{ request('subcategory_id') == $sub->id ? 'selected' : '' }}>{{ $sub->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
                         <label class="form-label fw-bold small text-secondary">BRAND</label>
                         <select name="brand_id" class="form-select">
                             <option value="">All Brands</option>
@@ -121,18 +130,9 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-lg-2 col-md-6">
-                        <label class="form-label fw-bold small text-secondary">MOUNTING</label>
-                        <select name="mounting" class="form-select">
-                            <option value="">All Mountings</option>
-                            @foreach($mountings as $mount)
-                                <option value="{{ $mount }}" {{ request('mounting') == $mount ? 'selected' : '' }}>{{ $mount }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                     <div class="col-lg-2 col-md-12 d-flex gap-2">
                         <button type="submit" class="btn btn-danger w-100 fw-bold">Search</button>
-                        @if(request()->anyFilled(['search', 'brand_id', 'capacity', 'mounting']))
+                        @if(request()->anyFilled(['search', 'subcategory_id', 'brand_id', 'capacity', 'mounting']))
                             <a href="{{ request()->url() }}" class="btn btn-secondary fw-bold">Reset</a>
                         @endif
                     </div>

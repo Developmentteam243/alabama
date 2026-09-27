@@ -1,38 +1,64 @@
 @extends('layouts.master')
 
-@section('title', 'Catalog - Alabama Portal')
+@section('title', 'Water Heaters, Plumbing & Building Materials Dubai - Alabama')
 
 @section('content')
 
 <!-- Hero Header -->
 <div class="hero cdhero-section">
     <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="content">
-                    <div class="rv" data-aos="fade-right">
-                        <div class="eyebrow">{{ $siteSettings['hero_eyebrow'] ?? 'Plumbing & building materials — Dubai, UAE' }}</div>
-                        <h1 class="h-display">{!! $siteSettings['hero_title'] ?? 'Every build runs on what\'s <span class="accent-i">behind the wall.</span>' !!}</h1>
-                        <p class="lede">
-                            {{ $siteSettings['hero_description'] ?? 'Water heaters, pipes and fittings, valves, pumps and sanitaryware — sourced, stocked and delivered for residential, commercial and industrial projects across the Emirates.' }}
-                        </p>
-                        <div class="hero-ctas">
-                            <a class="btn solid" href="{{ $siteSettings['hero_btn1_link'] ?? route('frontend.contact') }}">{{ $siteSettings['hero_btn1_text'] ?? 'Get a quote' }}</a>
-                            <a class="btn" href="{{ $siteSettings['hero_btn2_link'] ?? '#cat-hotwater' }}">{{ $siteSettings['hero_btn2_text'] ?? 'Browse categories' }}</a>
-                        </div>
-                    </div>
-                    <div class="hero-media" data-aos="fade-left">
-                        <div class="frame">
-                            <img src="{{ $siteSettings['hero_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp' }}" class="img-fluid" alt="Alabama plumbing materials" />
-                        </div>
-                        <div class="cdtag">
-                            <strong>{{ $siteSettings['hero_tag_title'] ?? 'Dubai Investments Park 2' }}</strong>
-                            <span>{{ $siteSettings['hero_tag_desc'] ?? 'Warehouse & sales — supplying trade and projects UAE-wide.' }}</span>
-                        </div>
+        <div class="row align-items-center py-4 py-lg-5">
+            <!-- Text Content: order-2 on mobile, order-lg-1 on desktop -->
+            <div class="col-lg-6 order-2 order-lg-1 mt-4 mt-lg-0">
+                <div class="rv" data-aos="fade-right">
+                    <div class="eyebrow">{{ $siteSettings['hero_eyebrow'] ?? 'Plumbing & building materials — Dubai, UAE' }}</div>
+                    <h1 class="h-display">{!! $siteSettings['hero_title'] ?? 'Every build runs on what\'s <span class="accent-i">behind the wall.</span>' !!}</h1>
+                    <p class="lede">
+                        {{ $siteSettings['hero_description'] ?? 'Water heaters, pipes and fittings, valves, pumps and sanitaryware — sourced, stocked and delivered for residential, commercial and industrial projects across the Emirates.' }}
+                    </p>
+                    <div class="hero-ctas">
+                        <a class="btn solid" href="{{ $siteSettings['hero_btn1_link'] ?? route('frontend.contact') }}">{{ $siteSettings['hero_btn1_text'] ?? 'Get a quote' }}</a>
+                        <a class="btn" href="{{ route('frontend.products.index') }}">{{ $siteSettings['hero_btn2_text'] ?? 'Browse Catalogue' }}</a>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-12">
+
+            <!-- Carousel Banner Media: order-1 on mobile, order-lg-2 on desktop -->
+            <div class="col-lg-6 order-1 order-lg-2">
+                <div class="hero-media" data-aos="fade-left">
+                    <div class="swiper heroSwiper rounded-4 shadow-sm overflow-hidden position-relative">
+                        <div class="swiper-wrapper">
+                            @foreach($categories as $cat)
+                                @php
+                                    $slideImg = $cat->banner_url ?: ($cat->home_image_url ?: 'https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp');
+                                @endphp
+                                <div class="swiper-slide position-relative">
+                                    <div class="hero-slide-card" style="height: 440px; position: relative; overflow: hidden; border-radius: 12px; background: #0f172a;">
+                                        <img src="{{ $slideImg }}" alt="{{ $cat->name }}" style="width: 100%; height: 100%; object-fit: cover;" />
+                                        <div class="hero-slide-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(15,23,42,0.85) 100%); display: flex; align-items: flex-end; padding: 24px;">
+                                            <div class="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                                <div>
+                                                    <span class="badge bg-danger text-white small text-uppercase mb-1">Alabama Range</span>
+                                                    <h4 class="text-white fw-bold mb-0">{{ $cat->name }}</h4>
+                                                </div>
+                                                <a href="{{ route('frontend.category.show', $cat->slug) }}" class="btn btn-sm btn-danger rounded-pill fw-bold px-4 py-2 text-uppercase shadow" style="background-color: #e11d48; border-color: #e11d48;">
+                                                    Explore {{ $cat->name }} &rarr;
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <!-- Swiper Controls -->
+                        <div class="swiper-pagination hero-pagination"></div>
+                        <div class="swiper-button-next hero-next text-white"></div>
+                        <div class="swiper-button-prev hero-prev text-white"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
                 <div class="hero-ghost">{{ $siteSettings['hero_ghost_text'] ?? 'ALABAMA' }}</div>
             </div>
         </div>
@@ -51,57 +77,66 @@
     </div>
 </section>
 
-<!-- cdproducts -->
-<section class="cdproducts">
+<!-- cdproducts / Categories Carousel -->
+<section class="cdproducts section">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="sec-head split rv">
+                <div class="sec-head split rv mb-4">
                     <div>
                         <div class="eyebrow">What we supply</div>
                         <h2 class="h-section">From boiler room to bathroom. <span class="accent-i">One supplier.</span></h2>
                     </div>
-                    <a class="link-arrow" href="#products">View all products <i class="fa-solid fa-angles-right"></i></a>
+                    <div class="d-flex align-items-center gap-3">
+                        <a class="link-arrow" href="{{ route('frontend.products.index') }}">View all products <i class="fa-solid fa-angles-right"></i></a>
+                        <div class="category-carousel-nav d-none d-md-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark rounded-circle cat-prev" style="width: 40px; height: 40px;" aria-label="Previous"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button class="btn btn-sm btn-outline-dark rounded-circle cat-next" style="width: 40px; height: 40px;" aria-label="Next"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-xl-12">
-                <div class="row">
-                    @forelse($categories as $index => $category)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6">
-                            <a class="cat-card rv" href="{{ route('frontend.category.show', $category->slug) }}" data-aos="fade-up" data-aos-duration="800">
-                                @php
-                                    $catImg = $category->home_image_url ?: $category->banner_url;
-                                @endphp
-                                @if($catImg)
-                                    <img src="{{ $catImg }}" alt="{{ $category->name }}" />
-                                @else
-                                    <div class="d-flex align-items-center justify-content-center bg-light text-dark" style="height: 100%; min-height: 480px; font-size: 2rem; font-weight: bold;">
-                                        {{ $category->name }}
+                <div class="swiper categorySwiper pb-4">
+                    <div class="swiper-wrapper">
+                        @forelse($categories as $index => $category)
+                            <div class="swiper-slide h-auto">
+                                <a class="cat-card rv d-block h-100" href="{{ route('frontend.category.show', $category->slug) }}" data-aos="fade-up" data-aos-duration="800">
+                                    @php
+                                        $catImg = $category->home_image_url ?: $category->banner_url;
+                                    @endphp
+                                    @if($catImg)
+                                        <img src="{{ $catImg }}" alt="{{ $category->name }}" />
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center bg-light text-dark" style="height: 100%; min-height: 480px; font-size: 2rem; font-weight: bold;">
+                                            {{ $category->name }}
+                                        </div>
+                                    @endif
+                                    <div class="cat-body">
+                                        <small>{{ sprintf('%02d', $index + 1) }} — {{ $category->name }}</small>
+                                        <h3>{{ $category->name }}</h3>
+                                        <p>{{ $category->description ?: 'High quality plumbing, fixtures and equipment for residential and commercial applications.' }}</p>
+                                        <span class="link-arrow">Explore Range <i class="fa-solid fa-arrow-right-long"></i></span>
                                     </div>
-                                @endif
-                                <div class="cat-body">
-                                    <small>{{ sprintf('%02d', $index + 1) }} — {{ $category->name }}</small>
-                                    <h3>{{ $category->name }}</h3>
-                                    <p>{{ $category->description ?: 'High quality plumbing, fixtures and equipment for residential and commercial applications.' }}</p>
-                                    <span class="link-arrow">Explore <i class="fa-solid fa-arrow-right-long"></i></span>
-                                </div>
-                            </a>
-                        </div>
-                    @empty
-                        <div class="col-12 text-center py-4">
-                            <p class="text-muted">No categories available at the moment.</p>
-                        </div>
-                    @endforelse
+                                </a>
+                            </div>
+                        @empty
+                            <div class="col-12 text-center py-4">
+                                <p class="text-muted">No categories available at the moment.</p>
+                            </div>
+                        @endforelse
+                    </div>
+                    <div class="swiper-pagination cat-pagination mt-2"></div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- qulity -->
-<section class="cdwhoweare">
+<!-- who we are -->
+<section class="cdwhoweare section">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-xl-6 col-md-6 col-lg-6">
                 <div data-aos="flip-left">
                     <div class="eyebrow">{{ $siteSettings['who_we_are_eyebrow'] ?? 'Who we are' }}</div>
@@ -122,9 +157,9 @@
     </div>
 </section>
 
-<!-- brand -->
+<!-- brand spotlight -->
 @if($spotlightBrand)
-<section class="cdbrand">
+<section class="cdbrand section">
     <div class="container">            
         <div class="spot">
             <div class="spot-media" data-aos="zoom-in">
@@ -185,47 +220,59 @@
 </section>
 @endif
 
-<!-- collections -->
-<section class="cdcollections" id="products">
+<!-- Featured Collections Carousel -->
+<section class="cdcollections section" id="products">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="sec-head split rv">
+                <div class="sec-head split rv mb-4">
                     <div>
                         <div class="eyebrow">Featured collections</div>
                         <h2 class="h-section">Specified by engineers. <span class="accent-i">Chosen by homes.</span></h2>
                     </div>
-                    <a class="link-arrow" href="https://wa.me/971559138047?text=Hello%20Alabama%2C%20please%20share%20your%20latest%20price%20list." target="_blank" rel="noopener">Request price list <i class="fa-solid fa-angles-right"></i></a>
+                    <div class="d-flex align-items-center gap-3">
+                        <a class="link-arrow" href="{{ route('frontend.products.index') }}?featured=1">All Featured <i class="fa-solid fa-angles-right"></i></a>
+                        <div class="product-carousel-nav d-none d-md-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark rounded-circle prod-prev" style="width: 40px; height: 40px;" aria-label="Previous"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button class="btn btn-sm btn-outline-dark rounded-circle prod-next" style="width: 40px; height: 40px;" aria-label="Next"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-xl-12">
-                <div class="row g-4">
-                    @forelse($featuredProducts as $product)
-                        <div class="col-xl-4 col-md-6 col-lg-4 col-sm-6" data-aos="fade-up">
-                            <a href="{{ route('frontend.product.show', $product->slug) }}" class="product-card text-decoration-none" data-aos="fade-up">
-                                <div class="product-img">
-                                    @if($product->image_url)
-                                        <img src="{{ $product->image_url }}"
-                                            alt="{{ $product->model_name ?: $product->sku_code }}"
-                                            class="img-fluid">
-                                    @else
-                                        <span class="ghost">{{ strtoupper(substr($product->model_name ?: $product->sku_code, 0, 1)) }}</span>
-                                    @endif
-                                </div>
-                                <div class="product-body">
-                                    <small>{{ $product->brand->name ?? '' }}</small>
-                                    <h3>{{ $product->model_name ?: $product->sku_code }}</h3>
-                                    <span class="product-link">
-                                        View Product <i class="fa-solid fa-arrow-right-long"></i>
-                                    </span>
-                                </div>
-                            </a>
-                        </div>
-                    @empty
-                        <div class="col-xl-12 text-center py-4">
-                            <p class="text-muted">No products found in the collection.</p>
-                        </div>
-                    @endforelse
+                <div class="swiper productSwiper pb-4">
+                    <div class="swiper-wrapper">
+                        @forelse($featuredProducts as $product)
+                            <div class="swiper-slide h-auto">
+                                <a href="{{ route('frontend.product.show', $product->slug) }}" class="product-card text-decoration-none d-flex flex-column h-100 position-relative">
+                                    <span class="position-absolute top-0 end-0 m-2 badge bg-danger text-white fw-bold shadow-sm" style="z-index: 5; font-size: 0.7rem;">⭐ FEATURED</span>
+                                    <div class="product-img">
+                                        @if($product->image_url)
+                                            <img src="{{ $product->image_url }}"
+                                                alt="{{ $product->model_name ?: $product->sku_code }}"
+                                                class="img-fluid" loading="lazy">
+                                        @else
+                                            <span class="ghost">{{ strtoupper(substr($product->model_name ?: $product->sku_code, 0, 1)) }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="product-body flex-grow-1 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <small>{{ $product->brand->name ?? 'Alabama' }}</small>
+                                            <h3>{{ $product->model_name ?: $product->sku_code }}</h3>
+                                        </div>
+                                        <span class="product-link mt-2">
+                                            View Product <i class="fa-solid fa-arrow-right-long"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        @empty
+                            <div class="col-xl-12 text-center py-4">
+                                <p class="text-muted">No featured products found in the collection.</p>
+                            </div>
+                        @endforelse
+                    </div>
+                    <div class="swiper-pagination prod-pagination mt-2"></div>
                 </div>
             </div>
         </div>
@@ -233,15 +280,15 @@
 </section>
 
 <!-- Certified -->
-<section class="cdCertified">
+<section class="cdCertified section">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="sec-head centered">
+                <div class="sec-head centered mb-4">
                     <div class="eyebrow centered">Assurance of quality</div>
                     <h2 class="h-section">Certified. Tested. <span class="accent-i">Trusted on site.</span></h2>
                 </div>
-                <div class="brand-strip" style="background: transparent; border: none; padding: 1rem 0;">
+                <div class="brand-strip" style="background: transparent; border: none; padding: 0.5rem 0;">
                     <div class="marquee-wrap">
                         <div class="marquee" style="animation-duration: 25s; gap: 0;">
                             @php
@@ -269,7 +316,7 @@
 </section>
 
 <!-- cta -->
-<section class="cdCta section">
+<section class="cdCta section py-4">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
@@ -297,7 +344,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div class="sec-head split">
+                <div class="sec-head split mb-4">
                     <div>
                         <div class="eyebrow">Insights</div>
                         <h2 class="h-section">From our <span class="accent-i">blog</span></h2>
@@ -334,10 +381,88 @@
 </section>
 @endif
 
-{{-- JS --}}
+{{-- GSAP & Swiper Scripts --}}
 <script src="{{ url('assets/js/gsap.min.js') }}"></script>
 <script src="{{ url('assets/js/ScrollTrigger.min.js') }}"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Hero Carousel
+        new Swiper(".heroSwiper", {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 4500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".hero-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".hero-next",
+                prevEl: ".hero-prev",
+            },
+            effect: "fade",
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+
+        // Category Showcase Carousel
+        new Swiper(".categorySwiper", {
+            slidesPerView: 1.15,
+            spaceBetween: 20,
+            loop: false,
+            navigation: {
+                nextEl: ".cat-next",
+                prevEl: ".cat-prev",
+            },
+            pagination: {
+                el: ".cat-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 24,
+                }
+            }
+        });
+
+        // Featured Products Carousel
+        new Swiper(".productSwiper", {
+            slidesPerView: 1.15,
+            spaceBetween: 20,
+            loop: false,
+            navigation: {
+                nextEl: ".prod-next",
+                prevEl: ".prod-prev",
+            },
+            pagination: {
+                el: ".prod-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                576: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 24,
+                },
+                1200: {
+                    slidesPerView: 4,
+                    spaceBetween: 24,
+                }
+            }
+        });
+    });
+
     gsap.registerPlugin(ScrollTrigger);
     gsap.utils.toArray(".post.rv").forEach((card) => {
         const tl = gsap.timeline({
@@ -354,46 +479,43 @@
             duration: 1,
             ease: "power4.out",
         })
-
-            .from(
-                card.querySelector(".meta"),
-                {
-                    y: 25,
-                    opacity: 0,
-                    duration: 0.4,
-                },
-                "-=0.6"
-            )
-
-            .from(
-                card.querySelector("h3"),
-                {
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.5,
-                },
-                "-=0.25"
-            )
-
-            .from(
-                card.querySelector("p"),
-                {
-                    y: 25,
-                    opacity: 0,
-                    duration: 0.5,
-                },
-                "-=0.25"
-            )
-
-            .from(
-                card.querySelector(".link-arrow"),
-                {
-                    x: -20,
-                    opacity: 0,
-                    duration: 0.4,
-                },
-                "-=0.2"
-            );
+        .from(
+            card.querySelector(".meta"),
+            {
+                y: 25,
+                opacity: 0,
+                duration: 0.4,
+            },
+            "-=0.6"
+        )
+        .from(
+            card.querySelector("h3"),
+            {
+                y: 30,
+                opacity: 0,
+                duration: 0.5,
+            },
+            "-=0.25"
+        )
+        .from(
+            card.querySelector("p"),
+            {
+                y: 25,
+                opacity: 0,
+                duration: 0.5,
+            },
+            "-=0.25"
+        )
+        .from(
+            card.querySelector(".link-arrow"),
+            {
+                x: -20,
+                opacity: 0,
+                duration: 0.4,
+            },
+            "-=0.2"
+        );
     });
 </script>
 @endsection
+

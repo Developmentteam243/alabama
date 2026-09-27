@@ -82,6 +82,7 @@
     {{-- CSS --}}
     <link href="{{url('assets/css/aos.css?v='.mt_rand()) }}" rel="stylesheet" />
     <link href="{{url('assets/css/FA.min.css?v='.mt_rand()) }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="{{url('assets/css/style.css?v='.mt_rand()) }}" rel="stylesheet" />
     <style>
         .navbar-brand-custom {
@@ -151,7 +152,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link cdLine" href="{{ route('frontend.home') }}#products">
+                        <a class="nav-link cdLine" href="{{ route('frontend.products.index') }}">
                             Products
                         </a>
                     </li>
@@ -251,6 +252,7 @@
                     <h6 class="text-white mb-3 fw-bold">Quick Links</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2">
                         <li><a href="{{ route('frontend.home') }}">Home</a></li>
+                        <li><a href="{{ route('frontend.products.index') }}">Products</a></li>
                         <li><a href="{{ route('frontend.about') }}">About us</a></li>
                         <li><a href="{{ route('frontend.all-brands') }}">Brands</a></li>
                         <li><a href="{{ route('frontend.blog') }}">Blog</a></li>
@@ -260,13 +262,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-4">
                     <h6 class="text-white mb-3 fw-bold">Products</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2">
-                        <li><a href="{{ route('frontend.home') }}">Water heaters</a></li>
-                        <li><a href="{{ route('frontend.home') }}">Solar heaters</a></li>
-                        <li><a href="{{ route('frontend.home') }}">Water pumps</a></li>
-                        <li><a href="{{ route('frontend.home') }}">Valves &amp; fittings</a></li>
-                        <li><a href="{{ route('frontend.home') }}">Sanitaryware</a></li>
-                        <li><a href="{{ route('frontend.home') }}">Bathroomware</a></li>
-                        <li><a href="{{ route('frontend.home') }}">Kitchen</a></li>
+                        @foreach($navCategories as $cat)
+                            <li><a href="{{ route('frontend.category.show', $cat->slug) }}">{{ $cat->name }}</a></li>
+                        @endforeach
+                        <li><a href="{{ route('frontend.products.index') }}">All Products &rarr;</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-4">
@@ -296,6 +295,7 @@
     </a>
 
     {{-- JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ url('assets/js/aos.js?v='.mt_rand()) }}"></script>
     <script src="{{ url('assets/js/script.js?v='.mt_rand()) }}"></script>
 </body>

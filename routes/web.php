@@ -22,6 +22,8 @@ Route::get('/category/{slug}', [FrontendController::class, 'categoryShow'])->nam
 Route::get('/category/{category:slug}/{subcategory:slug}', [FrontendController::class, 'subcategoryShow'])->name('frontend.subcategory.show');
 Route::get('/brand/{slug}', [FrontendController::class, 'brandShow'])->name('frontend.brand.show');
 Route::get('/all-brands', [FrontendController::class, 'all_brands'])->name('frontend.all-brands');
+Route::get('/catalogue', [FrontendController::class, 'products'])->name('frontend.products.index');
+Route::get('/products-catalog', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/product/{product:slug}', [FrontendController::class, 'show'])->name('frontend.product.show');
 Route::post('/product/{product}/reviews', [FrontendController::class, 'storeReview'])->name('frontend.reviews.store');
 Route::post('/get-quote', [FrontendController::class, 'storeQuote'])->name('frontend.quote.store');
@@ -43,4 +45,5 @@ Route::middleware('auth')->group(function () {
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
 });
+
 

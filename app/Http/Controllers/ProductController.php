@@ -94,11 +94,13 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'video_url' => 'nullable|string|max:255',
+            'is_featured' => 'nullable|boolean',
             'product_images' => 'nullable|array',
             'product_images.*' => 'image|max:10240',
         ]);
 
         $data = $validated;
+        $data['is_featured'] = $request->has('is_featured') ? (bool)$request->is_featured : false;
         unset($data['product_images']);
         unset($data['image']);
         unset($data['brochure']);
@@ -194,11 +196,13 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'video_url' => 'nullable|string|max:255',
+            'is_featured' => 'nullable|boolean',
             'product_images' => 'nullable|array',
             'product_images.*' => 'image|max:10240',
         ]);
 
         $data = $validated;
+        $data['is_featured'] = $request->has('is_featured') ? (bool)$request->is_featured : false;
         unset($data['product_images']);
         unset($data['image']);
         unset($data['brochure']);

@@ -283,6 +283,18 @@
                         </div>
                     </div>
 
+                    <div class="col-md-12">
+                        <div class="card p-3 bg-light border">
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input" type="checkbox" name="is_featured" id="is_featured" value="1" {{ old('is_featured', $product->is_featured) ? 'checked' : '' }}>
+                                <label class="form-check-label fw-bold" for="is_featured">
+                                    ⭐ Featured Product (Active / Inactive)
+                                </label>
+                            </div>
+                            <span class="text-muted small mt-1">If enabled, this product will be highlighted on the homepage Featured Collections carousel and category featured lists.</span>
+                        </div>
+                    </div>
+
                     <!-- SEO Fields -->
                     <div class="col-md-12">
                         <hr class="my-4" />

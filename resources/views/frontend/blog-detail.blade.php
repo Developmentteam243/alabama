@@ -199,14 +199,14 @@
                     
                     <!-- Share & Back Actions -->
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <a href="{{ route('frontend.blog') }}" class="btn btn-outline-primary rounded-pill px-4">
+                        <a href="{{ route('frontend.blog') }}" class="btn btn-outline-dark rounded-pill px-4">
                             <i class="fa-solid fa-arrow-left me-2"></i> Back to Insights
                         </a>
-                        <div class="share-buttons d-flex align-items-center gap-2">
+                        <div class="share-buttons d-flex align-items-center gap-3">
                             <span class="text-muted small fw-bold">Share:</span>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank" rel="noopener" class="btn btn-sm btn-light rounded-circle shadow-sm" aria-label="Facebook"><i class="fa-brands fa-facebook-f text-primary"></i></a>
-                            <a href="https://api.whatsapp.com/send?text={{ urlencode($blog->title . ' ' . request()->fullUrl()) }}" target="_blank" rel="noopener" class="btn btn-sm btn-light rounded-circle shadow-sm" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-success"></i></a>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank" rel="noopener" class="btn btn-sm btn-light rounded-circle shadow-sm" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in text-info"></i></a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank" rel="noopener" class="text-secondary fs-5" aria-label="Facebook" style="transition: color 0.2s;" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color=''"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="https://api.whatsapp.com/send?text={{ urlencode($blog->title . ' ' . request()->fullUrl()) }}" target="_blank" rel="noopener" class="text-secondary fs-5" aria-label="WhatsApp" style="transition: color 0.2s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color=''"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" target="_blank" rel="noopener" class="text-secondary fs-5" aria-label="LinkedIn" style="transition: color 0.2s;" onmouseover="this.style.color='#0A66C2'" onmouseout="this.style.color=''"><i class="fa-brands fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </article>
@@ -239,12 +239,12 @@
                     </div>
                 </div>
 
-                <!-- Call to action card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 text-white bg-dark">
+                <!-- Call to action card (Solid Black Background with Vibrant Red Button) -->
+                <div class="card border-0 shadow-lg rounded-4 p-4 text-white" style="background-color: #000000 !important;">
                     <div class="card-body p-2">
-                        <h4 class="fw-bold mb-3">Looking for Project Supply?</h4>
-                        <p class="small text-white-50 mb-4">Talk with Alabama specialists for commercial rates on project-approved water heaters, valves, pumps, and sanitaryware in Dubai &amp; UAE.</p>
-                        <a href="{{ route('frontend.contact') }}" class="btn btn-danger w-100 rounded-pill fw-bold">Get In Touch</a>
+                        <h4 class="fw-bold mb-3 text-white">Looking for Project Supply?</h4>
+                        <p class="small text-white-50 mb-4 lh-base">Talk with Alabama specialists for commercial rates on project-approved water heaters, valves, pumps, and sanitaryware in Dubai &amp; UAE.</p>
+                        <a href="{{ route('frontend.contact') }}" class="btn w-100 rounded-pill fw-bold text-white text-uppercase py-2" style="background-color: #e11d48; border-color: #e11d48; letter-spacing: 0.5px;">Get In Touch</a>
                     </div>
                 </div>
             </div>

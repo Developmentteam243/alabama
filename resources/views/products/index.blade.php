@@ -104,6 +104,7 @@
                             <th>Model Name</th>
                             <th>Brand</th>
                             <th>Subcategory</th>
+                            <th>Featured</th>
                             <th>Capacity (L)</th>
                             <th>Orientation</th>
                             <th>Power / Voltage</th>
@@ -130,6 +131,13 @@
                                 </td>
                                 <td data-label="Subcategory">
                                     {{ $product->subcategory->name ?? 'N/A' }}
+                                </td>
+                                <td data-label="Featured">
+                                    @if($product->is_featured)
+                                        <span class="badge bg-yellow-lt text-yellow fw-bold">⭐ Active</span>
+                                    @else
+                                        <span class="badge bg-secondary-lt text-muted">Inactive</span>
+                                    @endif
                                 </td>
                                 <td data-label="Capacity">
                                     {{ $product->capacity_l ?: '-' }}
