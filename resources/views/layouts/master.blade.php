@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TST9NBBP');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Water Heaters & Geysers Portal - Alabama Building Materials')</title>
@@ -16,35 +23,10 @@
     @yield('schema_markup')
 
     @php
-        $gtmId = $siteSettings['server_gtm_container_id'] ?? env('SERVER_GTM_CONTAINER_ID');
-        $gtmUrl = rtrim($siteSettings['server_gtm_url'] ?? env('SERVER_GTM_URL', 'https://www.googletagmanager.com'), '/');
         $ga4Id = $siteSettings['ga4_measurement_id'] ?? env('GA4_MEASUREMENT_ID');
         $clarityId = $siteSettings['clarity_project_id'] ?? env('CLARITY_PROJECT_ID');
         $pixelId = $siteSettings['meta_pixel_id'] ?? env('META_PIXEL_ID');
     @endphp
-
-    <!-- Server-Side Google Tag Manager (ServerGTM) -->
-    @if(!empty($gtmId))
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '{{ $gtmUrl }}/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{ $gtmId }}');
-    </script>
-    @endif
-
-    <!-- Google Analytics 4 (Direct GA4 if GTM not active) -->
-    @if(!empty($ga4Id) && empty($gtmId))
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $ga4Id }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '{{ $ga4Id }}');
-    </script>
-    @endif
 
     <!-- Microsoft Clarity -->
     @if(!empty($clarityId))
@@ -112,11 +94,10 @@
     </style>
 </head>
 <body>
-    @if(!empty($gtmId))
-    <!-- Server GTM (noscript) -->
-    <noscript><iframe src="{{ $gtmUrl }}/ns.html?id={{ $gtmId }}"
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TST9NBBP"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    @endif
+    <!-- End Google Tag Manager (noscript) -->
 
     {{--Go to top--}}
     <div id="return-to-top"><i class="fa fa-angle-up"></i></div>
