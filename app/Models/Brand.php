@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-    protected $fillable = ['name', 'code', 'manufacturer', 'country_of_origin', 'slug', 'description', 'logo_url'];
+    protected $fillable = ['name', 'code', 'manufacturer', 'country_of_origin', 'slug', 'description', 'logo_url', 'is_active'];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 
     protected static function boot()
     {

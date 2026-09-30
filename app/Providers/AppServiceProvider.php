@@ -29,10 +29,10 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             try {
                 if (Schema::hasTable('categories')) {
-                    $view->with('navCategories', Category::orderBy('name')->get());
+                    $view->with('navCategories', Category::active()->orderBy('name')->get());
                 }
                 if (Schema::hasTable('brands')) {
-                    $view->with('navBrands', Brand::orderBy('name')->get());
+                    $view->with('navBrands', Brand::active()->orderBy('name')->get());
                 }
                 if (Schema::hasTable('settings')) {
                     $settings = Setting::all()->pluck('value', 'key')->toArray();

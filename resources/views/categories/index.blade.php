@@ -48,8 +48,13 @@
                                 @endif
                                 <div>
                                     <h3 class="card-title mb-0">{{ $category->name }}</h3>
-                                    <div class="d-flex gap-1 mt-1">
+                                    <div class="d-flex gap-1 mt-1 align-items-center flex-wrap">
                                         <span class="badge bg-blue-lite text-blue">Code: {{ $category->code ?: 'N/A' }}</span>
+                                        @if($category->is_active)
+                                            <span class="badge bg-success text-success-fg">Active</span>
+                                        @else
+                                            <span class="badge bg-secondary text-secondary-fg">Inactive</span>
+                                        @endif
                                         @if($category->home_image_url)
                                             <span class="badge bg-green-lite text-green">Home Card</span>
                                         @endif
@@ -98,6 +103,11 @@
                                                 <div>
                                                     <strong>{{ $subcat->name }}</strong>
                                                     <span class="badge bg-secondary-lite text-secondary ms-1">{{ $subcat->code ?: 'N/A' }}</span>
+                                                    @if($subcat->is_active)
+                                                        <span class="badge bg-success-lite text-success ms-1">Active</span>
+                                                    @else
+                                                        <span class="badge bg-danger-lite text-danger ms-1">Inactive</span>
+                                                    @endif
                                                     @if($subcat->banner_url)
                                                         <span class="badge bg-success-lite text-success ms-1">Banner</span>
                                                     @endif
@@ -135,7 +145,13 @@
                                     <div class="col-md-4">
                                         <input type="file" name="banner" class="form-control form-control-sm" accept="image/*" title="Optional Banner Image">
                                     </div>
-                                    <div class="col-12 text-end mt-2">
+                                    <div class="col-md-6 mt-2">
+                                        <label class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="checkbox" name="is_active" value="1" checked>
+                                            <span class="form-check-label small">Active</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-6 text-end mt-2">
                                         <button type="submit" class="btn btn-sm btn-primary">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

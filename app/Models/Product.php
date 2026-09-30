@@ -10,11 +10,17 @@ class Product extends Model
 
     protected $casts = [
         'is_featured' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
     }
 
     protected static function boot()

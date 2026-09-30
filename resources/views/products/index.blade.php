@@ -105,6 +105,7 @@
                             <th>Brand</th>
                             <th>Subcategory</th>
                             <th>Featured</th>
+                            <th>Status</th>
                             <th>Capacity (L)</th>
                             <th>Orientation</th>
                             <th>Power / Voltage</th>
@@ -134,9 +135,16 @@
                                 </td>
                                 <td data-label="Featured">
                                     @if($product->is_featured)
-                                        <span class="badge bg-yellow-lt text-yellow fw-bold">⭐ Active</span>
+                                        <span class="badge bg-yellow-lt text-yellow fw-bold">⭐ Yes</span>
                                     @else
-                                        <span class="badge bg-secondary-lt text-muted">Inactive</span>
+                                        <span class="badge bg-secondary-lt text-muted">No</span>
+                                    @endif
+                                </td>
+                                <td data-label="Status">
+                                    @if($product->is_active)
+                                        <span class="badge bg-success text-success-fg">Active</span>
+                                    @else
+                                        <span class="badge bg-secondary text-secondary-fg">Inactive</span>
                                     @endif
                                 </td>
                                 <td data-label="Capacity">

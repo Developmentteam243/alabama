@@ -40,6 +40,7 @@
                             <th>Brand Name</th>
                             <th>Manufacturer / Principal</th>
                             <th>Country of Origin</th>
+                            <th>Status</th>
                             <th class="w-1">Actions</th>
                         </tr>
                     </thead>
@@ -57,6 +58,13 @@
                                 <td><strong>{{ $brand->name }}</strong></td>
                                 <td>{{ $brand->manufacturer ?: '-' }}</td>
                                 <td>{{ $brand->country_of_origin ?: '-' }}</td>
+                                <td>
+                                    @if($brand->is_active)
+                                        <span class="badge bg-success text-success-fg">Active</span>
+                                    @else
+                                        <span class="badge bg-secondary text-secondary-fg">Inactive</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-list flex-nowrap">
                                         <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-sm btn-outline-warning d-inline-flex align-items-center gap-1">

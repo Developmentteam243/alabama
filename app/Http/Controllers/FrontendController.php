@@ -17,23 +17,36 @@ class FrontendController extends Controller
      */
     public function index(Request $request)
     {
-        // Get featured products for homepage collections carousel
-        $featuredProducts = Product::featured()->with('brand')->latest()->get();
+        // Get featured active products for homepage collections carousel
+        $featuredProducts = Product::active()
+            ->featured()
+            ->whereHas('brand', fn($q) => $q->where('is_active', true))
+            ->whereHas('subcategory', fn($q) => $q->where('is_active', true)->whereHas('category', fn($cq) => $cq->where('is_active', true)))
+            ->with('brand')
+            ->latest()
+            ->get();
+
         if ($featuredProducts->isEmpty()) {
-            $featuredProducts = Product::with('brand')->latest()->limit(8)->get();
+            $featuredProducts = Product::active()
+                ->whereHas('brand', fn($q) => $q->where('is_active', true))
+                ->whereHas('subcategory', fn($q) => $q->where('is_active', true)->whereHas('category', fn($cq) => $cq->where('is_active', true)))
+                ->with('brand')
+                ->latest()
+                ->limit(8)
+                ->get();
         }
 
-        // Get unique options for categories & brands
-        $brands = Brand::orderBy('name')->get();
-        $categories = Category::with('subcategories')->orderBy('name')->get();
-        $subcategories = Subcategory::with('category')->orderBy('name')->get();
+        // Get active categories & brands
+        $brands = Brand::active()->orderBy('name')->get();
+        $categories = Category::active()->with(['subcategories' => fn($q) => $q->where('is_active', true)])->orderBy('name')->get();
+        $subcategories = Subcategory::active()->whereHas('category', fn($q) => $q->where('is_active', true))->with('category')->orderBy('name')->get();
 
         // Dynamic stats
-        $totalProductsCount = Product::count();
-        $totalBrandsCount = Brand::count();
+        $totalProductsCount = Product::active()->count();
+        $totalBrandsCount = Brand::active()->count();
 
-        // Spotlight brand (e.g., Lamborghini or first brand with description)
-        $spotlightBrand = Brand::where('slug', 'lamborghini-caloreclima')->first() ?? Brand::whereNotNull('description')->first() ?? Brand::first();
+        // Spotlight brand (e.g., Lamborghini or first active brand with description)
+        $spotlightBrand = Brand::active()->where('slug', 'lamborghini-caloreclima')->first() ?? Brand::active()->whereNotNull('description')->first() ?? Brand::active()->first();
 
         // Latest active blogs for homepage
         $blogs = Blog::active()->latest()->limit(3)->get();
@@ -55,7 +68,10 @@ class FrontendController extends Controller
      */
     public function products(Request $request)
     {
-        $query = Product::with(['brand', 'subcategory.category']);
+        $query = Product::active()
+            ->whereHas('brand', fn($q) => $q->where('is_active', true))
+            ->whereHas('subcategory', fn($q) => $q->where('is_active', true)->whereHas('category', fn($cq) => $cq->where('is_active', true)))
+            ->with(['brand', 'subcategory.category']);
 
         // Search keyword
         if ($request->filled('search')) {
@@ -115,11 +131,11 @@ class FrontendController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
 
-        $brands = Brand::orderBy('name')->get();
-        $categories = Category::with('subcategories')->orderBy('name')->get();
-        $subcategories = Subcategory::with('category')->orderBy('name')->get();
-        $capacities = Product::whereNotNull('capacity_l')->where('capacity_l', '!=', '')->distinct()->pluck('capacity_l')->sort();
-        $mountings = Product::whereNotNull('orientation_mounting')->where('orientation_mounting', '!=', '')->distinct()->pluck('orientation_mounting')->sort();
+        $brands = Brand::active()->orderBy('name')->get();
+        $categories = Category::active()->with(['subcategories' => fn($q) => $q->where('is_active', true)])->orderBy('name')->get();
+        $subcategories = Subcategory::active()->whereHas('category', fn($q) => $q->where('is_active', true))->with('category')->orderBy('name')->get();
+        $capacities = Product::active()->whereNotNull('capacity_l')->where('capacity_l', '!=', '')->distinct()->pluck('capacity_l')->sort();
+        $mountings = Product::active()->whereNotNull('orientation_mounting')->where('orientation_mounting', '!=', '')->distinct()->pluck('orientation_mounting')->sort();
 
         return view('frontend.products', compact(
             'products',
@@ -133,12 +149,18 @@ class FrontendController extends Controller
 
     public function show(Product $product)
     {
+        // Ensure product, brand, subcategory, and category are active
+        if (!$product->is_active || ($product->brand && !$product->brand->is_active) || ($product->subcategory && (!$product->subcategory->is_active || ($product->subcategory->category && !$product->subcategory->category->is_active)))) {
+            abort(404);
+        }
+
         $product->load(['brand', 'subcategory.category']);
         
-        // Find variants in the same product family
+        // Find active variants in the same product family
         $variants = collect();
         if ($product->product_family) {
-            $variants = Product::where('product_family', $product->product_family)
+            $variants = Product::active()
+                ->where('product_family', $product->product_family)
                 ->where('brand_id', $product->brand_id)
                 ->get();
         }
@@ -146,8 +168,9 @@ class FrontendController extends Controller
             $variants = collect([$product]);
         }
         
-        // Find related products in the same subcategory (excluding same family)
-        $relatedQuery = Product::where('subcategory_id', $product->subcategory_id)
+        // Find related active products in the same subcategory (excluding same family)
+        $relatedQuery = Product::active()
+            ->where('subcategory_id', $product->subcategory_id)
             ->where('id', '!=', $product->id);
             
         if ($product->product_family) {
@@ -183,11 +206,14 @@ class FrontendController extends Controller
         return view('frontend.contact');
     }
     public function categoryShow(Request $request, $slug) {
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $subcategories = $category->subcategories;
+        $category = Category::active()->where('slug', $slug)->firstOrFail();
+        $subcategories = $category->subcategories()->where('is_active', true)->get();
         $subIds = $subcategories->pluck('id');
         
-        $query = Product::whereIn('subcategory_id', $subIds)->with('brand');
+        $query = Product::active()
+            ->whereIn('subcategory_id', $subIds)
+            ->whereHas('brand', fn($q) => $q->where('is_active', true))
+            ->with('brand');
 
         if ($request->filled('search')) {
             $search = $request->get('search');
@@ -218,35 +244,39 @@ class FrontendController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
         
-        // Fetch featured products for this category
-        $featuredProducts = Product::whereIn('subcategory_id', $subIds)
+        // Fetch featured active products for this category
+        $featuredProducts = Product::active()
+            ->whereIn('subcategory_id', $subIds)
             ->where('is_featured', true)
+            ->whereHas('brand', fn($q) => $q->where('is_active', true))
             ->with('brand')
             ->latest()
             ->limit(8)
             ->get();
 
         if ($featuredProducts->isEmpty()) {
-            $featuredProducts = Product::whereIn('subcategory_id', $subIds)
+            $featuredProducts = Product::active()
+                ->whereIn('subcategory_id', $subIds)
+                ->whereHas('brand', fn($q) => $q->where('is_active', true))
                 ->with('brand')
                 ->latest()
                 ->limit(6)
                 ->get();
         }
 
-        // Get filter options specific to this category
-        $brands = Brand::whereHas('products', function($q) use ($subIds) {
-            $q->whereIn('subcategory_id', $subIds);
+        // Get active filter options specific to this category
+        $brands = Brand::active()->whereHas('products', function($q) use ($subIds) {
+            $q->where('is_active', true)->whereIn('subcategory_id', $subIds);
         })->orderBy('name')->get();
         
-        $capacities = Product::whereIn('subcategory_id', $subIds)
+        $capacities = Product::active()->whereIn('subcategory_id', $subIds)
             ->whereNotNull('capacity_l')
             ->where('capacity_l', '!=', '')
             ->distinct()
             ->pluck('capacity_l')
             ->sort();
             
-        $mountings = Product::whereIn('subcategory_id', $subIds)
+        $mountings = Product::active()->whereIn('subcategory_id', $subIds)
             ->whereNotNull('orientation_mounting')
             ->where('orientation_mounting', '!=', '')
             ->distinct()
@@ -265,10 +295,13 @@ class FrontendController extends Controller
     }
 
     public function subcategoryShow(Request $request, $categorySlug, $subcategorySlug) {
-        $category = Category::where('slug', $categorySlug)->firstOrFail();
-        $subcategory = Subcategory::where('category_id', $category->id)->where('slug', $subcategorySlug)->firstOrFail();
+        $category = Category::active()->where('slug', $categorySlug)->firstOrFail();
+        $subcategory = Subcategory::active()->where('category_id', $category->id)->where('slug', $subcategorySlug)->firstOrFail();
         
-        $query = Product::where('subcategory_id', $subcategory->id)->with('brand');
+        $query = Product::active()
+            ->where('subcategory_id', $subcategory->id)
+            ->whereHas('brand', fn($q) => $q->where('is_active', true))
+            ->with('brand');
 
         if ($request->filled('search')) {
             $search = $request->get('search');
@@ -296,15 +329,19 @@ class FrontendController extends Controller
         $products = $query->paginate(12)->withQueryString();
         
         // Fetch featured products for this subcategory
-        $featuredProducts = Product::where('subcategory_id', $subcategory->id)
+        $featuredProducts = Product::active()
+            ->where('subcategory_id', $subcategory->id)
             ->where('is_featured', true)
+            ->whereHas('brand', fn($q) => $q->where('is_active', true))
             ->with('brand')
             ->latest()
             ->limit(8)
             ->get();
 
         if ($featuredProducts->isEmpty()) {
-            $featuredProducts = Product::where('subcategory_id', $subcategory->id)
+            $featuredProducts = Product::active()
+                ->where('subcategory_id', $subcategory->id)
+                ->whereHas('brand', fn($q) => $q->where('is_active', true))
                 ->with('brand')
                 ->latest()
                 ->limit(6)
@@ -312,18 +349,18 @@ class FrontendController extends Controller
         }
 
         // Get filter options specific to this subcategory
-        $brands = Brand::whereHas('products', function($q) use ($subcategory) {
-            $q->where('subcategory_id', $subcategory->id);
+        $brands = Brand::active()->whereHas('products', function($q) use ($subcategory) {
+            $q->where('is_active', true)->where('subcategory_id', $subcategory->id);
         })->orderBy('name')->get();
         
-        $capacities = Product::where('subcategory_id', $subcategory->id)
+        $capacities = Product::active()->where('subcategory_id', $subcategory->id)
             ->whereNotNull('capacity_l')
             ->where('capacity_l', '!=', '')
             ->distinct()
             ->pluck('capacity_l')
             ->sort();
             
-        $mountings = Product::where('subcategory_id', $subcategory->id)
+        $mountings = Product::active()->where('subcategory_id', $subcategory->id)
             ->whereNotNull('orientation_mounting')
             ->where('orientation_mounting', '!=', '')
             ->distinct()
@@ -342,26 +379,31 @@ class FrontendController extends Controller
     }
 
     public function brandShow($slug) {
-        $brand = Brand::where('slug', $slug)->firstOrFail();
+        $brand = Brand::active()->where('slug', $slug)->firstOrFail();
         
-        // Fetch products belonging to this brand
-        $products = Product::where('brand_id', $brand->id)->with(['subcategory.category'])->paginate(12);
+        // Fetch active products belonging to this brand
+        $products = Product::active()
+            ->where('brand_id', $brand->id)
+            ->whereHas('subcategory', fn($q) => $q->where('is_active', true)->whereHas('category', fn($cq) => $cq->where('is_active', true)))
+            ->with(['subcategory.category'])
+            ->paginate(12);
 
         // Fetch categories and subcategories associated with this brand
-        $categories = Category::whereHas('subcategories.products', function ($q) use ($brand) {
-            $q->where('brand_id', $brand->id);
+        $categories = Category::active()->whereHas('subcategories.products', function ($q) use ($brand) {
+            $q->where('is_active', true)->where('brand_id', $brand->id);
         })->with(['subcategories' => function ($q) use ($brand) {
-            $q->whereHas('products', function ($pq) use ($brand) {
-                $pq->where('brand_id', $brand->id);
+            $q->where('is_active', true)->whereHas('products', function ($pq) use ($brand) {
+                $pq->where('is_active', true)->where('brand_id', $brand->id);
             })->withCount(['products' => function ($pq) use ($brand) {
-                $pq->where('brand_id', $brand->id);
+                $pq->where('is_active', true)->where('brand_id', $brand->id);
             }]);
         }])->get();
 
         return view('frontend.brand-show', compact('brand', 'products', 'categories'));
     }
+
     public function all_brands()  {
-        $brands = Brand::orderBy('name')->get();
+        $brands = Brand::active()->orderBy('name')->get();
         return view('frontend.all-brands', compact('brands'));
     }
 

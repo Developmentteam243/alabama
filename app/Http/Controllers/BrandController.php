@@ -27,10 +27,12 @@ class BrandController extends Controller
             'country_of_origin' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|max:10240',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $data = $validated;
         unset($data['logo']);
+        $data['is_active'] = $request->has('is_active') ? (bool) $request->is_active : true;
 
         if ($request->hasFile('logo')) {
             $logoUrl = \App\Services\CloudinaryService::upload($request->file('logo'));
@@ -63,10 +65,12 @@ class BrandController extends Controller
             'country_of_origin' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|max:10240',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $data = $validated;
         unset($data['logo']);
+        $data['is_active'] = $request->has('is_active') ? (bool) $request->is_active : false;
 
         if ($request->hasFile('logo')) {
             $logoUrl = \App\Services\CloudinaryService::upload($request->file('logo'));

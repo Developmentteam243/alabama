@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subcategory extends Model
 {
-    protected $fillable = ['category_id', 'name', 'code', 'slug', 'meta_title', 'meta_description', 'banner_url'];
+    protected $fillable = ['category_id', 'name', 'code', 'slug', 'meta_title', 'meta_description', 'banner_url', 'is_active'];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 
     protected static function boot()
     {

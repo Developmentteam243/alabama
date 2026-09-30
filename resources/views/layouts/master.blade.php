@@ -111,7 +111,7 @@
                 <a href="tel:+97143526973"><span class="hide-m"><i class="fa-solid fa-phone"></i> +971 4 352 6973</span></a>
             </div>
             <div class="tb-right">
-                <a href="https://alabamauae.com/wp-content/uploads/2026/01/Alabama-Brochure.pdf" target="_blank" rel="noopener">Download brochure <i class="fa-solid fa-download"></i></a>
+                <a href="{{ asset('assets/pdf/Alabama-Company-Profile.pdf') }}" target="_blank" download="Alabama-Company-Profile.pdf" rel="noopener">Download brochure <i class="fa-solid fa-download"></i></a>
             </div>
         </div>
     </div>

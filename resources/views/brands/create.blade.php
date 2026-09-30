@@ -64,6 +64,15 @@
                             <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
+                                <span class="form-check-label fw-bold">Active Status (Visible on Website)</span>
+                            </label>
+                            <small class="form-hint">Inactive brands will be hidden from the website catalogue, brand strip, and spotlight.</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer text-end">

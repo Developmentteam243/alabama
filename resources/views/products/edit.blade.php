@@ -283,15 +283,26 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="card p-3 bg-light border">
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $product->is_active) ? 'checked' : '' }}>
+                                <label class="form-check-label fw-bold" for="is_active">
+                                    Active Status (Visible on Website)
+                                </label>
+                            </div>
+                            <span class="text-muted small mt-1">If unchecked, this product will be completely hidden from the public website and catalog.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="card p-3 bg-light border">
                             <div class="form-check form-switch mb-0">
                                 <input class="form-check-input" type="checkbox" name="is_featured" id="is_featured" value="1" {{ old('is_featured', $product->is_featured) ? 'checked' : '' }}>
                                 <label class="form-check-label fw-bold" for="is_featured">
-                                    ⭐ Featured Product (Active / Inactive)
+                                    ⭐ Featured Product
                                 </label>
                             </div>
-                            <span class="text-muted small mt-1">If enabled, this product will be highlighted on the homepage Featured Collections carousel and category featured lists.</span>
+                            <span class="text-muted small mt-1">If enabled, this product will be highlighted on the homepage Featured Collections carousel.</span>
                         </div>
                     </div>
 

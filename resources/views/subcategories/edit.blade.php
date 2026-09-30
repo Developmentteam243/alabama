@@ -86,6 +86,15 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_active" value="1" {{ old('is_active', $subcategory->is_active) ? 'checked' : '' }}>
+                                <span class="form-check-label fw-bold">Active Status (Visible on Website)</span>
+                            </label>
+                            <small class="form-hint">Inactive subcategories will be hidden from category pages and filters.</small>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer text-end">

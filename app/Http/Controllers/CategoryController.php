@@ -31,10 +31,12 @@ class CategoryController extends Controller
             'meta_description' => 'nullable|string',
             'banner' => 'nullable|image|max:10240',
             'home_image' => 'nullable|image|max:10240',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $data = $validated;
         unset($data['banner'], $data['home_image']);
+        $data['is_active'] = $request->has('is_active') ? (bool) $request->is_active : true;
 
         if ($request->hasFile('banner')) {
             $bannerUrl = CloudinaryService::upload($request->file('banner'));
@@ -76,10 +78,12 @@ class CategoryController extends Controller
             'meta_description' => 'nullable|string',
             'banner' => 'nullable|image|max:10240',
             'home_image' => 'nullable|image|max:10240',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $data = $validated;
         unset($data['banner'], $data['home_image']);
+        $data['is_active'] = $request->has('is_active') ? (bool) $request->is_active : false;
 
         if ($request->hasFile('banner')) {
             $bannerUrl = CloudinaryService::upload($request->file('banner'));
@@ -114,10 +118,12 @@ class CategoryController extends Controller
             'code' => 'required|string|max:50|unique:subcategories,code',
             'slug' => 'nullable|string|max:255|unique:subcategories,slug',
             'banner' => 'nullable|image|max:10240',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $data = $validated;
         unset($data['banner']);
+        $data['is_active'] = $request->has('is_active') ? (bool) $request->is_active : true;
 
         if ($request->hasFile('banner')) {
             $bannerUrl = CloudinaryService::upload($request->file('banner'));
@@ -151,10 +157,12 @@ class CategoryController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'banner' => 'nullable|image|max:10240',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $data = $validated;
         unset($data['banner']);
+        $data['is_active'] = $request->has('is_active') ? (bool) $request->is_active : false;
 
         if ($request->hasFile('banner')) {
             $bannerUrl = CloudinaryService::upload($request->file('banner'));

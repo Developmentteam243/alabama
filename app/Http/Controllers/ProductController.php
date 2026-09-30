@@ -95,12 +95,14 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'video_url' => 'nullable|string|max:255',
             'is_featured' => 'nullable|boolean',
+            'is_active' => 'nullable|boolean',
             'product_images' => 'nullable|array',
             'product_images.*' => 'image|max:10240',
         ]);
 
         $data = $validated;
         $data['is_featured'] = $request->has('is_featured') ? (bool)$request->is_featured : false;
+        $data['is_active'] = $request->has('is_active') ? (bool)$request->is_active : true;
         unset($data['product_images']);
         unset($data['image']);
         unset($data['brochure']);
@@ -197,12 +199,14 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'video_url' => 'nullable|string|max:255',
             'is_featured' => 'nullable|boolean',
+            'is_active' => 'nullable|boolean',
             'product_images' => 'nullable|array',
             'product_images.*' => 'image|max:10240',
         ]);
 
         $data = $validated;
         $data['is_featured'] = $request->has('is_featured') ? (bool)$request->is_featured : false;
+        $data['is_active'] = $request->has('is_active') ? (bool)$request->is_active : false;
         unset($data['product_images']);
         unset($data['image']);
         unset($data['brochure']);
