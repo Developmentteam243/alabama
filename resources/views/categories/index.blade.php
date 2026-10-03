@@ -132,18 +132,21 @@
                                 <p class="text-muted small">No subcategories defined.</p>
                             @endif
 
-                            <!-- Form to Add Subcategory with optional banner upload -->
+                            <!-- Form to Add Subcategory with banner upload & dimensions guide -->
                             <form action="{{ route('categories.subcategories.store', $category->id) }}" method="POST" enctype="multipart/form-data" class="border-top pt-3 mt-3">
                                 @csrf
                                 <div class="row g-2 align-items-center">
-                                    <div class="col-md-5">
-                                        <input type="text" name="name" class="form-control form-control-sm" placeholder="Subcategory Name" required>
+                                    <div class="col-md-4">
+                                        <label class="form-label small text-muted mb-1">Subcategory Name *</label>
+                                        <input type="text" name="name" class="form-control form-control-sm" placeholder="e.g. Water Closets (WC)" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" name="code" class="form-control form-control-sm" placeholder="Code (e.g. GB)" required>
+                                        <label class="form-label small text-muted mb-1">Code *</label>
+                                        <input type="text" name="code" class="form-control form-control-sm" placeholder="e.g. WC" required>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="file" name="banner" class="form-control form-control-sm" accept="image/*" title="Optional Banner Image">
+                                    <div class="col-md-5">
+                                        <label class="form-label small text-muted mb-1">Header Banner (1920&times;450px)</label>
+                                        <input type="file" name="banner" class="form-control form-control-sm" accept="image/*">
                                     </div>
                                     <div class="col-md-6 mt-2">
                                         <label class="form-check form-check-inline mb-0">

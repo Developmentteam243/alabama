@@ -28,27 +28,62 @@
                 <div class="hero-media" data-aos="fade-left">
                     <div class="swiper heroSwiper rounded-4 shadow-sm overflow-hidden position-relative">
                         <div class="swiper-wrapper">
-                            @foreach($categories as $cat)
-                                @php
-                                    $slideImg = $cat->banner_url ?: ($cat->home_image_url ?: 'https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp');
-                                @endphp
-                                <div class="swiper-slide position-relative">
-                                    <div class="hero-slide-card" style="height: 440px; position: relative; overflow: hidden; border-radius: 12px; background: #0f172a;">
-                                        <img src="{{ $slideImg }}" alt="{{ $cat->name }}" style="width: 100%; height: 100%; object-fit: cover;" />
-                                        <div class="hero-slide-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(15,23,42,0.85) 100%); display: flex; align-items: flex-end; padding: 24px;">
-                                            <div class="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                                                <div>
-                                                    <span class="badge bg-danger text-white small text-uppercase mb-1">Alabama Range</span>
-                                                    <h4 class="text-white fw-bold mb-0">{{ $cat->name }}</h4>
+                            @if(isset($sliders) && $sliders->count() > 0)
+                                @foreach($sliders as $slide)
+                                    <div class="swiper-slide position-relative">
+                                        <div class="hero-slide-card" style="height: 440px; position: relative; overflow: hidden; border-radius: 12px; background: #0f172a;">
+                                            <img src="{{ $slide->image_url }}" alt="{{ $slide->title ?? 'Hero Slide' }}" style="width: 100%; height: 100%; object-fit: cover;" />
+                                            @if($slide->title || $slide->subtitle || $slide->button_url)
+                                                <div class="hero-slide-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(15,23,42,0.88) 100%); display: flex; align-items: flex-end; padding: 24px;">
+                                                    <div class="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                                        <div>
+                                                            @if($slide->subtitle)
+                                                                <span class="badge bg-danger text-white small text-uppercase mb-1">{{ $slide->subtitle }}</span>
+                                                            @endif
+                                                            @if($slide->title)
+                                                                <h4 class="text-white fw-bold mb-0">{{ $slide->title }}</h4>
+                                                            @endif
+                                                        </div>
+                                                        @if($slide->button_url)
+                                                            <a href="{{ $slide->button_url }}" class="btn btn-sm btn-danger rounded-pill fw-bold px-4 py-2 text-uppercase shadow" style="background-color: #e11d48; border-color: #e11d48;">
+                                                                {{ $slide->button_text ?: 'Explore' }} &rarr;
+                                                            </a>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                                <a href="{{ route('frontend.category.show', $cat->slug) }}" class="btn btn-sm btn-danger rounded-pill fw-bold px-4 py-2 text-uppercase shadow" style="background-color: #e11d48; border-color: #e11d48;">
-                                                    Explore {{ $cat->name }} &rarr;
-                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @elseif(isset($categories) && $categories->count() > 0)
+                                @foreach($categories as $cat)
+                                    @php
+                                        $slideImg = $cat->banner_url ?: ($cat->home_image_url ?: 'https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp');
+                                    @endphp
+                                    <div class="swiper-slide position-relative">
+                                        <div class="hero-slide-card" style="height: 440px; position: relative; overflow: hidden; border-radius: 12px; background: #0f172a;">
+                                            <img src="{{ $slideImg }}" alt="{{ $cat->name }}" style="width: 100%; height: 100%; object-fit: cover;" />
+                                            <div class="hero-slide-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(15,23,42,0.85) 100%); display: flex; align-items: flex-end; padding: 24px;">
+                                                <div class="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                                    <div>
+                                                        <span class="badge bg-danger text-white small text-uppercase mb-1">Alabama Range</span>
+                                                        <h4 class="text-white fw-bold mb-0">{{ $cat->name }}</h4>
+                                                    </div>
+                                                    <a href="{{ route('frontend.category.show', $cat->slug) }}" class="btn btn-sm btn-danger rounded-pill fw-bold px-4 py-2 text-uppercase shadow" style="background-color: #e11d48; border-color: #e11d48;">
+                                                        Explore {{ $cat->name }} &rarr;
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                @endforeach
+                            @else
+                                <div class="swiper-slide position-relative">
+                                    <div class="hero-slide-card" style="height: 440px; position: relative; overflow: hidden; border-radius: 12px; background: #0f172a;">
+                                        <img src="{{ $siteSettings['hero_image_url'] ?? 'https://alabamauae.com/wp-content/uploads/2026/01/sanitary-ware.webp' }}" alt="Hero Banner" style="width: 100%; height: 100%; object-fit: cover;" />
+                                    </div>
                                 </div>
-                            @endforeach
+                            @endif
                         </div>
                         <!-- Swiper Controls -->
                         <div class="swiper-pagination hero-pagination"></div>
@@ -116,7 +151,9 @@
                                         <small>{{ sprintf('%02d', $index + 1) }} — {{ $category->name }}</small>
                                         <h3>{{ $category->name }}</h3>
                                         <p>{{ $category->description ?: 'High quality plumbing, fixtures and equipment for residential and commercial applications.' }}</p>
-                                        <span class="link-arrow">Explore Range <i class="fa-solid fa-arrow-right-long"></i></span>
+                                        <div>
+                                            <span class="cat-btn-cta">Explore Range <i class="fa-solid fa-arrow-right-long"></i></span>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
@@ -163,8 +200,11 @@
     <div class="container">            
         <div class="spot">
             <div class="spot-media" data-aos="zoom-in">
-                @if($spotlightBrand->logo_url)
-                    <img src="{{ $spotlightBrand->logo_url }}" alt="{{ $spotlightBrand->name }}" class="img-fluid cd-brand"/>
+                @php
+                    $spotlightPoster = $spotlightBrand->poster_url ?: ($spotlightBrand->logo_url ?: null);
+                @endphp
+                @if($spotlightPoster)
+                    <img src="{{ $spotlightPoster }}" alt="{{ $spotlightBrand->name }}" class="img-fluid cd-brand" style="width: 100%; height: 100%; object-fit: cover;" />
                 @else
                     <div class="d-flex align-items-center justify-content-center h-100 bg-secondary text-white fw-bold fs-2 p-4">
                         {{ $spotlightBrand->name }}
@@ -193,11 +233,11 @@
             <!-- First Set -->
             @foreach($brands as $brand)
                 @if($brand->logo_url)
-                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" title="{{ $brand->name }}" class="d-inline-flex align-items-center">
-                        <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="img-fluid" style="max-height: 50px; object-fit: contain;" />
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" title="{{ $brand->name }}" class="brand-logo-item">
+                        <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" />
                     </a>
                 @else
-                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="d-inline-flex align-items-center text-decoration-none px-3 text-dark fw-bold">
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="brand-text-item">
                         {{ $brand->name }}
                     </a>
                 @endif
@@ -206,11 +246,11 @@
             <!-- Duplicate Set for smooth infinite marquee loop -->
             @foreach($brands as $brand)
                 @if($brand->logo_url)
-                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" title="{{ $brand->name }}" class="d-inline-flex align-items-center">
-                        <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="img-fluid" style="max-height: 50px; object-fit: contain;" />
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" title="{{ $brand->name }}" class="brand-logo-item">
+                        <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" />
                     </a>
                 @else
-                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="d-inline-flex align-items-center text-decoration-none px-3 text-dark fw-bold">
+                    <a href="{{ route('frontend.brand.show', $brand->slug) }}" class="brand-text-item">
                         {{ $brand->name }}
                     </a>
                 @endif
@@ -390,9 +430,12 @@
         new Swiper(".heroSwiper", {
             slidesPerView: 1,
             loop: true,
+            speed: 800,
+            grabCursor: true,
             autoplay: {
-                delay: 4500,
+                delay: 5000,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
             },
             pagination: {
                 el: ".hero-pagination",

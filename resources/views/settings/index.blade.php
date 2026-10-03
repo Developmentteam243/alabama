@@ -121,12 +121,24 @@
 
                                 <div class="col-md-12">
                                     <hr class="my-3" />
-                                    <h4 class="card-title mb-3">Hero Media Image & Badge Card</h4>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4 class="card-title mb-0">Hero Media & Sliders</h4>
+                                        <a href="{{ route('sliders.index') }}" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" />
+                                            </svg>
+                                            Manage Multi-Slide Hero Sliders &rarr;
+                                        </a>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <strong>Multi-slide carousel active!</strong> You can now manage unlimited slides with custom titles, badges, and CTA links in the <a href="{{ route('sliders.index') }}" class="alert-link fw-bold">Hero Sliders</a> section. The image below acts as a fallback single-banner image.
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Hero Banner Image (Upload new)</label>
+                                        <label class="form-label">Fallback Banner Image (Upload new)</label>
                                         <input type="file" name="hero_image" class="form-control" accept="image/*">
                                         @if(!empty($settings['hero_image_url']))
                                             <div class="mt-2">

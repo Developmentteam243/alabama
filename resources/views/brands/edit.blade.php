@@ -50,18 +50,34 @@
                             <input type="text" name="country_of_origin" class="form-control" value="{{ old('country_of_origin', $brand->country_of_origin) }}">
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label">Logo Image</label>
+                            <label class="form-label fw-bold">Brand Logo (for Marquee Strip & Catalogue)</label>
                             @if($brand->logo_url)
-                                <div class="mb-2">
-                                    <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" style="max-height: 80px; border: 1px solid #ddd; padding: 4px; border-radius: 4px;">
+                                <div class="mb-2 p-2 bg-light rounded d-inline-block border">
+                                    <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }} Logo" style="max-height: 60px; max-width: 140px; object-fit: contain;">
                                 </div>
                             @endif
                             <input type="file" name="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
                             @error('logo')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <small class="form-hint">Used in brand strip marquee and product cards (~200x80px).</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Homepage Spotlight Poster (Optional)</label>
+                            @if($brand->poster_url)
+                                <div class="mb-2 p-2 bg-light rounded d-inline-block border">
+                                    <img src="{{ $brand->poster_url }}" alt="{{ $brand->name }} Poster" style="max-height: 60px; max-width: 140px; object-fit: cover;">
+                                </div>
+                            @endif
+                            <input type="file" name="poster" class="form-control @error('poster') is-invalid @enderror" accept="image/*">
+                            @error('poster')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-hint">Hero poster or lifestyle shot shown when this brand is spotlighted on homepage (~800x600px).</small>
                         </div>
                     </div>
                     <div class="col-md-12">

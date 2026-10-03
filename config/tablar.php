@@ -150,6 +150,11 @@ return [
             'route' => 'home'
         ],
         [
+            'text' => 'Hero Sliders',
+            'icon' => 'ti ti-slideshow',
+            'route' => 'sliders.index'
+        ],
+        [
             'text' => 'Products SKU',
             'icon' => 'ti ti-box',
             'route' => 'products.index'

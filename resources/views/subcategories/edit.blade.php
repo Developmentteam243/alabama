@@ -40,18 +40,17 @@
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label class="form-label">Subcategory Banner Image</label>
+                            <label class="form-label fw-bold">Subcategory Header Banner Image</label>
+                            @if($subcategory->banner_url)
+                                <div class="mb-2 p-2 bg-light rounded d-inline-block border">
+                                    <img src="{{ $subcategory->banner_url }}" alt="{{ $subcategory->name }} Banner" class="img-thumbnail" style="max-height: 120px; object-fit: cover;">
+                                </div>
+                            @endif
                             <input type="file" name="banner" class="form-control @error('banner') is-invalid @enderror" accept="image/*">
                             @error('banner')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            @if($subcategory->banner_url)
-                                <div class="mt-2">
-                                    <label class="form-label small">Current Banner Preview:</label>
-                                    <img src="{{ $subcategory->banner_url }}" alt="{{ $subcategory->name }} Banner" class="img-thumbnail" style="max-height: 150px;">
-                                </div>
-                            @endif
-                            <small class="form-hint">Upload a banner image for this subcategory.</small>
+                            <small class="form-hint">Recommended banner dimensions: <strong>1920 &times; 450 px</strong> (wide landscape, max 10MB JPG, PNG, or WEBP). This is displayed as the full-width background image on the subcategory header page.</small>
                         </div>
                     </div>
                     <!-- SEO Fields -->

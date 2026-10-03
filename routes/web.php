@@ -12,6 +12,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SliderController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.home');
 Route::get('/about', [FrontendController::class, 'about'])->name('frontend.about');
@@ -32,6 +33,7 @@ require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('sliders', SliderController::class);
     Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);

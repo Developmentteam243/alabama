@@ -49,13 +49,24 @@
                             <input type="text" name="country_of_origin" class="form-control" value="{{ old('country_of_origin') }}">
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label">Logo Image</label>
+                            <label class="form-label fw-bold">Brand Logo (for Marquee Strip & Catalogue)</label>
                             <input type="file" name="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
                             @error('logo')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <small class="form-hint">Clean PNG or SVG with transparent background recommended (~200x80px).</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Homepage Spotlight Poster (Optional)</label>
+                            <input type="file" name="poster" class="form-control @error('poster') is-invalid @enderror" accept="image/*">
+                            @error('poster')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-hint">Promotional background banner or hero poster for this brand spotlight (~800x600px).</small>
                         </div>
                     </div>
                     <div class="col-md-12">

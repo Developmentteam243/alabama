@@ -9,10 +9,10 @@
 @section('content')
 
 <!-- Header -->
-<section class="page-hero" data-aos="fade-up" style="background: @if($subcategory->banner_url) url('{{ $subcategory->banner_url }}') no-repeat center center / cover @elseif($category->banner_url) url('{{ $category->banner_url }}') no-repeat center center / cover @else #f8f9fa @endif; padding: 100px 0; position: relative; min-height: 300px; display: flex; align-items: center;">
+<section class="page-hero" data-aos="fade-up" style="background: @if($subcategory->banner_url) url('{{ $subcategory->banner_url }}') no-repeat center center / cover @elseif($category->banner_url) url('{{ $category->banner_url }}') no-repeat center center / cover @else #0f172a @endif; padding: 110px 0 90px; position: relative; min-height: 320px; display: flex; align-items: center;">
     @if($subcategory->banner_url || $category->banner_url)
         <!-- Overlay to ensure text readability -->
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.55); z-index: 1;"></div>
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); z-index: 1;"></div>
     @endif
     <div class="container" style="position: relative; z-index: 2; @if($subcategory->banner_url || $category->banner_url) color: white; @endif">
         <div class="row">

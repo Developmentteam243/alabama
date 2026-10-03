@@ -8,7 +8,11 @@ use App\Models\Subcategory;
 use App\Models\Product;
 use App\Models\Blog;
 use App\Models\Quote;
+use App\Models\Slider;
+use App\Mail\NewQuoteNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
@@ -51,6 +55,9 @@ class FrontendController extends Controller
         // Latest active blogs for homepage
         $blogs = Blog::active()->latest()->limit(3)->get();
 
+        // Hero sliders
+        $sliders = Slider::active()->orderBy('sort_order', 'asc')->get();
+
         return view('frontend.index', compact(
             'featuredProducts',
             'brands',
@@ -59,7 +66,8 @@ class FrontendController extends Controller
             'totalProductsCount',
             'totalBrandsCount',
             'spotlightBrand',
-            'blogs'
+            'blogs',
+            'sliders'
         ));
     }
 
@@ -441,7 +449,15 @@ class FrontendController extends Controller
             }
         }
 
-        Quote::create($data);
+        $quote = Quote::create($data);
+
+        // Send email notification to sales@alabamauae.com
+        try {
+            $salesEmail = env('MAIL_SALES_ADDRESS', 'sales@alabamauae.com');
+            Mail::to($salesEmail)->send(new NewQuoteNotification($quote));
+        } catch (\Exception $e) {
+            Log::error('Failed to send quote notification email: ' . $e->getMessage());
+        }
 
         return redirect()->back()->with('success_quote', 'Your quotation request has been submitted successfully. Our sales team will get back to you shortly.');
     }
