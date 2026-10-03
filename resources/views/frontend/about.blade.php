@@ -105,28 +105,18 @@
 <!-- leadership -->
 <section class="cdLeadership section">
     <div class="container">
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             <div class="col-xl-12">
                 <div class="sec-head split">
                     <div data-aos="zoom-in-up">
                         <div class="eyebrow">Leadership</div>
                         <h2 class="h-section">A Legacy of Quality. <span class="accent-i">A Future of Excellence.</span></h2>
                     </div>
-                    <a class="link-arrow" href="#blog" data-aos="zoom-in-up">All articles <i class="fa-solid fa-angles-right"></i></a>
+                    <a class="link-arrow" href="{{ route('frontend.blog') }}" data-aos="zoom-in-up">All articles <i class="fa-solid fa-angles-right"></i></a>
                 </div>
             </div>
-            <div class="col-xl-6 col-md-6 col-lg-6">
-                <div class="val" data-aos="fade-right">
-                    <b>Founder's message</b>
-                    <h3>Nasheer Ahammad</h3>
-                    <p class="subhead">Founder</p>
-                    <p>Since the establishment of Alabama, my vision has been to build a trusted company recognized for supplying premium plumbing and building materials across the UAE. Our foundation is built on integrity, quality, reliability, and long-term partnerships, with a commitment to delivering exceptional value to every customer and project.</p>
-                    <p>We believe that sustainable success comes from consistently providing high-quality plumbing products, sanitary ware, water heaters, pipes and fittings, valves, pumps, and building solutions that meet the highest industry standards. Every decision we make is guided by our dedication to excellence, transparency, and customer satisfaction.</p>
-                    <p>Over the years, we have earned the trust of developers, contractors, consultants, businesses, and homeowners by delivering dependable products, expert support, and reliable service for residential, commercial, and industrial construction projects. As we continue to grow, our commitment remains the same—to provide innovative building solutions, strengthen lasting relationships, and contribute to the continued development of the UAE's construction industry.</p>
-                </div>
-            </div>
-            <div class="col-xl-6 col-md-6 col-lg-6">
-                <div class="val" data-aos="fade-left">
+            <div class="col-xl-10 col-lg-10">
+                <div class="val" data-aos="fade-up">
                     <b>CEO's message</b>
                     <h3>Junaid Nasheer</h3>
                     <p class="subhead">Chief Executive Officer (CEO)</p>

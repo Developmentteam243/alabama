@@ -263,7 +263,12 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-4">
                     <h6 class="text-white mb-3 fw-bold">Contact</h6>
-                    <p class="small mb-1"><i class="fa-solid fa-location-dot me-2"></i> Dubai Investments Park 2, Dubai, UAE</p>
+                    <p class="small mb-1">
+                        <i class="fa-solid fa-location-dot me-2 text-danger"></i>
+                        <a href="https://maps.google.com/?q=Dubai+Investments+Park+2,+Dubai,+UAE" target="_blank" rel="noopener" class="text-decoration-none text-reset">
+                            Dubai Investments Park 2, Dubai, UAE
+                        </a>
+                    </p>
                     <p class="small mb-1"><i class="fa-solid fa-envelope me-2"></i><a href="mailto:sales@alabamauae.com">sales@alabamauae.com</a></p>
                     <p class="small"><i class="fa-solid fa-phone me-2"></i><a href="tel:+97143526973">+971 4 352 6973</a></p>
                 </div>

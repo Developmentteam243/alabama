@@ -335,17 +335,17 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    color: #fff;
+    color: #ffffff;
     cursor: pointer;
     background-color: #0c121e;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .cat-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.1);
-    color: #fff;
+    box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.35), 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: #ffffff;
 }
 .cat-card img {
     position: absolute;
@@ -359,17 +359,17 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cat-card:hover img {
     transform: scale(1.05);
 }
-/* Refined multi-stop gradient for maximum text readability and clean product presentation */
+/* Multi-stop dark gradient overlay across full card to guarantee contrast over any image brightness */
 .cat-card::after {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(15, 23, 42, 0.05) 0%,
-        rgba(15, 23, 42, 0.15) 35%,
-        rgba(15, 23, 42, 0.75) 65%,
-        rgba(15, 23, 42, 0.96) 100%
+        rgba(15, 23, 42, 0.15) 0%,
+        rgba(15, 23, 42, 0.35) 40%,
+        rgba(15, 23, 42, 0.85) 70%,
+        rgba(10, 15, 29, 0.98) 100%
     );
     transition: background 0.3s ease;
     pointer-events: none;
@@ -377,10 +377,10 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cat-card:hover::after {
     background: linear-gradient(
         180deg,
-        rgba(15, 23, 42, 0.08) 0%,
-        rgba(15, 23, 42, 0.25) 30%,
-        rgba(15, 23, 42, 0.85) 60%,
-        rgba(15, 23, 42, 0.98) 100%
+        rgba(15, 23, 42, 0.2) 0%,
+        rgba(15, 23, 42, 0.45) 35%,
+        rgba(15, 23, 42, 0.9) 65%,
+        rgba(10, 15, 29, 1) 100%
     );
 }
 .cat-body {
@@ -388,42 +388,44 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
     z-index: 2;
     padding: 24px 22px 24px;
     width: 100%;
-    background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.4) 100%);
-    backdrop-filter: blur(2px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(10, 15, 29, 0.92) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 .cat-body small {
     display: inline-flex;
     align-items: center;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #fda4af;
-    background: rgba(225, 29, 72, 0.25);
-    border: 1px solid rgba(225, 29, 72, 0.45);
+    color: #ffffff;
+    background: #e11d48;
+    box-shadow: 0 2px 6px rgba(225, 29, 72, 0.4);
     padding: 4px 12px;
     border-radius: 9999px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     line-height: 1.2;
 }
 .cat-body h3 {
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 800;
     color: #ffffff;
     margin-bottom: 8px;
     line-height: 1.25;
     letter-spacing: -0.01em;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
 .cat-body p {
     font-size: 13.5px;
-    line-height: 1.5;
-    color: rgba(241, 245, 249, 0.85);
-    margin-bottom: 16px;
+    line-height: 1.55;
+    color: #f1f5f9;
+    font-weight: 500;
+    margin-bottom: 18px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    letter-spacing: 0;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -439,16 +441,16 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 8px 18px;
+    padding: 9px 20px;
     border-radius: 9999px;
-    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
     transition: all 0.25s ease;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .cat-card:hover .cat-body .cat-btn-cta {
     background: #be123c;
     gap: 12px;
-    box-shadow: 0 6px 16px rgba(225, 29, 72, 0.55);
+    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.65);
     transform: translateY(-1px);
 }
 

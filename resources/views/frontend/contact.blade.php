@@ -31,19 +31,24 @@
                     <div data-aos="fade-up">
                         <div class="info-item">
                             <h6>SHOWROOM & WAREHOUSE</h6>
-                            <p>Dubai Investments Park 2, Dubai, UAE</p>
+                            <p>
+                                <a href="https://maps.google.com/?q=Dubai+Investments+Park+2,+Dubai,+UAE" target="_blank" rel="noopener" class="text-decoration-none text-reset d-inline-flex align-items-center gap-2">
+                                    <span>Dubai Investments Park 2, Dubai, UAE</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-danger small"></i>
+                                </a>
+                            </p>
                         </div>
                         <div class="info-item">
                             <h6>EMAIL</h6>
-                            <p>sales@alabamauae.com</p>
+                            <p><a href="mailto:sales@alabamauae.com" class="text-decoration-none text-reset">sales@alabamauae.com</a></p>
                         </div>
                         <div class="info-item">
                             <h6>PHONE</h6>
-                            <p>+971 4 352 6973</p>
+                            <p><a href="tel:+97143526973" class="text-decoration-none text-reset">+971 4 352 6973</a></p>
                         </div>
                         <div class="info-item">
                             <h6>WHATSAPP</h6>
-                            <p>+971 55 913 8047</p>
+                            <p><a href="https://wa.me/971559138047" target="_blank" rel="noopener" class="text-decoration-none text-reset">+971 55 913 8047</a></p>
                         </div>
                         <div class="info-item border-0 pb-0">
                             <h6>HOURS</h6>
@@ -113,5 +118,27 @@
     </div>
 </section>
 
+<!-- Google Map Section -->
+<section class="cdMap section pt-0" data-aos="fade-up">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="rounded-4 overflow-hidden shadow-sm border" style="height: 450px; background: #e2e8f0;">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Dubai%20Investments%20Park%202,%20Dubai,%20UAE&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Alabama Building Materials Location Map">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @endsection
+
