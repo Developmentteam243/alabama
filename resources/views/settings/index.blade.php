@@ -291,6 +291,14 @@
                                         <small class="form-hint">Server-to-server token for Meta Conversions API (optional).</small>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Omnisend Brand ID</label>
+                                        <input type="text" name="omnisend_brand_id" class="form-control" value="{{ $settings['omnisend_brand_id'] ?? '6abe01572df7ffe1c84c5e3d' }}" placeholder="e.g. 6abe01572df7ffe1c84c5e3d">
+                                        <small class="form-hint">Omnisend tracking & email popup launcher brand identifier.</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

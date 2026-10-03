@@ -58,6 +58,18 @@
     alt="facebook pixel" /></noscript>
     @endif
 
+    <!-- Omnisend Tracking -->
+    <script type="text/javascript">
+        window.omnisend = window.omnisend || [];
+        omnisend.push(["brandID", "{{ $siteSettings['omnisend_brand_id'] ?? '6abe01572df7ffe1c84c5e3d' }}"]);
+        omnisend.push(["track", "$pageViewed"]);
+        !function(){var e=document.createElement("script");
+        e.type="text/javascript",e.async=!0,
+        e.src="https://omnisnippet1.com/inshop/launcher-v2.js";
+        var t=document.getElementsByTagName("script")[0];
+        t.parentNode.insertBefore(e,t)}();
+    </script>
+
     <!-- CSS & JS Assets via Vite -->
     @vite(['resources/js/app.js'])
     
