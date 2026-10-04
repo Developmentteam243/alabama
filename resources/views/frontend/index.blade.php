@@ -17,8 +17,16 @@
                         {{ $siteSettings['hero_description'] ?? 'Water heaters, pipes and fittings, valves, pumps and sanitaryware — sourced, stocked and delivered for residential, commercial and industrial projects across the Emirates.' }}
                     </p>
                     <div class="hero-ctas">
-                        <a class="btn solid" href="{{ $siteSettings['hero_btn1_link'] ?? route('frontend.contact') }}">{{ $siteSettings['hero_btn1_text'] ?? 'Get a quote' }}</a>
-                        <a class="btn" href="{{ route('frontend.products.index') }}">{{ $siteSettings['hero_btn2_text'] ?? 'Browse Catalogue' }}</a>
+                        @php
+                            $heroBtn1Link = !empty($siteSettings['hero_btn1_link']) 
+                                ? (str_starts_with($siteSettings['hero_btn1_link'], 'http') ? $siteSettings['hero_btn1_link'] : url($siteSettings['hero_btn1_link'])) 
+                                : route('frontend.contact');
+                            $heroBtn2Link = !empty($siteSettings['hero_btn2_link']) 
+                                ? (str_starts_with($siteSettings['hero_btn2_link'], 'http') ? $siteSettings['hero_btn2_link'] : url($siteSettings['hero_btn2_link'])) 
+                                : route('frontend.products.index');
+                        @endphp
+                        <a class="btn solid" href="{{ $heroBtn1Link }}">{{ $siteSettings['hero_btn1_text'] ?? 'Get a quote' }}</a>
+                        <a class="btn" href="{{ $heroBtn2Link }}">{{ $siteSettings['hero_btn2_text'] ?? 'Browse Catalogue' }}</a>
                     </div>
                 </div>
             </div>
