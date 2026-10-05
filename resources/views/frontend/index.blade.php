@@ -41,25 +41,19 @@
                                     <div class="swiper-slide position-relative">
                                         <div class="hero-slide-card" style="height: 440px; position: relative; overflow: hidden; border-radius: 12px; background: #0f172a;">
                                             <img src="{{ $slide->image_url }}" alt="{{ $slide->title ?? 'Hero Slide' }}" style="width: 100%; height: 100%; object-fit: cover;" />
-                                            @if($slide->title || $slide->subtitle || $slide->button_url)
-                                                <div class="hero-slide-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(15,23,42,0.88) 100%); display: flex; align-items: flex-end; padding: 24px;">
-                                                    <div class="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                                                        <div>
-                                                            @if($slide->subtitle)
-                                                                <span class="badge bg-danger text-white small text-uppercase mb-1">{{ $slide->subtitle }}</span>
-                                                            @endif
-                                                            @if($slide->title)
-                                                                <h4 class="text-white fw-bold mb-0">{{ $slide->title }}</h4>
-                                                            @endif
-                                                        </div>
-                                                        @if($slide->button_url)
-                                                            <a href="{{ $slide->button_url }}" class="btn btn-sm btn-danger rounded-pill fw-bold px-4 py-2 text-uppercase shadow" style="background-color: #e11d48; border-color: #e11d48;">
-                                                                {{ $slide->button_text ?: 'Explore' }} &rarr;
-                                                            </a>
+                                            <div class="hero-slide-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(15,23,42,0.85) 100%); display: flex; align-items: flex-end; padding: 20px; z-index: 2;">
+                                                <div class="w-100 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                                    <div>
+                                                        <span class="badge bg-danger text-white small text-uppercase mb-1">{{ $slide->subtitle ?: 'Alabama Range' }}</span>
+                                                        @if($slide->title)
+                                                            <h4 class="text-white fw-bold mb-0" style="font-size: 1.15rem;">{{ $slide->title }}</h4>
                                                         @endif
                                                     </div>
+                                                    <a href="{{ $slide->button_url ?: route('frontend.products.index') }}" class="btn btn-sm btn-danger rounded-pill fw-bold px-3 py-2 text-uppercase shadow text-white" style="background-color: #e11d48; border-color: #e11d48; font-size: 0.8rem; text-decoration: none;">
+                                                        {{ $slide->button_text ?: 'Explore' }} &rarr;
+                                                    </a>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -121,7 +115,7 @@
 </section>
 
 <!-- cdproducts / Categories Carousel -->
-<section class="cdproducts section">
+<section class="cdproducts section" id="categories">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
@@ -160,7 +154,7 @@
                                         <h3>{{ $category->name }}</h3>
                                         <p>{{ $category->description ?: 'High quality plumbing, fixtures and equipment for residential and commercial applications.' }}</p>
                                         <div>
-                                            <span class="cat-btn-cta">Explore Range <i class="fa-solid fa-arrow-right-long"></i></span>
+                                            <span class="cat-btn-cta" style="background-color: #e11d48 !important; color: #ffffff !important; border: 1px solid #e11d48 !important; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45) !important;">Explore Range <i class="fa-solid fa-arrow-right-long ms-1"></i></span>
                                         </div>
                                     </div>
                                 </a>

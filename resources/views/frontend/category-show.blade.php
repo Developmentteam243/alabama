@@ -49,26 +49,22 @@
                 <div class="row g-3">
                     @forelse($subcategories as $idx => $sub)
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-aos="fade-up">
-                            <a href="{{ route('frontend.subcategory.show', [$category->slug, $sub->slug]) }}" class="subcat-card">
-                                <div class="subcat-img-wrap">
+                            <a href="{{ route('frontend.subcategory.show', [$category->slug, $sub->slug]) }}" class="product-card text-decoration-none d-flex flex-column h-100">
+                                <div class="product-img">
                                     @if($sub->banner_url)
-                                        <img src="{{ $sub->banner_url }}" alt="{{ $sub->name }}" loading="lazy" />
+                                        <img src="{{ $sub->banner_url }}" alt="{{ $sub->name }}" class="img-fluid" loading="lazy" />
                                     @else
-                                        <div class="subcat-placeholder">
-                                            {{ strtoupper(substr($sub->name, 0, 1)) }}
-                                        </div>
+                                        <span class="ghost">{{ strtoupper(substr($sub->name, 0, 1)) }}</span>
                                     @endif
                                 </div>
-                                <div class="subcat-body">
+                                <div class="product-body flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
                                         <small>{{ sprintf('%02d', $idx + 1) }} · {{ $category->name }}</small>
                                         <h3>{{ $sub->name }}</h3>
                                     </div>
-                                    <div>
-                                        <span class="subcat-link">
-                                            Explore Range <i class="fa-solid fa-arrow-right-long"></i>
-                                        </span>
-                                    </div>
+                                    <span class="product-link mt-2">
+                                        Explore Range <i class="fa-solid fa-arrow-right-long"></i>
+                                    </span>
                                 </div>
                             </a>
                         </div>

@@ -384,44 +384,44 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cat-body {
     position: relative;
     z-index: 2;
-    padding: 20px 20px 22px;
+    padding: 16px 18px 18px;
     width: 100%;
     margin-top: auto;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.35) 0%, rgba(10, 15, 29, 0.75) 100%);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(10, 15, 29, 0.88) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .cat-body small {
     display: inline-flex;
     align-items: center;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #ffffff;
     background: #e11d48;
     box-shadow: 0 2px 6px rgba(225, 29, 72, 0.4);
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 9999px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     line-height: 1.2;
 }
 .cat-body h3 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 800;
     color: #ffffff;
-    margin-bottom: 8px;
-    line-height: 1.25;
+    margin-bottom: 4px;
+    line-height: 1.2;
     letter-spacing: -0.01em;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
 .cat-body p {
-    font-size: 13.5px;
-    line-height: 1.55;
-    color: #f1f5f9;
-    font-weight: 500;
-    margin-bottom: 18px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #e2e8f0;
+    font-weight: 400;
+    margin-bottom: 12px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     letter-spacing: 0.01em;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
@@ -506,18 +506,18 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 48px;
-    padding: 6px 16px;
+    height: 40px;
+    padding: 4px 12px;
     background: transparent;
     transition: transform 0.25s ease, opacity 0.25s ease;
     opacity: 0.75;
     flex-shrink: 0;
 }
 .brand-logo-item img {
-    max-height: 38px;
-    max-width: 130px;
-    width: auto;
-    height: auto;
+    max-height: 28px !important;
+    max-width: 95px !important;
+    width: auto !important;
+    height: auto !important;
     object-fit: contain;
     filter: grayscale(100%);
     transition: filter 0.3s ease, transform 0.3s ease;
@@ -532,7 +532,7 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .brand-text-item {
     display: inline-flex;
     align-items: center;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
     color: #64748b;
     text-transform: uppercase;
