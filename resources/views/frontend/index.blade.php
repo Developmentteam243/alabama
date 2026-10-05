@@ -26,7 +26,7 @@
                                 : route('frontend.products.index');
                         @endphp
                         <a class="btn solid" href="{{ $heroBtn1Link }}">{{ $siteSettings['hero_btn1_text'] ?? 'Get a quote' }}</a>
-                        <a class="btn" href="{{ $heroBtn2Link }}">{{ $siteSettings['hero_btn2_text'] ?? 'Browse Catalogue' }}</a>
+                        <a class="btn" href="#categories">{{ $siteSettings['hero_btn2_text'] ?? 'Browse Categories' }}</a>
                     </div>
                 </div>
             </div>
