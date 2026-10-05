@@ -115,7 +115,6 @@
     <div id="return-to-top"><i class="fa fa-angle-up"></i></div>
 
     {{-- top bar --}}
-    <div class="mock-note">Design concept — Alabama Building Materials Trading L.L.C · prepared for review · not the live site</div>
     <div class="topbar">
         <div class="wrap">
             <div class="tb-left">

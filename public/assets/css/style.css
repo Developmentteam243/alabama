@@ -359,17 +359,16 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cat-card:hover img {
     transform: scale(1.05);
 }
-/* Multi-stop dark gradient overlay across full card to guarantee contrast over any image brightness */
+/* Subtle gradient overlay at bottom so image stays visible while text remains legible */
 .cat-card::after {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(15, 23, 42, 0.15) 0%,
-        rgba(15, 23, 42, 0.35) 40%,
-        rgba(15, 23, 42, 0.85) 70%,
-        rgba(10, 15, 29, 0.98) 100%
+        rgba(15, 23, 42, 0.02) 0%,
+        rgba(15, 23, 42, 0.2) 50%,
+        rgba(10, 15, 29, 0.8) 100%
     );
     transition: background 0.3s ease;
     pointer-events: none;
@@ -377,21 +376,21 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .cat-card:hover::after {
     background: linear-gradient(
         180deg,
-        rgba(15, 23, 42, 0.2) 0%,
-        rgba(15, 23, 42, 0.45) 35%,
-        rgba(15, 23, 42, 0.9) 65%,
-        rgba(10, 15, 29, 1) 100%
+        rgba(15, 23, 42, 0.05) 0%,
+        rgba(15, 23, 42, 0.3) 45%,
+        rgba(10, 15, 29, 0.9) 100%
     );
 }
 .cat-body {
     position: relative;
     z-index: 2;
-    padding: 24px 22px 24px;
+    padding: 20px 20px 22px;
     width: 100%;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(10, 15, 29, 0.92) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: auto;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.35) 0%, rgba(10, 15, 29, 0.75) 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .cat-body small {
     display: inline-flex;
