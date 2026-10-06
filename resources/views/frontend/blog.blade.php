@@ -39,7 +39,7 @@
                                     <span class="date">{{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}</span>
                                 </div>
                                 <h3>{{ $post->title }}</h3>
-                                <p>{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 140) }}</p>
+                                <p>{{ Str::limit(strip_tags($post->excerpt ?: $post->content), 140) }}</p>
                                 <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
                             </div>
                         </a>

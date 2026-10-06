@@ -133,7 +133,7 @@
 
                     @if($blog->excerpt)
                         <div class="p-3 mb-4 rounded-3 bg-light border-start border-4 border-danger">
-                            <p class="mb-0 fs-6 fw-semibold text-secondary fst-italic">{{ $blog->excerpt }}</p>
+                            <p class="mb-0 fs-6 fw-semibold text-secondary fst-italic">{{ strip_tags($blog->excerpt) }}</p>
                         </div>
                     @endif
                     

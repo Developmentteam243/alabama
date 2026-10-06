@@ -875,11 +875,31 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
     border-radius: 6px;
 }
 .categorySwiper, .productSwiper {
-    padding-bottom: 30px !important;
+    padding-bottom: 50px !important;
+    position: relative;
+}
+.categorySwiper .swiper-pagination,
+.productSwiper .swiper-pagination {
+    bottom: 8px !important;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+.categorySwiper .swiper-pagination-bullet,
+.productSwiper .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    background: #94a3b8;
+    opacity: 0.5;
+    transition: all 0.3s ease;
 }
 .categorySwiper .swiper-pagination-bullet-active,
 .productSwiper .swiper-pagination-bullet-active {
     background: #e11d48;
+    opacity: 1;
+    width: 26px;
+    border-radius: 6px;
 }
 
 

@@ -411,7 +411,7 @@
                                     <span class="date">{{ $blog->created_at ? $blog->created_at->format('F Y') : '' }}</span>
                                 </div>
                                 <h3>{{ $blog->title }}</h3>
-                                <p>{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 120) }}</p>
+                                <p>{{ \Illuminate\Support\Str::limit(strip_tags($blog->excerpt ?: $blog->content), 120) }}</p>
                                 <span class="link-arrow">Read more <i class="fa-solid fa-arrow-right-long"></i></span>
                             </div>
                         </a>
