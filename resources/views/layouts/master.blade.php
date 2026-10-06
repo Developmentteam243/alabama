@@ -215,7 +215,7 @@
 
                 <!-- menu-btn -->
                 <div class="nav-cta">
-                    <a class="btn solid" href="{{ route('frontend.contact') }}">Get a quote</a>
+                    <a class="btn solid" href="{{ route('frontend.contact') }}#quote-form">Get a quote</a>
                 </div>
             </div>
         </div>

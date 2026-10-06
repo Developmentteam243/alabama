@@ -20,7 +20,7 @@
                         @php
                             $heroBtn1Link = !empty($siteSettings['hero_btn1_link']) 
                                 ? (str_starts_with($siteSettings['hero_btn1_link'], 'http') ? $siteSettings['hero_btn1_link'] : url($siteSettings['hero_btn1_link'])) 
-                                : route('frontend.contact');
+                                : route('frontend.contact') . '#quote-form';
                             $heroBtn2Link = !empty($siteSettings['hero_btn2_link']) 
                                 ? (str_starts_with($siteSettings['hero_btn2_link'], 'http') ? $siteSettings['hero_btn2_link'] : url($siteSettings['hero_btn2_link'])) 
                                 : route('frontend.products.index');
@@ -370,7 +370,7 @@
                     <div class="actions">
                         <a
                             class="btn brass"
-                            href="{{ route('frontend.contact') }}"
+                            href="{{ route('frontend.contact') }}#quote-form"
                             >GET QUOTE</a
                         >
                     </div>

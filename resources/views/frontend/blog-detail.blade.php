@@ -186,7 +186,7 @@
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mt-2">
                                                 <a href="{{ route('frontend.product.show', $product->slug) }}" class="btn btn-sm btn-outline-dark">View Details</a>
-                                                <a href="{{ route('frontend.contact') }}?product={{ urlencode($product->model_name ?: $product->sku_code) }}" class="btn btn-sm btn-danger">Get Quote</a>
+                                                <a href="{{ route('frontend.contact') }}?product={{ urlencode($product->model_name ?: $product->sku_code) }}#quote-form" class="btn btn-sm btn-danger">Get Quote</a>
                                             </div>
                                         </div>
                                     </div>

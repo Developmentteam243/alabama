@@ -22,7 +22,7 @@
 </section>
 
 <!-- cotact form -->
-<section class="cdContact section">
+<section class="cdContact section" id="quote-section">
     <div class="container">
         <div class="row g-5">
             <!-- Left Side -->
@@ -60,17 +60,17 @@
 
             <!-- Right Side -->
             <div class="col-xl-6 col-md-6 col-lg-6 mt-0">
-                <div class="contact-form">
+                <div class="contact-form" id="quote-form">
                     <div data-aos="fade-up">
                         @if(session('success_quote'))
-                            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" id="quote-alert">
                                 {{ session('success_quote') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
                         @if($errors->any())
-                            <div class="alert alert-danger mb-4">
+                            <div class="alert alert-danger mb-4" id="quote-errors">
                                 <ul class="mb-0">
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -79,26 +79,26 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('frontend.quote.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('frontend.quote.store') }}" method="POST" enctype="multipart/form-data" id="quote-request-form">
                             @csrf
                             <div class="mb-4">
                                 <label class="form-label required">NAME</label>
-                                <input type="text" name="name" class="form-control" placeholder="Your name" value="{{ old('name') }}" required>
+                                <input type="text" name="name" id="quote_name" class="form-control" placeholder="Your name" value="{{ old('name') }}" required>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label required">EMAIL</label>
-                                <input type="email" name="email" class="form-control" placeholder="you@company.com" value="{{ old('email') }}" required>
+                                <input type="email" name="email" id="quote_email" class="form-control" placeholder="you@company.com" value="{{ old('email') }}" required>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label required">PHONE</label>
-                                <input type="text" name="phone" class="form-control" placeholder="e.g. +971 50 123 4567" value="{{ old('phone') }}" required>
+                                <input type="text" name="phone" id="quote_phone" class="form-control" placeholder="e.g. +971 50 123 4567" value="{{ old('phone') }}" required>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">REQUIREMENT (OPTIONAL)</label>
-                                <textarea name="requirement" rows="4" class="form-control" placeholder="Products, quantities, project details...">{{ old('requirement') }}</textarea>
+                                <textarea name="requirement" id="quote_requirement" rows="4" class="form-control" placeholder="Products, quantities, project details...">{{ old('requirement', request('product') ? 'I would like to request a quote for: ' . request('product') : '') }}</textarea>
                             </div>
 
                             <div class="mb-4">
@@ -139,6 +139,53 @@
         </div>
     </div>
 </section>
+
+<style>
+    #quote-section, #quote-form {
+        scroll-margin-top: 110px;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function scrollToForm() {
+            var target = document.getElementById("quote-form") || document.getElementById("quote-section");
+            if (target) {
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+                var nameInput = document.getElementById("quote_name");
+                if (nameInput && !nameInput.value) {
+                    setTimeout(function() {
+                        nameInput.focus();
+                    }, 500);
+                }
+            }
+        }
+
+        var hash = window.location.hash;
+        var urlParams = new URLSearchParams(window.location.search);
+        var hasErrors = document.getElementById("quote-errors");
+        var hasSuccess = document.getElementById("quote-alert");
+
+        if (hash === "#quote-form" || hash === "#quote-section" || hash === "#quote" || urlParams.has("product") || urlParams.has("quote") || hasErrors || hasSuccess) {
+            setTimeout(scrollToForm, 250);
+        }
+
+        // Handle on-page quote button clicks smoothly
+        document.querySelectorAll('a[href*="#quote-form"], a[href*="#quote-section"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                var currentPath = window.location.pathname.replace(/\/$/, '');
+                var linkHref = anchor.getAttribute('href');
+                if (linkHref.includes('#quote-form') || linkHref.includes('#quote-section')) {
+                    if (window.location.pathname.includes('/contact')) {
+                        e.preventDefault();
+                        scrollToForm();
+                        history.pushState(null, null, '#quote-form');
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 @endsection
 
