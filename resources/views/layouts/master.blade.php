@@ -215,7 +215,7 @@
 
                 <!-- menu-btn -->
                 <div class="nav-cta">
-                    <a class="btn solid" href="{{ route('frontend.contact') }}#quote-form">Get a quote</a>
+                    <a class="btn solid" href="{{ request()->routeIs('frontend.home') ? '#quote-form' : route('frontend.contact') . '#quote-form' }}">Get a quote</a>
                 </div>
             </div>
         </div>
@@ -248,6 +248,8 @@
                         <li><a href="{{ route('frontend.about') }}">About us</a></li>
                         <li><a href="{{ route('frontend.all-brands') }}">Brands</a></li>
                         <li><a href="{{ route('frontend.blog') }}">Blog</a></li>
+                        <li><a href="{{ route('frontend.privacy') }}">Privacy Policy</a></li>
+                        <li><a href="{{ route('frontend.terms') }}">Terms &amp; Conditions</a></li>
                         <li><a href="{{ route('frontend.contact') }}">Contact us</a></li>
                     </ul>
                 </div>

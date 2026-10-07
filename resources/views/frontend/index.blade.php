@@ -20,7 +20,7 @@
                         @php
                             $heroBtn1Link = !empty($siteSettings['hero_btn1_link']) 
                                 ? (str_starts_with($siteSettings['hero_btn1_link'], 'http') ? $siteSettings['hero_btn1_link'] : url($siteSettings['hero_btn1_link'])) 
-                                : route('frontend.contact') . '#quote-form';
+                                : '#quote-form';
                             $heroBtn2Link = !empty($siteSettings['hero_btn2_link']) 
                                 ? (str_starts_with($siteSettings['hero_btn2_link'], 'http') ? $siteSettings['hero_btn2_link'] : url($siteSettings['hero_btn2_link'])) 
                                 : route('frontend.products.index');
@@ -357,6 +357,95 @@
     </div>
 </section>
 
+<!-- Quote Request Form Section on Homepage -->
+<section class="cdContact section" id="quote-section">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <!-- Left Info -->
+            <div class="col-xl-5 col-lg-5">
+                <div class="contact-info p-4 p-lg-5 rounded-4 shadow-sm border bg-white" data-aos="fade-right">
+                    <div class="eyebrow mb-2">Instant project estimate</div>
+                    <h2 class="h-section mb-3">Looking for Project Supply? <span class="accent-i">Get a Quote.</span></h2>
+                    <p class="lede mb-4">Send us your BOQ or material requirements. Our experienced technical sales engineers will prepare competitive commercial pricing within 24 hours.</p>
+                    
+                    <div class="info-item pt-0">
+                        <h6>DIRECT SALES DESK</h6>
+                        <p><a href="tel:+97143526973" class="text-decoration-none text-reset fw-bold"><i class="fa-solid fa-phone text-danger me-2"></i>+971 4 352 6973</a></p>
+                    </div>
+                    <div class="info-item">
+                        <h6>WHATSAPP SUPPORT</h6>
+                        <p><a href="https://wa.me/971559138047" target="_blank" rel="noopener" class="text-decoration-none text-reset fw-bold"><i class="fa-brands fa-whatsapp text-success me-2"></i>+971 55 913 8047</a></p>
+                    </div>
+                    <div class="info-item border-0 pb-0">
+                        <h6>SALES EMAIL</h6>
+                        <p><a href="mailto:sales@alabamauae.com" class="text-decoration-none text-reset"><i class="fa-solid fa-envelope text-danger me-2"></i>sales@alabamauae.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Form -->
+            <div class="col-xl-7 col-lg-7">
+                <div class="contact-form p-4 p-md-5 rounded-4 shadow-sm" id="quote-form" data-aos="fade-left">
+                    @if(session('success_quote'))
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" id="quote-alert">
+                            {{ session('success_quote') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger mb-4" id="quote-errors">
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <h3 class="fw-bold mb-4">Submit Quotation Request</h3>
+                    <form action="{{ route('frontend.quote.store') }}" method="POST" enctype="multipart/form-data" id="quote-request-form">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label required">FULL NAME</label>
+                                <input type="text" name="name" id="quote_name" class="form-control" placeholder="Your name" value="{{ old('name') }}" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label required">EMAIL ADDRESS</label>
+                                <input type="email" name="email" id="quote_email" class="form-control" placeholder="you@company.com" value="{{ old('email') }}" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label required">PHONE / MOBILE NUMBER</label>
+                                <input type="text" name="phone" id="quote_phone" class="form-control" placeholder="e.g. +971 50 123 4567" value="{{ old('phone') }}" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">REQUIREMENTS / PRODUCTS LIST</label>
+                                <textarea name="requirement" id="quote_requirement" rows="3" class="form-control" placeholder="Specify products, sizes, quantities or project scope...">{{ old('requirement') }}</textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">UPLOAD BOQ (PDF / EXCEL - OPTIONAL)</label>
+                                <input type="file" name="boq" class="form-control" accept=".pdf,.xls,.xlsx">
+                                <small class="text-muted">Accepts PDF, XLS, XLSX formats (Max 15MB).</small>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn solid w-100 py-3">
+                                    SUBMIT QUOTE REQUEST &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- cta -->
 <section class="cdCta section py-4">
     <div class="container">
@@ -370,7 +459,7 @@
                     <div class="actions">
                         <a
                             class="btn brass"
-                            href="{{ route('frontend.contact') }}#quote-form"
+                            href="#quote-form"
                             >GET QUOTE</a
                         >
                     </div>
