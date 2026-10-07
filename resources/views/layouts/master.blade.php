@@ -278,9 +278,9 @@
                     &copy; {{ date('Y') }} Alabama Building Materials Trading L.L.C. All rights reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end small">
-                    <a href="#" class="cd-link">Privacy</a>
+                    <a href="{{ route('frontend.privacy') }}" class="cd-link">Privacy</a>
                      · 
-                    <a href="#" class="cd-link">Terms</a>
+                    <a href="{{ route('frontend.terms') }}" class="cd-link">Terms</a>
                 </div>
             </div>
         </div>

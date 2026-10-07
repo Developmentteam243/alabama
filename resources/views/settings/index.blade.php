@@ -54,7 +54,18 @@
                                 <path d="M12 9h.01" />
                                 <path d="M11 12h1v4h1" />
                             </svg>
-                            Server-Side Tracking (ServerGTM, GA4, Clarity, Pixel)
+                            Server-Side Tracking
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tabs-legal" class="nav-link" data-bs-toggle="tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                <path d="M9 15l2 2l4 -4" />
+                            </svg>
+                            Legal Pages (Privacy &amp; Terms)
                         </a>
                     </li>
                 </ul>
@@ -301,6 +312,67 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Legal & Policies Tab (Privacy & Terms) -->
+                        <div class="tab-pane" id="tabs-legal">
+                            <h3 class="card-title mb-3">Legal &amp; Policy Pages Content</h3>
+                            <p class="text-muted mb-4">Edit the content for the public Privacy Policy (<code>/privacy</code>) and Terms &amp; Conditions (<code>/terms</code>) pages using the rich text editor below.</p>
+
+                            <div class="row row-cards">
+                                <!-- Privacy Policy Section -->
+                                <div class="col-12">
+                                    <div class="card mb-4 border shadow-none">
+                                        <div class="card-header bg-light">
+                                            <h4 class="card-title mb-0">Privacy Policy Page (<code>/privacy</code>)</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Page Title</label>
+                                                    <input type="text" name="privacy_title" class="form-control" value="{{ $settings['privacy_title'] ?? 'Privacy Policy' }}" placeholder="Privacy Policy">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Eyebrow / Subtitle</label>
+                                                    <input type="text" name="privacy_eyebrow" class="form-control" value="{{ $settings['privacy_eyebrow'] ?? 'Legal' }}" placeholder="Legal">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Privacy Policy Full Content (HTML / Rich Text)</label>
+                                                <textarea name="privacy_policy_content" id="privacy_policy_content" rows="12" class="form-control">{{ $settings['privacy_policy_content'] ?? '' }}</textarea>
+                                                <small class="form-hint">Leave blank to use the default pre-formatted privacy template.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Terms & Conditions Section -->
+                                <div class="col-12">
+                                    <div class="card mb-3 border shadow-none">
+                                        <div class="card-header bg-light">
+                                            <h4 class="card-title mb-0">Terms &amp; Conditions Page (<code>/terms</code>)</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Page Title</label>
+                                                    <input type="text" name="terms_title" class="form-control" value="{{ $settings['terms_title'] ?? 'Terms & Conditions' }}" placeholder="Terms & Conditions">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Eyebrow / Subtitle</label>
+                                                    <input type="text" name="terms_eyebrow" class="form-control" value="{{ $settings['terms_eyebrow'] ?? 'Legal' }}" placeholder="Legal">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Terms &amp; Conditions Full Content (HTML / Rich Text)</label>
+                                                <textarea name="terms_conditions_content" id="terms_conditions_content" rows="12" class="form-control">{{ $settings['terms_conditions_content'] ?? '' }}</textarea>
+                                                <small class="form-hint">Leave blank to use the default pre-formatted terms template.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="card-footer text-end">
@@ -316,4 +388,27 @@
         </div>
     </div>
 </div>
+
+<!-- CKEditor 4 CDN -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if (typeof CKEDITOR !== 'undefined') {
+            const editorConfig = {
+                height: 320,
+                removeButtons: '',
+                extraAllowedContent: '*(*)[*]{*}; span(*); strong(*); a[*]{*}; table(*)[*]{*};',
+                allowedContent: true,
+                versionCheck: false
+            };
+
+            if (document.getElementById('privacy_policy_content')) {
+                CKEDITOR.replace('privacy_policy_content', editorConfig);
+            }
+            if (document.getElementById('terms_conditions_content')) {
+                CKEDITOR.replace('terms_conditions_content', editorConfig);
+            }
+        }
+    });
+</script>
 @endsection

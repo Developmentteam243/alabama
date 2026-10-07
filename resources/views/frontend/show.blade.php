@@ -84,14 +84,16 @@
             <div class="row g-2 mt-2" id="gallery-thumbnails">
               @foreach($galleryItems as $index => $item)
                 <div class="col-3">
-                  <div class="ratio ratio-1x1 border rounded-2 p-1 bg-light thumbnail-item {{ $index === 0 ? 'border-danger' : 'border-light-subtle' }}" 
+                  <div class="ratio ratio-1x1 border rounded-2 p-1 bg-light thumbnail-item {{ $index === 0 ? 'border-danger active' : 'border-light-subtle' }}" 
                        style="cursor: pointer; overflow: hidden; transition: all 0.2s;"
                        data-type="{{ $item['type'] }}"
-                       data-url="{{ $item['url'] }}">
+                       data-url="{{ $item['url'] }}"
+                       role="button"
+                       tabindex="0">
                     @if($item['type'] == 'image')
-                      <img src="{{ $item['thumb'] }}" alt="thumbnail" class="img-fluid rounded" style="object-fit: contain; max-height: 100%; width: 100%;">
+                      <img src="{{ $item['thumb'] }}" alt="thumbnail" class="img-fluid rounded pe-none" style="object-fit: contain; max-height: 100%; width: 100%; pointer-events: none;">
                     @else
-                      <div class="d-flex align-items-center justify-content-center bg-dark text-white rounded h-100 w-100">
+                      <div class="d-flex align-items-center justify-content-center bg-dark text-white rounded h-100 w-100 pe-none" style="pointer-events: none;">
                         <i class="fa fa-play-circle fa-2x"></i>
                       </div>
                     @endif
@@ -390,61 +392,80 @@
         }
 
         // Gallery thumbnail switcher logic
-        const mainImg = document.getElementById('main-image');
-        const mainVid = document.getElementById('main-video');
-        const mainHtmlVid = document.getElementById('main-html-video');
-        const thumbnails = document.querySelectorAll('.thumbnail-item');
+        function switchMedia(type, url, element) {
+            const mainImg = document.getElementById('main-image');
+            const mainVid = document.getElementById('main-video');
+            const mainHtmlVid = document.getElementById('main-html-video');
+            const thumbnails = document.querySelectorAll('.thumbnail-item');
 
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', function () {
-                // Remove active border from all thumbnails
-                thumbnails.forEach(t => {
-                    t.classList.remove('border-danger');
-                    t.classList.add('border-light-subtle');
-                });
+            thumbnails.forEach(t => {
+                t.classList.remove('border-danger', 'active');
+                t.classList.add('border-light-subtle');
+            });
+
+            if (element) {
+                element.classList.remove('border-light-subtle');
+                element.classList.add('border-danger', 'active');
+            }
+
+            if (type === 'image') {
+                if (mainImg) {
+                    mainImg.src = url;
+                    mainImg.classList.remove('d-none');
+                }
+                if (mainVid) {
+                    mainVid.classList.add('d-none');
+                    mainVid.src = '';
+                }
+                if (mainHtmlVid) {
+                    mainHtmlVid.classList.add('d-none');
+                    mainHtmlVid.src = '';
+                }
+            } else if (type === 'video') {
+                if (mainImg) mainImg.classList.add('d-none');
                 
-                // Add active border to clicked thumbnail
-                this.classList.remove('border-light-subtle');
-                this.classList.add('border-danger');
-
-                const type = this.getAttribute('data-type');
-                const url = this.getAttribute('data-url');
-
-                if (type === 'image') {
-                    if (mainImg) {
-                        mainImg.src = url;
-                        mainImg.classList.remove('d-none');
-                    }
+                const isEmbed = url.includes('youtube.com') || url.includes('vimeo.com') || url.includes('youtube-nocookie.com') || url.includes('embed');
+                if (isEmbed) {
                     if (mainVid) {
-                        mainVid.classList.add('d-none');
-                        mainVid.src = '';
+                        mainVid.src = url;
+                        mainVid.classList.remove('d-none');
                     }
                     if (mainHtmlVid) {
                         mainHtmlVid.classList.add('d-none');
                         mainHtmlVid.src = '';
                     }
-                } else if (type === 'video') {
-                    if (mainImg) mainImg.classList.add('d-none');
-                    
-                    const isEmbed = url.includes('youtube.com') || url.includes('vimeo.com') || url.includes('youtube-nocookie.com') || url.includes('embed');
-                    if (isEmbed) {
-                        if (mainVid) {
-                            mainVid.src = url;
-                            mainVid.classList.remove('d-none');
-                        }
-                        if (mainHtmlVid) {
-                            mainHtmlVid.classList.add('d-none');
-                            mainHtmlVid.src = '';
-                        }
-                    } else {
-                        if (mainHtmlVid) {
-                            mainHtmlVid.src = url;
-                            mainHtmlVid.classList.remove('d-none');
-                        }
+                } else {
+                    if (mainHtmlVid) {
+                        mainHtmlVid.src = url;
+                        mainHtmlVid.classList.remove('d-none');
+                    }
+                }
+            }
+        }
+
+        const galleryThumbnailsContainer = document.getElementById('gallery-thumbnails');
+        if (galleryThumbnailsContainer) {
+            galleryThumbnailsContainer.addEventListener('click', function(e) {
+                const item = e.target.closest('.thumbnail-item');
+                if (item) {
+                    const type = item.getAttribute('data-type');
+                    const url = item.getAttribute('data-url');
+                    switchMedia(type, url, item);
+                }
+            });
+
+            galleryThumbnailsContainer.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const item = e.target.closest('.thumbnail-item');
+                    if (item) {
+                        e.preventDefault();
+                        const type = item.getAttribute('data-type');
+                        const url = item.getAttribute('data-url');
+                        switchMedia(type, url, item);
                     }
                 }
             });
-        });
+        }
         // Star rating selector logic
         const stars = document.querySelectorAll('.star-select');
         const ratingInput = document.getElementById('review-rating-val');

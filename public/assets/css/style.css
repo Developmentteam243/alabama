@@ -502,22 +502,28 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .marquee:hover {
     animation-play-state: paused;
 }
+.marquee img {
+    height: 50px !important;
+    max-height: 50px !important;
+    width: auto !important;
+    object-fit: contain;
+}
 .brand-logo-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    padding: 4px 12px;
+    height: 60px;
+    padding: 4px 16px;
     background: transparent;
     transition: transform 0.25s ease, opacity 0.25s ease;
-    opacity: 0.75;
+    opacity: 0.8;
     flex-shrink: 0;
 }
 .brand-logo-item img {
-    max-height: 28px !important;
-    max-width: 95px !important;
+    height: 50px !important;
+    max-height: 50px !important;
+    max-width: 140px !important;
     width: auto !important;
-    height: auto !important;
     object-fit: contain;
     filter: grayscale(100%);
     transition: filter 0.3s ease, transform 0.3s ease;
@@ -549,6 +555,7 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 
 /* --- product ---*/
 .cdcollections {padding: 56px 0;}
+.cdcollections .pb-4 {margin-bottom: 2.5rem !important;}
 .cdcollections .product-card{
     display:block;
     background:#fff;
@@ -864,9 +871,18 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .heroSwiper .swiper-button-next:hover {
     background: #e11d48;
 }
+.heroSwiper {
+    padding-bottom: 30px !important;
+}
+.heroSwiper .hero-pagination {
+    bottom: 6px !important;
+    z-index: 10;
+}
 .heroSwiper .swiper-pagination-bullet {
     background: #ffffff;
     opacity: 0.6;
+    margin: 0 4px;
+    transition: all 0.3s ease;
 }
 .heroSwiper .swiper-pagination-bullet-active {
     background: #e11d48;

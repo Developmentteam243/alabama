@@ -162,7 +162,7 @@ class FrontendController extends Controller
             abort(404);
         }
 
-        $product->load(['brand', 'subcategory.category']);
+        $product->load(['brand', 'subcategory.category', 'images']);
         
         // Find active variants in the same product family
         $variants = collect();
@@ -193,6 +193,15 @@ class FrontendController extends Controller
     public function about()  {
         return view('frontend.about');
     }
+
+    public function privacy() {
+        return view('frontend.privacy');
+    }
+
+    public function terms() {
+        return view('frontend.terms');
+    }
+
     public function blog()  {
         $blogs = Blog::active()->latest()->paginate(9);
         return view('frontend.blog', compact('blogs'));

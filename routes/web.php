@@ -26,6 +26,8 @@ Route::get('/all-brands', [FrontendController::class, 'all_brands'])->name('fron
 Route::get('/catalogue', [FrontendController::class, 'products'])->name('frontend.products.index');
 Route::get('/products-catalog', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/product/{product:slug}', [FrontendController::class, 'show'])->name('frontend.product.show');
+Route::get('/privacy', [FrontendController::class, 'privacy'])->name('frontend.privacy');
+Route::get('/terms', [FrontendController::class, 'terms'])->name('frontend.terms');
 Route::post('/product/{product}/reviews', [FrontendController::class, 'storeReview'])->name('frontend.reviews.store');
 Route::post('/get-quote', [FrontendController::class, 'storeQuote'])->name('frontend.quote.store');
 
