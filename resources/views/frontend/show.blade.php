@@ -380,14 +380,20 @@
         }
         detailHtml += `<tr><td class="fw-semibold text-secondary">SKU Reference</td><td class="text-danger fw-bold">${variant.sku_code}</td></tr>`;
         
-        document.getElementById('pd-vdetail').innerHTML = detailHtml;
+        const detailEl = document.getElementById('pd-vdetail');
+        if (detailEl) {
+            detailEl.innerHTML = detailHtml;
+        }
         
-        const message = `Hello Alabama, I am interested in ${variant.model_name || variant.sku_code} (SKU: ${variant.sku_code}). Please share pricing and details.`;
-        document.getElementById('pd-venquire').href = `https://wa.me/971559138047?text=${encodeURIComponent(message)}`;
+        const enquireEl = document.getElementById('pd-venquire');
+        if (enquireEl) {
+            const message = `Hello Alabama, I am interested in ${variant.model_name || variant.sku_code} (SKU: ${variant.sku_code}). Please share pricing and details.`;
+            enquireEl.href = `https://wa.me/971559138047?text=${encodeURIComponent(message)}`;
+        }
     }
     
     document.addEventListener('DOMContentLoaded', () => {
-        if (VARIANTS.length > 0) {
+        if (VARIANTS.length > 0 && document.getElementById('pd-vdetail')) {
             selectVariant(0);
         }
 
