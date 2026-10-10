@@ -505,37 +505,35 @@ h1,h2,h3{font-family: 'pop-bold';letter-spacing:.01em}
 .marquee:hover {
     animation-play-state: paused;
 }
-.marquee img {
+.marquee img,
+.brand-strip .marquee img,
+.brand-logo-item img {
     height: 50px !important;
     max-height: 50px !important;
     width: auto !important;
-    object-fit: contain;
+    max-width: 140px !important;
+    object-fit: contain !important;
+    display: inline-block;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.3s ease;
 }
 .brand-logo-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 60px;
-    padding: 4px 16px;
+    height: 50px;
+    padding: 0 16px;
     background: transparent;
     transition: transform 0.25s ease, opacity 0.25s ease;
-    opacity: 0.8;
+    opacity: 0.85;
     flex-shrink: 0;
-}
-.brand-logo-item img {
-    height: 50px !important;
-    max-height: 50px !important;
-    max-width: 140px !important;
-    width: auto !important;
-    object-fit: contain;
-    filter: grayscale(100%);
-    transition: filter 0.3s ease, transform 0.3s ease;
 }
 .brand-logo-item:hover {
     opacity: 1;
-    transform: scale(1.06);
+    transform: scale(1.05);
 }
-.brand-logo-item:hover img {
+.brand-logo-item:hover img,
+.marquee:hover img {
     filter: grayscale(0%);
 }
 .brand-text-item {
